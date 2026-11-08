@@ -13,7 +13,7 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 antialiased">
 
-  <!-- 1. ส่วนหน้าแรก (ก่อนเข้าสู่ระบบ): ฟอร์มลงทะเบียนและเข้าสู่ระบบ -->
+  <!-- 1. ส่วนเข้าสู่ระบบ / ลงทะเบียน -->
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-slate-100">
       
@@ -113,8 +113,7 @@
     </div>
   </div>
 
-
-  <!-- 2. ส่วนหน้าหลัก (หลังเข้าสู่ระบบสำเร็จ) -->
+  <!-- 2. ส่วนหน้าหลัก (หลังล็อกอินสำเร็จ) -->
   <div id="mainAppContainer" class="hidden min-h-screen flex flex-col">
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -140,43 +139,12 @@
     </nav>
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- TAB 1: หน้าแรก -->
       <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-        <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold border border-amber-200">
-          ⚡ WORKSHOP เชิงปฏิบัติการ
-        </div>
+        <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold border border-amber-200">⚡ WORKSHOP เชิงปฏิบัติการ</div>
         <h1 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
         <p class="text-slate-600 text-sm">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
       </div>
-
-      <!-- TAB 2: วิทยากร -->
-      <div id="tab-instructors" class="hidden space-y-8">
-        <div class="text-center"><h2 class="text-3xl font-bold text-slate-900">ทำความรู้จัก วิทยากร</h2></div>
-        <div class="swiper mySwiper pb-10">
-          <div class="swiper-wrapper">
-            <script>
-              const instructors = [
-                {name: "พี่ต้นกล้า", role: "AI & Game Dev", desc: "เข้าใจทฤษฎีเกมและ Vibe Coding"},
-                {name: "พี่ปัน", role: "Prompt & Coding", desc: "สร้างเกมเสริมการเรียนรู้สุดสนุก"},
-                {name: "พี่ปาย", role: "API & Advance", desc: "การเพิ่มเสียงพูดและเชื่อมต่อระบบ"},
-                {name: "พี่โอเล่", role: "AR Learning", desc: "สร้างสรรค์สื่อการเรียนรู้แบบสมจริง"}
-              ];
-              instructors.forEach((ins, index) => {
-                document.write(`
-                  <div class="swiper-slide bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200" class="w-20 h-20 rounded-full object-cover mb-3 shadow-inner">
-                    <h4 class="font-bold text-slate-800 text-base">${ins.name}</h4>
-                    <p class="text-xs text-blue-600 font-semibold mb-2">${ins.role}</p>
-                    <p class="text-xs text-slate-500">${ins.desc}</p>
-                  </div>
-                `);
-              });
-            </script>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 3, 4, 5 (ย่อไว้เพื่อความกระชับ) -->
+      <div id="tab-instructors" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">ข้อมูลวิทยากร</div>
       <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">กำหนดการอบรม</div>
       <div id="tab-submitWork" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">ระบบส่งผลงาน</div>
       <div id="tab-evaluation" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">แบบประเมินความพึงพอใจ</div>
@@ -193,10 +161,33 @@
       <form id="adminLoginForm" class="space-y-4">
         <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3 py-2 border rounded-xl text-sm">
         <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3 py-2 border rounded-xl text-sm">
-        <button type="submit" class="w-full bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-sm">ยืนยัน</button>
+        <button type="submit" id="adminLoginBtn" class="w-full bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-sm">ยืนยัน</button>
       </form>
     </div>
   </div>
+
+  <!-- หน้าแดชบอร์ดแอดมิน -->
+  <section id="adminSection" class="hidden min-h-screen p-4 sm:p-6 max-w-6xl mx-auto">
+    <header class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-xl font-bold text-slate-900">🔒 ระบบจัดการแอดมิน (ค่ายคอมพิวเตอร์ 2/2569)</h1>
+        <p id="totalCountBadge" class="text-xs text-blue-600 font-semibold mt-1">กำลังโหลด...</p>
+      </div>
+      <button onclick="logout()" class="bg-slate-200 px-4 py-2 rounded-xl text-xs font-medium">ออกจากระบบแอดมิน</button>
+    </header>
+    <div class="bg-white rounded-2xl shadow-sm border p-4 overflow-x-auto">
+      <table class="w-full text-left border-collapse min-w-[600px] text-sm">
+        <thead>
+          <tr class="bg-slate-100 text-slate-700 text-xs">
+            <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody" class="text-slate-600 divide-y divide-slate-100">
+          <tr><td colspan="7" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <!-- Popup ลงทะเบียนสำเร็จ -->
   <div id="successModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
@@ -211,8 +202,10 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
+    // ⚠️ นำลิงก์ Web App ของ Google Apps Script ที่ลงท้ายด้วย /exec มาใส่ตรงนี้
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
+
     let generatedId = "";
 
     function toggleAuthView(view) {
@@ -232,6 +225,7 @@
       generatedId = campId;
       document.getElementById("authContainer").classList.add("hidden");
       document.getElementById("successModal").style.display = "none";
+      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("mainAppContainer").classList.remove("hidden");
       document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
       switchTab('home');
@@ -242,36 +236,26 @@
         document.getElementById(`tab-${t}`).classList.add("hidden");
       });
       document.getElementById(`tab-${tabName}`).classList.remove("hidden");
-      if(tabName === 'instructors') initSwiper();
       window.scrollTo(0, 0);
-    }
-
-    function initSwiper() {
-      if (!window.swiperInstance) {
-        window.swiperInstance = new Swiper(".mySwiper", {
-          slidesPerView: 1, spaceBetween: 20, loop: true, speed: 4000,
-          autoplay: { delay: 0, disableOnInteraction: false },
-          breakpoints: { 640: { slidesPerView: 2 }, 768: { slidesPerView: 3 } }
-        });
-      }
     }
 
     function logout() {
       document.getElementById("mainAppContainer").classList.add("hidden");
+      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("authContainer").classList.remove("hidden");
       document.getElementById("registerForm").reset();
+      document.getElementById("loginForm").reset();
       toggleAuthView('register');
     }
 
-    // 🔗 ส่วนส่งข้อมูลฟอร์มลงทะเบียนไปยัง Google Apps Script (ผ่าน Fetch API)
+    // 1. ส่งข้อมูลสมัครเรียน (Register)
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
       submitBtn.disabled = true;
       submitBtn.innerText = "กำลังบันทึกข้อมูล...";
 
-      const randomNum = Math.floor(1000 + Math.random() * 9000);
-      generatedId = `CAMP-${randomNum}`;
+      generatedId = `CAMP-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const formData = {
         action: "register",
@@ -285,9 +269,6 @@
         reason: document.getElementById("reason").value,
         campId: generatedId
       };
-
-      // ⚠️ นำลิงก์ Web App ของคุณมาใส่ตรงนี้ (ต้องลงท้ายด้วย /exec)
-      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
 
       fetch(WEB_APP_URL, {
         method: "POST",
@@ -308,11 +289,120 @@
       });
     });
 
-    // ระบบ Login และ Admin (เชื่อมต่อผ่าน fetch ไปยัง GAS เช่นกัน)
+    // 2. เข้าสู่ระบบนักเรียน (Student Login)
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      alert("ระบบเข้าสู่ระบบด้วย Google Sheets กำลังเชื่อมต่อ...");
+      const loginBtn = document.getElementById("loginBtn");
+      loginBtn.disabled = true;
+      loginBtn.innerText = "กำลังตรวจสอบ...";
+
+      const payload = {
+        action: "login",
+        studentId: document.getElementById("loginStudentId").value,
+        password: document.getElementById("loginPassword").value
+      };
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        loginBtn.disabled = false;
+        loginBtn.innerText = "เข้าสู่ระบบ";
+        if (data.status === "success") {
+          enterMainApp(data.campId);
+        } else {
+          alert(data.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+        }
+      })
+      .catch(err => {
+        loginBtn.disabled = false;
+        loginBtn.innerText = "เข้าสู่ระบบ";
+        alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์");
+      });
     });
+
+    // 3. เข้าสู่ระบบแอดมิน (Admin Login)
+    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const btn = document.getElementById("adminLoginBtn");
+      btn.disabled = true;
+      btn.innerText = "กำลังตรวจสอบ...";
+
+      const payload = {
+        action: "adminLogin",
+        username: document.getElementById("adminUser").value,
+        password: document.getElementById("adminPass").value
+      };
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        btn.disabled = false;
+        btn.innerText = "ยืนยัน";
+        if (data.status === "success") {
+          closeAdminModal();
+          document.getElementById("adminLoginForm").reset();
+          document.getElementById("authContainer").classList.add("hidden");
+          document.getElementById("adminSection").classList.remove("hidden");
+          loadAdminData();
+        } else {
+          alert(data.message || "รหัสผ่านแอดมินไม่ถูกต้อง");
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerText = "ยืนยัน";
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      });
+    });
+
+    // 4. ดึงข้อมูลรายชื่อมาแสดงในตารางแอดมิน (Admin Data)
+    function loadAdminData() {
+      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "getAdminData" })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === "success") {
+          const tbody = document.getElementById("adminTableBody");
+          document.getElementById("totalCountBadge").innerText = `📊 จำนวนผู้สมัครทั้งหมด: ${res.data.length} คน`;
+          if (res.data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">ยังไม่มีข้อมูลการลงทะเบียน</td></tr>`;
+            return;
+          }
+          let html = "";
+          res.data.forEach(item => {
+            html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
+              <td class="p-3">${item.timestamp}</td>
+              <td class="p-3 text-slate-500">${item.email}</td>
+              <td class="p-3 font-medium text-slate-800">${item.studentId}</td>
+              <td class="p-3">${item.title} ${item.fullName}</td>
+              <td class="p-3">${item.nickname}</td>
+              <td class="p-3 font-semibold text-blue-600">${item.grade}</td>
+              <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
+            </tr>`;
+          });
+          tbody.innerHTML = html;
+        }
+      })
+      .catch(err => {
+        document.getElementById("totalCountBadge").innerText = "โหลดข้อมูลไม่สำเร็จ";
+      });
+    }
   </script>
 </body>
 </html>
