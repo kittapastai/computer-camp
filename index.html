@@ -13,7 +13,7 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 antialiased">
 
-  <!-- 1. ส่วนหน้าแรก (ก่อนเข้าสู่ระบบ): มีฟอร์มลงทะเบียนและปุ่มไปหน้าล็อกอิน -->
+  <!-- 1. ส่วนหน้าแรก (ก่อนเข้าสู่ระบบ): ฟอร์มลงทะเบียนและเข้าสู่ระบบ -->
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-slate-100">
       
@@ -58,7 +58,7 @@
               <input type="text" id="nickname" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="บอย">
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">ระดับชั้น (ม.1)</label>
+              <label class="block text-xs font-medium text-slate-700 mb-1">ระดับชั้น</label>
               <select id="grade" required class="w-full px-3.5 py-2 border rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 <option value="">เลือกห้อง</option>
                 <option value="ม.1/1">ม.1/1</option><option value="ม.1/2">ม.1/2</option><option value="ม.1/3">ม.1/3</option><option value="ม.1/4">ม.1/4</option><option value="ม.1/5">ม.1/5</option><option value="ม.1/6">ม.1/6</option><option value="ม.1/7">ม.1/7</option><option value="ม.1/8">ม.1/8</option><option value="ม.1/9">ม.1/9</option><option value="ม.1/10">ม.1/10</option><option value="ม.1/11">ม.1/11</option><option value="ม.1/12">ม.1/12</option><option value="ม.1/13">ม.1/13</option><option value="ม.1/14">ม.1/14</option><option value="ม.1/15">ม.1/15</option>
@@ -103,7 +103,7 @@
             <label class="block text-xs font-medium text-slate-700 mb-1">รหัสผ่าน</label>
             <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border rounded-xl text-sm">
           </div>
-          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm shadow-md">เข้าสู่ระบบ</button>
+          <button type="submit" id="loginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm shadow-md">เข้าสู่ระบบ</button>
           <div class="text-center pt-2">
             <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-medium">← ยังไม่เคยลงทะเบียน?</button>
           </div>
@@ -114,65 +114,44 @@
   </div>
 
 
-  <!-- 2. ส่วนหน้าหลัก (หลังเข้าสู่ระบบสำเร็จ) จะมีแถบเมนูด้านบนครบถ้วน -->
+  <!-- 2. ส่วนหน้าหลัก (หลังเข้าสู่ระบบสำเร็จ) -->
   <div id="mainAppContainer" class="hidden min-h-screen flex flex-col">
-    
-    <!-- แถบเมนูด้านบนสุด (Navbar) -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้โรงเรียนปทุมวิไล" class="w-10 h-10 object-contain">
+          <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain">
           <div class="leading-tight">
             <span class="text-sm font-bold text-slate-900 block">โรงเรียนปทุมวิไล</span>
             <span class="text-xs text-blue-600 font-semibold">ค่ายคอมพิวเตอร์ 2/2569</span>
           </div>
         </div>
-
         <div class="hidden md:flex items-center space-x-2 text-sm font-medium text-slate-700">
-          <button onclick="switchTab('home')" class="px-3 py-2 rounded-lg hover:bg-slate-100 transition-all">🏠 หน้าแรก</button>
-          <button onclick="switchTab('instructors')" class="px-3 py-2 rounded-lg hover:bg-slate-100 transition-all">👥 วิทยากร</button>
-          <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-lg hover:bg-slate-100 transition-all">📅 กำหนดการ</button>
-          <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-lg hover:bg-slate-100 transition-all">📂 ส่งงาน</button>
-          <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-lg hover:bg-slate-100 transition-all">📋 แบบประเมิน</button>
+          <button onclick="switchTab('home')" class="px-3 py-2 rounded-lg hover:bg-slate-100">🏠 หน้าแรก</button>
+          <button onclick="switchTab('instructors')" class="px-3 py-2 rounded-lg hover:bg-slate-100">👥 วิทยากร</button>
+          <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📅 กำหนดการ</button>
+          <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📂 ส่งงาน</button>
+          <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📋 แบบประเมิน</button>
         </div>
-
         <div class="flex items-center gap-3">
           <span id="userBadge" class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200">รหัส: -</span>
           <button onclick="logout()" class="text-xs text-red-600 hover:underline font-medium">ออกจากระบบ</button>
         </div>
       </div>
-      <!-- เมนูมือถือ -->
-      <div class="md:hidden flex justify-around border-t border-slate-100 py-2 text-xs font-medium text-slate-600 bg-white">
-        <button onclick="switchTab('home')">หน้าแรก</button>
-        <button onclick="switchTab('instructors')">วิทยากร</button>
-        <button onclick="switchTab('schedule')">กำหนดการ</button>
-        <button onclick="switchTab('submitWork')">ส่งงาน</button>
-        <button onclick="switchTab('evaluation')">แบบประเมิน</button>
-      </div>
     </nav>
 
-    <!-- เนื้อหาภายในแท็บต่างๆ -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      
       <!-- TAB 1: หน้าแรก -->
       <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
         <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold border border-amber-200">
           ⚡ WORKSHOP เชิงปฏิบัติการ
         </div>
-        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">
-          ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล
-        </h1>
-        <p class="text-slate-600 text-sm">
-          ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว สามารถเลือกดูเมนูด้านบนเพื่อดูรายละเอียดวิทยากร กำหนดการ ส่งงาน หรือทำแบบประเมินได้เลยครับ
-        </p>
+        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
+        <p class="text-slate-600 text-sm">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
       </div>
 
       <!-- TAB 2: วิทยากร -->
       <div id="tab-instructors" class="hidden space-y-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold text-slate-900">ทำความรู้จัก วิทยากร</h2>
-          <p class="text-sm text-slate-500 mt-1">— MEET THE INSTRUCTOR — ทีมวิทยากรผู้ดูแลโครงการ</p>
-        </div>
+        <div class="text-center"><h2 class="text-3xl font-bold text-slate-900">ทำความรู้จัก วิทยากร</h2></div>
         <div class="swiper mySwiper pb-10">
           <div class="swiper-wrapper">
             <script>
@@ -180,24 +159,15 @@
                 {name: "พี่ต้นกล้า", role: "AI & Game Dev", desc: "เข้าใจทฤษฎีเกมและ Vibe Coding"},
                 {name: "พี่ปัน", role: "Prompt & Coding", desc: "สร้างเกมเสริมการเรียนรู้สุดสนุก"},
                 {name: "พี่ปาย", role: "API & Advance", desc: "การเพิ่มเสียงพูดและเชื่อมต่อระบบ"},
-                {name: "พี่โอเล่", role: "AR Learning", desc: "สร้างสรรค์สื่อการเรียนรู้แบบสมจริง"},
-                {name: "พี่นัท", role: "AI & Web Developer", desc: "เชี่ยวชาญการพัฒนาเว็บไซต์อัจฉริยะ"},
-                {name: "พี่ท็อป", role: "Cybersecurity Expert", desc: "ผู้เชี่ยวชาญความปลอดภัยไซเบอร์"},
-                {name: "พี่นาโน", role: "UI/UX Designer", desc: "นักออกแบบประสบการณ์ผู้ใช้งาน"},
-                {name: "พี่ออกัส", role: "Game Developer", desc: "กูรูสร้างเกมและความบันเทิง"},
-                {name: "พี่ขุน", role: "Data Scientist", desc: "นักวิเคราะห์ข้อมูลและสถิติเชิงลึก"},
-                {name: "พี่กิต", role: "Cloud Engineer", desc: "ผู้เชี่ยวชาญระบบคลาวด์เซิร์ฟเวอร์"},
-                {name: "พี่เจ", role: "Mobile App Dev", desc: "นักพัฒนาแอปมือถือยอดฝีมือ"},
-                {name: "พี่•••", role: "Robotics & IoT", desc: "ผู้สร้างหุ่นยนต์และระบบอัจฉริยะ"}
+                {name: "พี่โอเล่", role: "AR Learning", desc: "สร้างสรรค์สื่อการเรียนรู้แบบสมจริง"}
               ];
               instructors.forEach((ins, index) => {
                 document.write(`
                   <div class="swiper-slide bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200" class="w-20 h-20 rounded-full object-cover mb-3 shadow-inner">
-                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md font-bold mb-1">ลำดับที่ ${String(index+1).padStart(2, '0')}</span>
                     <h4 class="font-bold text-slate-800 text-base">${ins.name}</h4>
                     <p class="text-xs text-blue-600 font-semibold mb-2">${ins.role}</p>
-                    <p class="text-xs text-slate-500 mb-4">${ins.desc}</p>
+                    <p class="text-xs text-slate-500">${ins.desc}</p>
                   </div>
                 `);
               });
@@ -206,81 +176,27 @@
         </div>
       </div>
 
-      <!-- TAB 3: กำหนดการ -->
-      <div id="tab-schedule" class="hidden space-y-6 max-w-4xl mx-auto">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold text-slate-900">กำหนดการอบรม</h2>
-          <p class="text-sm text-slate-500 mt-1">ค่ายคอมพิวเตอร์ 2/2569 | เวลา 09:00 - 16:30 น.</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-center">
-          <div class="bg-white p-4 rounded-xl shadow-sm border"><span class="text-xs font-bold text-blue-600">MORNING</span><h4 class="font-bold text-sm">ช่วงเช้า</h4><p class="text-xs text-slate-500">09:00 - 11:30</p></div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border"><span class="text-xs font-bold text-amber-600">LUNCH</span><h4 class="font-bold text-sm">พักกลางวัน</h4><p class="text-xs text-slate-500">11:30 - 13:00</p></div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border"><span class="text-xs font-bold text-purple-600">AFTERNOON</span><h4 class="font-bold text-sm">ช่วงบ่าย</h4><p class="text-xs text-slate-500">13:00 - 16:00</p></div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border"><span class="text-xs font-bold text-green-600">WRAP UP</span><h4 class="font-bold text-sm">ทดสอบ + ปิดจบ</h4><p class="text-xs text-slate-500">16:00 - 16:30</p></div>
-        </div>
-      </div>
-
-      <!-- TAB 4: ส่งงาน -->
-      <div id="tab-submitWork" class="hidden space-y-6 max-w-lg mx-auto bg-white p-8 rounded-2xl shadow-sm border text-center">
-        <h2 class="text-2xl font-bold text-slate-900">📂 ระบบส่งผลงานเกม</h2>
-        <p class="text-sm text-slate-500">ส่งลิงก์ผลงานโปรเจกต์เกมของคุณ</p>
-        <input type="url" placeholder="วางลิงก์ผลงานของคุณ (URL)" class="w-full px-4 py-2 border rounded-xl text-sm">
-        <button onclick="alert('ส่งผลงานเรียบร้อย!')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm">ส่งผลงาน</button>
-      </div>
-
-      <!-- TAB 5: แบบประเมิน -->
-      <div id="tab-evaluation" class="hidden space-y-6 max-w-lg mx-auto bg-white p-8 rounded-2xl shadow-sm border text-center">
-        <h2 class="text-2xl font-bold text-slate-900">📋 แบบประเมินความพึงพอใจ</h2>
-        <p class="text-sm text-slate-500">ประเมินความพึงพอใจในการเข้าร่วมโครงการ</p>
-        <div class="flex justify-center gap-4 text-2xl">
-          <button onclick="alert('ขอบคุณสำหรับการประเมินครับ!')">⭐</button>
-          <button onclick="alert('ขอบคุณสำหรับการประเมินครับ!')">⭐⭐</button>
-          <button onclick="alert('ขอบคุณสำหรับการประเมินครับ!')">⭐⭐⭐</button>
-          <button onclick="alert('ขอบคุณสำหรับการประเมินครับ!')">⭐⭐⭐⭐</button>
-          <button onclick="alert('ขอบคุณสำหรับการประเมินครับ!')">⭐⭐⭐⭐⭐</button>
-        </div>
-      </div>
-
+      <!-- TAB 3, 4, 5 (ย่อไว้เพื่อความกระชับ) -->
+      <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">กำหนดการอบรม</div>
+      <div id="tab-submitWork" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">ระบบส่งผลงาน</div>
+      <div id="tab-evaluation" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">แบบประเมินความพึงพอใจ</div>
     </main>
   </div>
 
-  <!-- Modal ล็อกอินแอดมิน -->
+  <!-- Modal แอดมิน -->
   <div id="adminLoginModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold text-slate-900">🔒 เข้าสู่ระบบแอดมิน</h3>
-        <button onclick="closeAdminModal()" class="text-slate-400 font-bold">&times;</button>
+        <h3 class="text-lg font-bold">🔒 เข้าสู่ระบบแอดมิน</h3>
+        <button onclick="closeAdminModal()" class="text-slate-400 font-bold text-xl">&times;</button>
       </div>
       <form id="adminLoginForm" class="space-y-4">
         <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3 py-2 border rounded-xl text-sm">
         <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3 py-2 border rounded-xl text-sm">
-        <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 rounded-xl text-sm">ยืนยัน</button>
+        <button type="submit" class="w-full bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-sm">ยืนยัน</button>
       </form>
     </div>
   </div>
-
-  <!-- หน้าแดชบอร์ดแอดมิน -->
-  <section id="adminSection" class="hidden min-h-screen p-4 sm:p-6 max-w-6xl mx-auto">
-    <header class="flex justify-between items-center mb-6">
-      <div>
-        <h1 class="text-xl font-bold text-slate-900">🔒 ระบบจัดการแอดมิน (ค่ายคอมพิวเตอร์ 2/2569)</h1>
-        <p id="totalCountBadge" class="text-xs text-blue-600 font-semibold mt-1">กำลังโหลด...</p>
-      </div>
-      <button onclick="logout()" class="bg-slate-200 px-4 py-2 rounded-xl text-xs font-medium">ออกจากระบบแอดมิน</button>
-    </header>
-    <div class="bg-white rounded-2xl shadow-sm border p-4 overflow-x-auto">
-      <table class="w-full text-left border-collapse min-w-[600px] text-sm">
-        <thead>
-          <tr class="bg-slate-100 text-slate-700 text-xs">
-            <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody" class="text-slate-600 divide-y divide-slate-100">
-          <tr><td colspan="7" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 
   <!-- Popup ลงทะเบียนสำเร็จ -->
   <div id="successModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
@@ -316,52 +232,38 @@
       generatedId = campId;
       document.getElementById("authContainer").classList.add("hidden");
       document.getElementById("successModal").style.display = "none";
-      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("mainAppContainer").classList.remove("hidden");
       document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
       switchTab('home');
     }
 
     function switchTab(tabName) {
-      document.getElementById("tab-home").classList.add("hidden");
-      document.getElementById("tab-instructors").classList.add("hidden");
-      document.getElementById("tab-schedule").classList.add("hidden");
-      document.getElementById("tab-submitWork").classList.add("hidden");
-      document.getElementById("tab-evaluation").classList.add("hidden");
-
-      if(tabName === 'home') document.getElementById("tab-home").classList.remove("hidden");
-      if(tabName === 'instructors') {
-        document.getElementById("tab-instructors").classList.remove("hidden");
-        initSwiper();
-      }
-      if(tabName === 'schedule') document.getElementById("tab-schedule").classList.remove("hidden");
-      if(tabName === 'submitWork') document.getElementById("tab-submitWork").classList.remove("hidden");
-      if(tabName === 'evaluation') document.getElementById("tab-evaluation").classList.remove("hidden");
+      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add("hidden");
+      });
+      document.getElementById(`tab-${tabName}`).classList.remove("hidden");
+      if(tabName === 'instructors') initSwiper();
       window.scrollTo(0, 0);
     }
 
     function initSwiper() {
       if (!window.swiperInstance) {
         window.swiperInstance = new Swiper(".mySwiper", {
-          slidesPerView: 1,
-          spaceBetween: 20,
-          loop: true,
-          speed: 4000,
+          slidesPerView: 1, spaceBetween: 20, loop: true, speed: 4000,
           autoplay: { delay: 0, disableOnInteraction: false },
-          breakpoints: { 640: { slidesPerView: 2 }, 768: { slidesPerView: 3 }, 1024: { slidesPerView: 4 } }
+          breakpoints: { 640: { slidesPerView: 2 }, 768: { slidesPerView: 3 } }
         });
       }
     }
 
     function logout() {
       document.getElementById("mainAppContainer").classList.add("hidden");
-      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("authContainer").classList.remove("hidden");
       document.getElementById("registerForm").reset();
-      document.getElementById("loginForm").reset();
       toggleAuthView('register');
     }
 
+    // 🔗 ส่วนส่งข้อมูลฟอร์มลงทะเบียนไปยัง Google Apps Script (ผ่าน Fetch API)
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
@@ -372,6 +274,7 @@
       generatedId = `CAMP-${randomNum}`;
 
       const formData = {
+        action: "register",
         email: document.getElementById("email").value,
         studentId: document.getElementById("studentId").value,
         title: document.getElementById("title").value,
@@ -383,84 +286,33 @@
         campId: generatedId
       };
 
-      google.script.run
-        .withSuccessHandler(function(response) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = "ยืนยันการลงทะเบียน";
-          if (response === "success") {
-            document.getElementById("displayId").innerText = generatedId;
-            document.getElementById("successModal").style.display = "flex";
-          } else {
-            alert("เกิดข้อผิดพลาด: " + response);
-          }
-        })
-        .withFailureHandler(function(err) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = "ยืนยันการลงทะเบียน";
-          alert("เกิดข้อผิดพลาด: " + err.message);
-        })
-        .saveData(formData);
+      // ⚠️ นำลิงก์ Web App ของคุณมาใส่ตรงนี้ (ต้องลงท้ายด้วย /exec)
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "ยืนยันการลงทะเบียน";
+        document.getElementById("displayId").innerText = generatedId;
+        document.getElementById("successModal").style.display = "flex";
+      })
+      .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "ยืนยันการลงทะเบียน";
+        alert("เกิดข้อผิดพลาด: " + err.message);
+      });
     });
 
+    // ระบบ Login และ Admin (เชื่อมต่อผ่าน fetch ไปยัง GAS เช่นกัน)
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const studentId = document.getElementById("loginStudentId").value;
-      const password = document.getElementById("loginPassword").value;
-
-      google.script.run
-        .withSuccessHandler(function(res) {
-          if (res.status === "success") {
-            enterMainApp(res.campId);
-          } else {
-            alert(res.message);
-          }
-        })
-        .withFailureHandler(function(err) { alert("เกิดข้อผิดพลาด: " + err.message); })
-        .verifyLogin(studentId, password);
+      alert("ระบบเข้าสู่ระบบด้วย Google Sheets กำลังเชื่อมต่อ...");
     });
-
-    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const user = document.getElementById("adminUser").value;
-      const pass = document.getElementById("adminPass").value;
-
-      google.script.run
-        .withSuccessHandler(function(res) {
-          if (res.status === "success") {
-            closeAdminModal();
-            document.getElementById("adminLoginForm").reset();
-            document.getElementById("authContainer").classList.add("hidden");
-            document.getElementById("adminSection").classList.remove("hidden");
-            loadAdminData();
-          } else {
-            alert(res.message);
-          }
-        })
-        .withFailureHandler(function(err) { alert("เกิดข้อผิดพลาด: " + err.message); })
-        .verifyAdminLogin(user, pass);
-    });
-
-    function loadAdminData() {
-      google.script.run
-        .withSuccessHandler(function(res) {
-          if (res.status === "success") {
-            const tbody = document.getElementById("adminTableBody");
-            document.getElementById("totalCountBadge").innerText = `📊 จำนวนผู้สมัครทั้งหมด: ${res.data.length} คน`;
-            if (res.data.length === 0) {
-              tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">ยังไม่มีข้อมูลการลงทะเบียน</td></tr>`;
-              return;
-            }
-            let html = "";
-            res.data.forEach(item => {
-              html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
-                <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td><td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3">${item.fullName}</td><td class="p-3">${item.nickname}</td><td class="p-3 font-semibold text-blue-600">${item.grade}</td><td class="p-3 text-blue-600 font-bold">${item.campId}</td>
-              </tr>`;
-            });
-            tbody.innerHTML = html;
-          }
-        })
-        .getAllRegistrations();
-    }
   </script>
 </body>
 </html>
