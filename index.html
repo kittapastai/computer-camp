@@ -7,9 +7,7 @@
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <style>
-    .swiper-wrapper { transition-timing-function: linear !important; }
-  </style>
+  <style>.swiper-wrapper { transition-timing-function: linear !important; }</style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 antialiased">
 
@@ -17,11 +15,10 @@
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-slate-100">
       
-      <!-- ฟอร์มลงทะเบียน -->
       <div id="registerView">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
-            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้โรงเรียนปทุมวิไล" class="w-16 h-16 object-contain">
+            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain">
           </div>
           <h1 class="text-2xl font-bold text-slate-900">ค่ายคอมพิวเตอร์ 2/2569</h1>
           <p class="text-xs text-slate-500 mt-1">โรงเรียนปทุมวิไล จังหวัดปทุมธานี</p>
@@ -41,10 +38,8 @@
               <label class="block text-xs font-medium text-slate-700 mb-1">คำนำหน้า</label>
               <select id="title" required class="w-full px-3.5 py-2 border rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 <option value="">เลือก</option>
-                <option value="เด็กชาย">เด็กชาย</option>
-                <option value="เด็กหญิง">เด็กหญิง</option>
-                <option value="นาย">นาย</option>
-                <option value="นางสาว">นางสาว</option>
+                <option value="เด็กชาย">เด็กชาย</option><option value="เด็กหญิง">เด็กหญิง</option>
+                <option value="นาย">นาย</option><option value="นางสาว">นางสาว</option>
               </select>
             </div>
           </div>
@@ -73,9 +68,7 @@
             <label class="block text-xs font-medium text-slate-700 mb-1">เหตุผลที่อยากเข้าค่าย</label>
             <textarea id="reason" rows="2" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="เหตุผลสั้นๆ"></textarea>
           </div>
-          <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all shadow-md text-sm">
-            ยืนยันการลงทะเบียน
-          </button>
+          <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all shadow-md text-sm">ยืนยันการลงทะเบียน</button>
           
           <div class="text-center pt-3 flex items-center justify-center gap-2 text-xs">
             <button type="button" onclick="toggleAuthView('login')" class="text-blue-600 hover:underline font-medium">มีรหัสแล้ว? เข้าสู่ระบบ</button>
@@ -85,11 +78,10 @@
         </form>
       </div>
 
-      <!-- ฟอร์มเข้าสู่ระบบ -->
       <div id="loginView" class="hidden">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
-            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้โรงเรียนปทุมวิไล" class="w-16 h-16 object-contain">
+            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain">
           </div>
           <h1 class="text-2xl font-bold text-slate-900">เข้าสู่ระบบค่าย</h1>
           <p class="text-xs text-slate-500 mt-1">ค่ายคอมพิวเตอร์ 2/2569</p>
@@ -113,7 +105,7 @@
     </div>
   </div>
 
-  <!-- 2. ส่วนหน้าหลัก (หลังล็อกอินสำเร็จ) -->
+  <!-- 2. ส่วนหน้าหลัก (นักเรียน / แอดมิน ที่ใช้หน้าตาเดียวกัน) -->
   <div id="mainAppContainer" class="hidden min-h-screen flex flex-col">
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -130,6 +122,8 @@
           <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📅 กำหนดการ</button>
           <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📂 ส่งงาน</button>
           <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📋 แบบประเมิน</button>
+          <!-- แท็บแสดงรายชื่อสำหรับแอดมิน (แสดงเพิ่มขึ้นมาตรงข้างๆ แอคเค้าท์) -->
+          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="hidden px-3 py-2 rounded-lg bg-amber-50 text-amber-800 font-bold hover:bg-amber-100">📊 รายชื่อผู้สมัคร</button>
         </div>
         <div class="flex items-center gap-3">
           <span id="userBadge" class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200">รหัส: -</span>
@@ -145,53 +139,103 @@
         <p class="text-slate-600 text-sm">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
       </div>
 
-      <!-- TAB 2: วิทยากร / สตาฟ / ที่ปรึกษา -->
-      <div id="tab-instructors" class="hidden space-y-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-black text-slate-900">ทำความรู้จัก วิทยากร</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมดของโปรเจกต์นี้</p>
-        </div>
+      <div id="tab-instructors" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">ข้อมูลวิทยากร</div>
+      <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">กำหนดการอบรม</div>
 
-        <!-- ปุ่มหมวดหมู่ย่อย บนซ้ายเหนือรูปวิทยากร -->
-        <div class="flex flex-wrap items-center justify-start gap-2 border-b border-slate-200 pb-3">
-          <button onclick="filterTeam('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition-all">ทั้งหมด</button>
-          <button onclick="filterTeam('instructor')" id="btn-instructor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">👥 วิทยากร</button>
-          <button onclick="filterTeam('staff')" id="btn-staff" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">🧑‍💻 สตาฟ</button>
-          <button onclick="filterTeam('advisor')" id="btn-advisor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">⭐ ครู / ที่ปรึกษา</button>
-        </div>
-
-        <!-- ส่วนแสดงที่ปรึกษาโครงการ -->
-        <div id="advisorSection" class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-6 sm:p-8 shadow-sm">
-          <div class="inline-flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4 shadow-sm">
-            👑 ที่ปรึกษาโครงการ
+      <!-- TAB: ระบบส่งงาน (แยก 3 ช่อง / 3 ฐาน) -->
+      <div id="tab-submitWork" class="hidden space-y-6">
+        <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">📂 ระบบส่งงานกิจกรรมค่าย</h2>
+            <p class="text-xs text-slate-500 mt-1">เลือกส่งงานตามฐานหรือหัวข้อคำสั่งงานด้านล่าง</p>
           </div>
-          <div class="flex flex-col sm:flex-row items-center gap-6">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" alt="ที่ปรึกษา" class="w-32 h-32 rounded-2xl object-cover shadow-md border-4 border-white">
-            <div class="text-center sm:text-left">
-              <h3 class="text-2xl font-bold text-slate-900">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3>
-              <p class="text-xs text-blue-600 font-bold mt-1">อาจารย์ที่ปรึกษาประจำโครงการ</p>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">คอยให้คำปรึกษา แนะนำ และดูแลโปรเจกต์อย่างใกล้ชิด</p>
+          <!-- ปุ่มให้แอดมินกดเพิ่มคำสั่งงาน -->
+          <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold">➕ เพิ่มคำสั่งงานใหม่</button>
+        </div>
+
+        <!-- 3 ช่องหลักตามฐาน/หมวดหมู่ -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- ฐานที่ 1 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2.5 py-1 rounded-md w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
+            <div id="workList-1" class="space-y-3 flex-grow">
+              <p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>
             </div>
           </div>
-        </div>
-
-        <!-- Carousel / Slider แสดงวิทยากร 12 คน -->
-        <div id="sliderContainer" class="space-y-4">
-          <div class="swiper mySwiper py-4">
-            <div class="swiper-wrapper" id="teamSliderWrapper">
-              <!-- ข้อมูลการ์ดเติมผ่าน JS -->
+          <!-- ฐานที่ 2 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+            <span class="bg-emerald-100 text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-md w-max mb-3">ฐานที่ 2: Prompt & API Game</span>
+            <div id="workList-2" class="space-y-3 flex-grow">
+              <p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>
+            </div>
+          </div>
+          <!-- ฐานที่ 3 -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+            <span class="bg-purple-100 text-purple-700 font-bold text-xs px-2.5 py-1 rounded-md w-max mb-3">ฐานที่ 3: AR & Active Learning</span>
+            <div id="workList-3" class="space-y-3 flex-grow">
+              <p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">กำหนดการอบรม</div>
-      <div id="tab-submitWork" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">ระบบส่งผลงาน</div>
       <div id="tab-evaluation" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">แบบประเมินความพึงพอใจ</div>
+
+      <!-- TAB สำหรับแอดมิน: ตารางแสดงรายชื่อผู้สมัคร -->
+      <div id="tab-adminDashboard" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl shadow-sm border p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-slate-900">📊 ตารางจัดการและรายชื่อผู้สมัครทั้งหมด</h2>
+            <span id="totalCountBadge" class="text-xs text-blue-600 font-semibold">กำลังโหลด...</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[600px] text-sm">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 text-xs">
+                  <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody" class="text-slate-600 divide-y divide-slate-100">
+                <tr><td colspan="7" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
-  <!-- Modal แอดมิน -->
+  <!-- Modal สำหรับแอดมินเพิ่มคำสั่งงาน -->
+  <div id="assignmentModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold">➕ เพิ่มคำสั่งงานใหม่</h3>
+        <button onclick="closeAssignmentModal()" class="text-slate-400 font-bold text-xl">&times;</button>
+      </div>
+      <form id="assignmentForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1">เลือกฐาน / หมวดหมู่</label>
+          <select id="workCategory" class="w-full px-3 py-2 border rounded-xl text-sm bg-white">
+            <option value="1">ฐานที่ 1: Vibe Coding & Game</option>
+            <option value="2">ฐานที่ 2: Prompt & API Game</option>
+            <option value="3">ฐานที่ 3: AR & Active Learning</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1">หัวข้อคำสั่งงาน</label>
+          <input type="text" id="workTitle" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="เช่น สร้างตัวละครในเกม">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1">รายละเอียดงาน</label>
+          <textarea id="workDesc" rows="3" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="รายละเอียดคำชี้แจง"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm">บันทึกคำสั่งงาน</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal ล็อกอินแอดมิน -->
   <div id="adminLoginModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl">
       <div class="flex justify-between items-center mb-4">
@@ -206,29 +250,6 @@
     </div>
   </div>
 
-  <!-- หน้าแดชบอร์ดแอดมิน -->
-  <section id="adminSection" class="hidden min-h-screen p-4 sm:p-6 max-w-6xl mx-auto">
-    <header class="flex justify-between items-center mb-6">
-      <div>
-        <h1 class="text-xl font-bold text-slate-900">🔒 ระบบจัดการแอดมิน (ค่ายคอมพิวเตอร์ 2/2569)</h1>
-        <p id="totalCountBadge" class="text-xs text-blue-600 font-semibold mt-1">กำลังโหลด...</p>
-      </div>
-      <button onclick="logout()" class="bg-slate-200 px-4 py-2 rounded-xl text-xs font-medium">ออกจากระบบแอดมิน</button>
-    </header>
-    <div class="bg-white rounded-2xl shadow-sm border p-4 overflow-x-auto">
-      <table class="w-full text-left border-collapse min-w-[600px] text-sm">
-        <thead>
-          <tr class="bg-slate-100 text-slate-700 text-xs">
-            <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody" class="text-slate-600 divide-y divide-slate-100">
-          <tr><td colspan="7" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
   <!-- Popup ลงทะเบียนสำเร็จ -->
   <div id="successModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-xl">
@@ -238,111 +259,14 @@
       <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4">
         <span id="displayId" class="text-2xl font-extrabold text-blue-700 tracking-wider">CAMP-XXXX</span>
       </div>
-      <button onclick="enterMainApp(generatedId)" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-xl text-sm">เข้าสู่หน้าหลัก</button>
+      <button onclick="enterMainApp(generatedId, false)" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-xl text-sm">เข้าสู่หน้าหลัก</button>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
-
     let generatedId = "";
-
-    // รายชื่อวิทยากร และสตาฟ 12 คน
-    const teamMembers = [
-      { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
-      { name: "ตุ้ยนุ้ย", fullName: "พันธรา สุขดิบ", role: "วิทยากร", desc: "รู้จักเกมส่งเสริมการเรียนรู้ Prompt & Coding และสร้างเกมฟาร์ม", type: "instructor", badge: "ตุ้ยนุ้ย", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" },
-      { name: "นุ่น", fullName: "ยลรดี รุ่งแจ่ม", role: "วิทยากร", desc: "การเพิ่มเสียงพูดในเกม, รู้จัก API และนำมาสร้างเกมที่ Advance ขึ้น", type: "instructor", badge: "นุ่น", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" },
-      { name: "น้ำฝน", fullName: "สุชาดา ชิดโคกสูง", role: "วิทยากร", desc: "ทำความรู้จัก AR (Hand Tracking, Active Learning) สร้างเกม AR", type: "instructor", badge: "น้ำฝน", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300" },
-      { name: "พี่มายด์", fullName: "ชลธิชา ใจดี", role: "สตาฟ", desc: "ดูแลระบบลงทะเบียนและสนับสนุนผู้เข้าร่วมอบรม", type: "staff", badge: "มายด์", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300" },
-      { name: "พี่ภูมิ", fullName: "ภูมิพัฒน์ กล้าหาญ", role: "สตาฟ", desc: "ดูแลอุปกรณ์ฮาร์ดแวร์และเทคนิคประจำห้องปฏิบัติการ", type: "staff", badge: "ภูมิ", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" },
-      { name: "พี่ฟ้า", fullName: "นภัสสร รุ่งเรือง", role: "สตาฟ", desc: "คอยประสานงานประจำกลุ่มกิจกรรมและสันทนาการ", type: "staff", badge: "ฟ้า", img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300" },
-      { name: "พี่เจมส์", fullName: "กิตติศักดิ์ มีสุข", role: "สตาฟ", desc: "ผู้ช่วยวิทยากร ให้คำปรึกษาการเขียนโค้ดเบื้องต้น", type: "staff", badge: "เจมส์", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300" },
-      { name: "พี่นัท", fullName: "ณัฐวุฒิ สุขสว่าง", role: "สตาฟ", desc: "บันทึกภาพถ่ายและวิดีโอกิจกรรมตลอดโครงการ", type: "staff", badge: "นัท", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300" },
-      { name: "พี่เต้", fullName: "ธนกฤต มั่นคง", role: "สตาฟ", desc: "ดูแลระบบเครือข่ายและเครื่องเซิร์ฟเวอร์ปฏิบัติการ", type: "staff", badge: "เต้", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300" },
-      { name: "พี่เอิร์ธ", fullName: "ภานุวัฒน์ วิเศษ", role: "สตาฟ", desc: "อำนวยความสะดวก และแก้ไขปัญหาเฉพาะหน้าในค่าย", type: "staff", badge: "เอิร์ธ", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300" },
-      { name: "พี่โบว์", fullName: "กานดา สมบูรณ์", role: "สตาฟ", desc: "ดูแลฝ่ายสวัสดิการ เครื่องดื่ม และของรางวัล", type: "staff", badge: "โบว์", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" }
-    ];
-
-    function renderTeam(filter = 'all') {
-      const wrapper = document.getElementById("teamSliderWrapper");
-      let html = "";
-      const filtered = filter === 'all' ? teamMembers : teamMembers.filter(m => m.type === filter);
-
-      filtered.forEach((item, idx) => {
-        const numStr = String(idx + 1).padStart(2, '0');
-        html += `
-          <div class="swiper-slide bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden flex flex-col h-full">
-            <div class="relative h-64 bg-slate-100">
-              <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover">
-              <div class="absolute top-3 left-3 flex gap-1.5">
-                <span class="bg-amber-400 text-amber-950 font-bold text-[11px] px-2.5 py-0.5 rounded-md shadow-sm">${item.badge}</span>
-                <span class="bg-black/60 backdrop-blur-sm text-white font-medium text-[11px] px-2.5 py-0.5 rounded-md">ลำดับที่ ${numStr}</span>
-              </div>
-            </div>
-            <div class="p-5 flex flex-col flex-grow text-left">
-              <h4 class="text-lg font-bold text-slate-900 mb-1">${item.fullName}</h4>
-              <p class="text-xs text-slate-500 mb-4 flex-grow leading-relaxed">${item.desc}</p>
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-blue-600 hover:text-blue-700 cursor-pointer text-xs font-semibold">
-                <span>ดูรายละเอียดและสไลด์</span>
-                <span>→</span>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      wrapper.innerHTML = html;
-      initSwiper();
-    }
-
-    function filterTeam(type) {
-      ['all', 'instructor', 'staff', 'advisor'].forEach(t => {
-        const btn = document.getElementById(`btn-${t}`);
-        if (t === type) {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition-all";
-        } else {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all";
-        }
-      });
-
-      const advisorSec = document.getElementById("advisorSection");
-      const sliderCont = document.getElementById("sliderContainer");
-
-      if (type === 'advisor') {
-        advisorSec.style.display = "block";
-        sliderCont.style.display = "none";
-      } else if (type === 'instructor' || type === 'staff') {
-        advisorSec.style.display = "none";
-        sliderCont.style.display = "block";
-        renderTeam(type);
-      } else {
-        advisorSec.style.display = "block";
-        sliderCont.style.display = "block";
-        renderTeam('all');
-      }
-    }
-
-    function initSwiper() {
-      if (window.swiperInstance) {
-        window.swiperInstance.destroy(true, true);
-      }
-      window.swiperInstance = new Swiper(".mySwiper", {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        speed: 5000,
-        autoplay: {
-          delay: 0,
-          disableOnInteraction: false,
-        },
-        breakpoints: {
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 }
-        }
-      });
-    }
+    let isAdmin = false;
 
     function toggleAuthView(view) {
       if(view === 'login') {
@@ -356,44 +280,58 @@
 
     function showAdminModal() { document.getElementById("adminLoginModal").style.display = "flex"; }
     function closeAdminModal() { document.getElementById("adminLoginModal").style.display = "none"; }
+    function openAssignmentModal() { document.getElementById("assignmentModal").style.display = "flex"; }
+    function closeAssignmentModal() { document.getElementById("assignmentModal").style.display = "none"; }
 
-    function enterMainApp(campId) {
+    function enterMainApp(campId, adminMode = false) {
       generatedId = campId;
+      isAdmin = adminMode;
       document.getElementById("authContainer").classList.add("hidden");
       document.getElementById("successModal").style.display = "none";
-      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("mainAppContainer").classList.remove("hidden");
-      document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
-      switchTab('home');
+      
+      if (isAdmin) {
+        document.getElementById("userBadge").innerText = `ผู้ดูแลระบบ: ${campId}`;
+        document.getElementById("adminUserTab").classList.remove("hidden");
+        document.getElementById("addAssignmentBtn").classList.remove("hidden");
+        switchTab('adminDashboard');
+      } else {
+        document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
+        document.getElementById("adminUserTab").classList.add("hidden");
+        document.getElementById("addAssignmentBtn").classList.add("hidden");
+        switchTab('home');
+      }
+      loadAssignments();
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add("hidden");
+      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation', 'adminDashboard'].forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        if(el) el.classList.add("hidden");
       });
-      document.getElementById(`tab-${tabName}`).classList.remove("hidden");
-      if (tabName === 'instructors') {
-        renderTeam('all');
-      }
+      const target = document.getElementById(`tab-${tabName}`);
+      if(target) target.classList.remove("hidden");
+
+      if (tabName === 'adminDashboard') loadAdminData();
+      if (tabName === 'submitWork') loadAssignments();
       window.scrollTo(0, 0);
     }
 
     function logout() {
       document.getElementById("mainAppContainer").classList.add("hidden");
-      document.getElementById("adminSection").classList.add("hidden");
       document.getElementById("authContainer").classList.remove("hidden");
       document.getElementById("registerForm").reset();
       document.getElementById("loginForm").reset();
+      isAdmin = false;
       toggleAuthView('register');
     }
 
-    // 1. ส่งข้อมูลสมัครเรียน (Register)
+    // 1. ลงทะเบียน
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
       submitBtn.disabled = true;
       submitBtn.innerText = "กำลังบันทึกข้อมูล...";
-
       generatedId = `CAMP-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const formData = {
@@ -410,8 +348,7 @@
       };
 
       fetch(WEB_APP_URL, {
-        method: "POST",
-        mode: "no-cors",
+        method: "POST", mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       })
@@ -428,31 +365,24 @@
       });
     });
 
-    // 2. เข้าสู่ระบบนักเรียน (Student Login)
+    // 2. ล็อกอินนักเรียน
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const loginBtn = document.getElementById("loginBtn");
       loginBtn.disabled = true;
       loginBtn.innerText = "กำลังตรวจสอบ...";
 
-      const payload = {
-        action: "login",
-        studentId: document.getElementById("loginStudentId").value,
-        password: document.getElementById("loginPassword").value
-      };
-
       fetch(WEB_APP_URL, {
-        method: "POST",
-        mode: "cors",
+        method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ action: "login", studentId: document.getElementById("loginStudentId").value, password: document.getElementById("loginPassword").value })
       })
       .then(res => res.json())
       .then(data => {
         loginBtn.disabled = false;
         loginBtn.innerText = "เข้าสู่ระบบ";
         if (data.status === "success") {
-          enterMainApp(data.campId);
+          enterMainApp(data.campId, false);
         } else {
           alert(data.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
         }
@@ -460,28 +390,21 @@
       .catch(err => {
         loginBtn.disabled = false;
         loginBtn.innerText = "เข้าสู่ระบบ";
-        alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์");
+        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ");
       });
     });
 
-    // 3. เข้าสู่ระบบแอดมิน (Admin Login)
+    // 3. ล็อกอินแอดมิน (เข้ามาใช้ระบบแบบยูสเซอร์ทั่วไป แต่มีแท็บจัดการรายชื่อเพิ่มขึ้นมา)
     document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const btn = document.getElementById("adminLoginBtn");
       btn.disabled = true;
       btn.innerText = "กำลังตรวจสอบ...";
 
-      const payload = {
-        action: "adminLogin",
-        username: document.getElementById("adminUser").value,
-        password: document.getElementById("adminPass").value
-      };
-
       fetch(WEB_APP_URL, {
-        method: "POST",
-        mode: "cors",
+        method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ action: "adminLogin", username: document.getElementById("adminUser").value, password: document.getElementById("adminPass").value })
       })
       .then(res => res.json())
       .then(data => {
@@ -490,9 +413,7 @@
         if (data.status === "success") {
           closeAdminModal();
           document.getElementById("adminLoginForm").reset();
-          document.getElementById("authContainer").classList.add("hidden");
-          document.getElementById("adminSection").classList.remove("hidden");
-          loadAdminData();
+          enterMainApp("ADMIN", true);
         } else {
           alert(data.message || "รหัสผ่านแอดมินไม่ถูกต้อง");
         }
@@ -504,13 +425,67 @@
       });
     });
 
-    // 4. ดึงข้อมูลรายชื่อมาแสดงในตารางแอดมิน (Admin Data)
-    function loadAdminData() {
-      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
+    // 4. แอดมินเพิ่มคำสั่งงาน
+    document.getElementById("assignmentForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const payload = {
+        action: "addAssignment",
+        category: document.getElementById("workCategory").value,
+        title: document.getElementById("workTitle").value,
+        description: document.getElementById("workDesc").value
+      };
 
       fetch(WEB_APP_URL, {
-        method: "POST",
-        mode: "cors",
+        method: "POST", mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.status === "success") {
+          closeAssignmentModal();
+          document.getElementById("assignmentForm").reset();
+          loadAssignments();
+          alert("เพิ่มคำสั่งงานสำเร็จ!");
+        }
+      })
+      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
+    });
+
+    // โหลดคำสั่งงานแสดงใน 3 ช่อง
+    function loadAssignments() {
+      fetch(WEB_APP_URL, {
+        method: "POST", mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "getAssignments" })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === "success") {
+          let lists = { "1": "", "2": "", "3": "" };
+          res.data.forEach(item => {
+            if(lists[item.category] !== undefined) {
+              lists[item.category] += `
+                <div class="p-3 bg-slate-50 border rounded-xl space-y-1">
+                  <h4 class="font-bold text-slate-800 text-xs">${item.title}</h4>
+                  <p class="text-[11px] text-slate-500">${item.description}</p>
+                  <button class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-lg text-[11px] font-semibold">ส่งงานชิ้นนี้</button>
+                </div>
+              `;
+            }
+          });
+          for(let i=1; i<=3; i++) {
+            document.getElementById(`workList-${i}`).innerHTML = lists[i] || `<p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>`;
+          }
+        }
+      });
+    }
+
+    // โหลดตารางรายชื่อผู้สมัครสำหรับแอดมิน
+    function loadAdminData() {
+      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
+      fetch(WEB_APP_URL, {
+        method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "getAdminData" })
       })
@@ -526,20 +501,14 @@
           let html = "";
           res.data.forEach(item => {
             html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3">${item.timestamp}</td>
-              <td class="p-3 text-slate-500">${item.email}</td>
-              <td class="p-3 font-medium text-slate-800">${item.studentId}</td>
-              <td class="p-3">${item.title} ${item.fullName}</td>
-              <td class="p-3">${item.nickname}</td>
-              <td class="p-3 font-semibold text-blue-600">${item.grade}</td>
+              <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td>
+              <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3">${item.title} ${item.fullName}</td>
+              <td class="p-3">${item.nickname}</td><td class="p-3 font-semibold text-blue-600">${item.grade}</td>
               <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
             </tr>`;
           });
           tbody.innerHTML = html;
         }
-      })
-      .catch(err => {
-        document.getElementById("totalCountBadge").innerText = "โหลดข้อมูลไม่สำเร็จ";
       });
     }
   </script>
