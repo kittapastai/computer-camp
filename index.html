@@ -122,8 +122,10 @@
           <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📅 กำหนดการ</button>
           <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📂 ส่งงาน</button>
           <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-lg hover:bg-slate-100">📋 แบบประเมิน</button>
-          <!-- แท็บแสดงรายชื่อสำหรับแอดมิน -->
-          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="hidden px-3 py-2 rounded-lg bg-amber-50 text-amber-800 font-bold hover:bg-amber-100">📊 จัดการรายชื่อผู้สมัคร</button>
+          
+          <!-- เมนูแอดมิน: รายชื่อ & เช็กชื่อ -->
+          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="hidden px-3 py-2 rounded-lg bg-amber-50 text-amber-800 font-bold hover:bg-amber-100">📊 รายชื่อผู้สมัคร</button>
+          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="hidden px-3 py-2 rounded-lg bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100">✅ เช็กชื่อหน้างาน</button>
         </div>
         <div class="flex items-center gap-3">
           <span id="userBadge" class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200">รหัส: -</span>
@@ -139,20 +141,18 @@
         <p class="text-slate-600 text-sm">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
       </div>
 
-      <!-- TAB 2: วิทยากร / สตาฟ / ที่ปรึกษา -->
+      <!-- TAB 2: วิทยากร -->
       <div id="tab-instructors" class="hidden space-y-8">
         <div class="text-center">
           <h2 class="text-3xl font-black text-slate-900">ทำความรู้จัก วิทยากร</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมดของโปรเจกต์นี้</p>
+          <p class="text-xs sm:text-sm text-slate-500 mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
         </div>
-
         <div class="flex flex-wrap items-center justify-start gap-2 border-b border-slate-200 pb-3">
           <button onclick="filterTeam('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition-all">ทั้งหมด</button>
           <button onclick="filterTeam('instructor')" id="btn-instructor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">👥 วิทยากร</button>
           <button onclick="filterTeam('staff')" id="btn-staff" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">🧑‍💻 สตาฟ</button>
           <button onclick="filterTeam('advisor')" id="btn-advisor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all">⭐ ครู / ที่ปรึกษา</button>
         </div>
-
         <div id="advisorSection" class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-6 sm:p-8 shadow-sm">
           <div class="inline-flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4 shadow-sm">👑 ที่ปรึกษาโครงการ</div>
           <div class="flex flex-col sm:flex-row items-center gap-6">
@@ -160,21 +160,17 @@
             <div class="text-center sm:text-left">
               <h3 class="text-2xl font-bold text-slate-900">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3>
               <p class="text-xs text-blue-600 font-bold mt-1">อาจารย์ที่ปรึกษาประจำโครงการ</p>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">คอยให้คำปรึกษา แนะนำ และดูแลโปรเจกต์อย่างใกล้ชิด</p>
             </div>
           </div>
         </div>
-
         <div id="sliderContainer" class="space-y-4">
-          <div class="swiper mySwiper py-4">
-            <div class="swiper-wrapper" id="teamSliderWrapper"></div>
-          </div>
+          <div class="swiper mySwiper py-4"><div class="swiper-wrapper" id="teamSliderWrapper"></div></div>
         </div>
       </div>
 
       <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">กำหนดการอบรม</div>
 
-      <!-- TAB: ระบบส่งงาน (3 ช่อง / 3 ฐาน) -->
+      <!-- TAB: ระบบส่งงาน -->
       <div id="tab-submitWork" class="hidden space-y-6">
         <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border">
           <div>
@@ -183,7 +179,6 @@
           </div>
           <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold">➕ เพิ่มคำสั่งงานใหม่</button>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
             <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2.5 py-1 rounded-md w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
@@ -202,7 +197,7 @@
 
       <div id="tab-evaluation" class="hidden text-center p-8 bg-white rounded-2xl shadow-sm">แบบประเมินความพึงพอใจ</div>
 
-      <!-- TAB แอดมิน: จัดการรายชื่อผู้สมัคร -->
+      <!-- TAB แอดมิน: รายชื่อผู้สมัคร -->
       <div id="tab-adminDashboard" class="hidden space-y-4">
         <div class="bg-white rounded-2xl shadow-sm border p-6">
           <div class="flex justify-between items-center mb-4">
@@ -224,10 +219,44 @@
         </div>
       </div>
 
+      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน (แบ่ง 2 วัน พร้อมช่องค้นหา) -->
+      <div id="tab-adminCheckin" class="hidden space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">✅ ระบบเช็กชื่อหน้างานจริง</h2>
+              <p class="text-xs text-slate-500 mt-0.5">ค้นหาชื่อ นามสกุล ชื่อเล่น หรือ ID แล้วกดเช็กชื่อแยกตามวัน</p>
+            </div>
+            <!-- ช่องค้นหา -->
+            <div class="w-full sm:w-72">
+              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID)..." class="w-full px-4 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[750px] text-sm">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 text-xs">
+                  <th class="p-3">เลข นร. / Camp ID</th>
+                  <th class="p-3">ชื่อ-นามสกุล</th>
+                  <th class="p-3">ชื่อเล่น</th>
+                  <th class="p-3">ระดับชั้น</th>
+                  <th class="p-3 text-center">📅 28 พ.ย. 2569</th>
+                  <th class="p-3 text-center">📅 29 พ.ย. 2569</th>
+                </tr>
+              </thead>
+              <tbody id="checkinTableBody" class="text-slate-600 divide-y divide-slate-100">
+                <tr><td colspan="6" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
-  <!-- Modal สำหรับแอดมินยืนยันรหัสผ่านก่อนลบรายชื่อ -->
+  <!-- Modal ยืนยันรหัสผ่านเพื่อลบรายชื่อ -->
   <div id="deleteConfirmModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl">
       <div class="flex justify-between items-center mb-4">
@@ -306,6 +335,7 @@
     let generatedId = "";
     let isAdmin = false;
     let currentAdminUser = "";
+    let allStudentsData = []; // เก็บข้อมูลนักเรียนไว้ใช้ค้นหา
 
     const teamMembers = [
       { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
@@ -409,11 +439,13 @@
       if (isAdmin) {
         document.getElementById("userBadge").innerText = `แอดมิน: ${currentAdminUser}`;
         document.getElementById("adminUserTab").classList.remove("hidden");
+        document.getElementById("adminCheckinTab").classList.remove("hidden");
         document.getElementById("addAssignmentBtn").classList.remove("hidden");
         switchTab('adminDashboard');
       } else {
         document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
         document.getElementById("adminUserTab").classList.add("hidden");
+        document.getElementById("adminCheckinTab").classList.add("hidden");
         document.getElementById("addAssignmentBtn").classList.add("hidden");
         switchTab('home');
       }
@@ -421,7 +453,7 @@
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation', 'adminDashboard'].forEach(t => {
+      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation', 'adminDashboard', 'adminCheckin'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
       });
@@ -429,7 +461,7 @@
       if(target) target.classList.remove("hidden");
 
       if (tabName === 'instructors') renderTeam('all');
-      if (tabName === 'adminDashboard') loadAdminData();
+      if (tabName === 'adminDashboard' || tabName === 'adminCheckin') loadAdminData();
       if (tabName === 'submitWork') loadAssignments();
       window.scrollTo(0, 0);
     }
@@ -512,7 +544,7 @@
       });
     });
 
-    // 3. ล็อกอินแอดมิน (แสดงชื่อบัญชีแอดมินคนนั้นๆ)
+    // 3. ล็อกอินแอดมิน
     document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const btn = document.getElementById("adminLoginBtn");
@@ -546,14 +578,12 @@
       });
     });
 
-    // เปิด Modal ยืนยันรหัสผ่านเพื่อลบรายชื่อ
     function promptDeleteStudent(rowIdx) {
       document.getElementById("deleteTargetRow").value = rowIdx;
       document.getElementById("confirmAdminPass").value = "";
       document.getElementById("deleteConfirmModal").style.display = "flex";
     }
 
-    // ฟอร์มยืนยันลบรายชื่อผู้สมัคร
     document.getElementById("deleteConfirmForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const rowIdx = document.getElementById("deleteTargetRow").value;
@@ -577,7 +607,103 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     });
 
-    // 4. แอดมินเพิ่มคำสั่งงาน
+    // 4. บันทึกเช็กชื่อแยกวัน (28 หรือ 29)
+    function updateCheckinStatus(rowIdx, day, status) {
+      fetch(WEB_APP_URL, {
+        method: "POST", mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "updateCheckin", rowIdx: rowIdx, day: day, status: status })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.status === "success") {
+          loadAdminData(); // โหลดข้อมูลอัปเดตใหม่
+        }
+      })
+      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
+    }
+
+    // ฟังก์ชันค้นหาในตารางเช็กชื่อ
+    function filterCheckinTable() {
+      const keyword = document.getElementById("checkinSearchInput").value.toLowerCase();
+      const filtered = allStudentsData.filter(item => {
+        return item.fullName.toLowerCase().includes(keyword) ||
+               item.nickname.toLowerCase().includes(keyword) ||
+               item.studentId.toLowerCase().includes(keyword) ||
+               item.campId.toLowerCase().includes(keyword);
+      });
+      renderCheckinTable(filtered);
+    }
+
+    function renderCheckinTable(dataList) {
+      const tbody = document.getElementById("checkinTableBody");
+      if (dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">ไม่พบรายชื่อที่ค้นหา</td></tr>`;
+        return;
+      }
+      let html = "";
+      dataList.forEach(item => {
+        let btn28 = item.check28 === "มาแล้ว" 
+          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'ยังไม่มา')" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm">✓ มาแล้ว</button>`
+          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'มาแล้ว')" class="bg-slate-200 text-slate-700 hover:bg-emerald-100 px-3 py-1.5 rounded-xl text-xs font-semibold">ยังไม่มา</button>`;
+
+        let btn29 = item.check29 === "มาแล้ว" 
+          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'ยังไม่มา')" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm">✓ มาแล้ว</button>`
+          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'มาแล้ว')" class="bg-slate-200 text-slate-700 hover:bg-emerald-100 px-3 py-1.5 rounded-xl text-xs font-semibold">ยังไม่มา</button>`;
+
+        html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
+          <td class="p-3"><span class="font-bold text-slate-800">${item.studentId}</span><br><span class="text-[11px] text-blue-600 font-semibold">${item.campId}</span></td>
+          <td class="p-3 font-semibold text-slate-800">${item.title} ${item.fullName}</td>
+          <td class="p-3">${item.nickname}</td>
+          <td class="p-3">${item.grade}</td>
+          <td class="p-3 text-center">${btn28}</td>
+          <td class="p-3 text-center">${btn29}</td>
+        </tr>`;
+      });
+      tbody.innerHTML = html;
+    }
+
+    // โหลดข้อมูลแอดมินทั้งหมด
+    function loadAdminData() {
+      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
+      fetch(WEB_APP_URL, {
+        method: "POST", mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "getAdminData" })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === "success") {
+          allStudentsData = res.data;
+          document.getElementById("totalCountBadge").innerText = `📊 จำนวนผู้สมัครทั้งหมด: ${res.data.length} คน`;
+          
+          // Render ตารางรายชื่อผู้สมัคร
+          const tbody = document.getElementById("adminTableBody");
+          if (res.data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">ยังไม่มีข้อมูลการลงทะเบียน</td></tr>`;
+          } else {
+            let html = "";
+            res.data.forEach(item => {
+              html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
+                <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td>
+                <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3">${item.title} ${item.fullName}</td>
+                <td class="p-3">${item.nickname}</td><td class="p-3 font-semibold text-blue-600">${item.grade}</td>
+                <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
+                <td class="p-3 text-center">
+                  <button onclick="promptDeleteStudent(${item.rowIdx})" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-lg text-xs font-semibold">ลบ</button>
+                </td>
+              </tr>`;
+            });
+            tbody.innerHTML = html;
+          }
+
+          // Render ตารางเช็กชื่อ
+          renderCheckinTable(allStudentsData);
+        }
+      });
+    }
+
+    // เพิ่มคำสั่งงาน
     document.getElementById("assignmentForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const payload = {
@@ -604,7 +730,6 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     });
 
-    // โหลดคำสั่งงานแสดงใน 3 ช่อง
     function loadAssignments() {
       fetch(WEB_APP_URL, {
         method: "POST", mode: "cors",
@@ -629,40 +754,6 @@
           for(let i=1; i<=3; i++) {
             document.getElementById(`workList-${i}`).innerHTML = lists[i] || `<p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>`;
           }
-        }
-      });
-    }
-
-    // โหลดตารางรายชื่อผู้สมัครสำหรับแอดมิน พร้อมปุ่มลบ
-    function loadAdminData() {
-      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "getAdminData" })
-      })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === "success") {
-          const tbody = document.getElementById("adminTableBody");
-          document.getElementById("totalCountBadge").innerText = `📊 จำนวนผู้สมัครทั้งหมด: ${res.data.length} คน`;
-          if (res.data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">ยังไม่มีข้อมูลการลงทะเบียน</td></tr>`;
-            return;
-          }
-          let html = "";
-          res.data.forEach(item => {
-            html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td>
-              <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3">${item.title} ${item.fullName}</td>
-              <td class="p-3">${item.nickname}</td><td class="p-3 font-semibold text-blue-600">${item.grade}</td>
-              <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
-              <td class="p-3 text-center">
-                <button onclick="promptDeleteStudent(${item.rowIdx})" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-lg text-xs font-semibold">ลบ</button>
-              </td>
-            </tr>`;
-          });
-          tbody.innerHTML = html;
         }
       });
     }
