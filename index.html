@@ -20,7 +20,7 @@
 
   <!-- 1. ส่วนเข้าสู่ระบบ / ลงทะเบียน -->
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4 animate-fade-in">
-    <div class="w-full max-w-md bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/60">
+    <div class="w-full max-w-md bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/65">
       
       <!-- ฟอร์มลงทะเบียน -->
       <div id="registerView" class="animate-fade-in">
@@ -88,7 +88,7 @@
         </form>
       </div>
 
-      <!-- ฟอร์มเข้าสู่ระบบ + ปุ่มลืมรหัสผ่าน -->
+      <!-- ฟอร์มเข้าสู่ระบบ -->
       <div id="loginView" class="hidden animate-fade-in">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
@@ -133,15 +133,17 @@
           </div>
         </div>
 
-        <div class="hidden lg:flex items-center space-x-1.5 text-xs font-bold text-slate-700">
-          <button id="nav-home" onclick="switchTab('home')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">🏠 หน้าแรก</button>
-          <button id="nav-instructors" onclick="switchTab('instructors')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">👥 วิทยากร</button>
-          <button id="nav-schedule" onclick="switchTab('schedule')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">📅 กำหนดการ</button>
-          <button id="nav-submitWork" onclick="switchTab('submitWork')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">📂 ส่งงาน</button>
-          <button id="nav-evaluation" onclick="switchTab('evaluation')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">📋 แบบประเมิน</button>
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex items-center space-x-1 text-xs font-bold text-slate-700">
+          <button id="nav-home" onclick="switchTab('home')" class="nav-btn px-3 py-2 rounded-xl transition-all">🏠 หน้าแรก</button>
+          <button id="nav-instructors" onclick="switchTab('instructors')" class="nav-btn px-3 py-2 rounded-xl transition-all">👥 วิทยากร</button>
+          <button id="nav-schedule" onclick="switchTab('schedule')" class="nav-btn px-3 py-2 rounded-xl transition-all">📅 กำหนดการ</button>
+          <button id="nav-submitWork" onclick="switchTab('submitWork')" class="nav-btn px-3 py-2 rounded-xl transition-all">📂 ส่งงาน</button>
+          <button id="nav-faq" onclick="switchTab('faq')" class="nav-btn px-3 py-2 rounded-xl transition-all">❓ คู่มือการใช้</button>
+          <button id="nav-evaluation" onclick="switchTab('evaluation')" class="nav-btn px-3 py-2 rounded-xl transition-all">📋 แบบประเมิน</button>
           
-          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="nav-btn hidden px-3.5 py-2 rounded-xl bg-amber-400/20 text-amber-900 border border-amber-300/50 transition-all">📊 รายชื่อผู้สมัคร</button>
-          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="nav-btn hidden px-3.5 py-2 rounded-xl bg-emerald-400/20 text-emerald-900 border border-emerald-300/50 transition-all">✅ เช็กชื่อหน้างาน</button>
+          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="nav-btn hidden px-3 py-2 rounded-xl bg-amber-400/20 text-amber-900 border border-amber-300/50 transition-all">📊 รายชื่อผู้สมัคร</button>
+          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="nav-btn hidden px-3 py-2 rounded-xl bg-emerald-400/20 text-emerald-900 border border-emerald-300/50 transition-all">✅ เช็กชื่อหน้างาน</button>
         </div>
 
         <div class="flex items-center gap-3">
@@ -151,11 +153,13 @@
         </div>
       </div>
 
+      <!-- Mobile Menu -->
       <div id="mobileMenu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 p-4 space-y-2 text-sm font-bold text-slate-700 animate-fade-in">
         <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">🏠 หน้าแรก</button>
         <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">👥 วิทยากร</button>
         <button onclick="switchTab('schedule'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📅 กำหนดการ</button>
         <button onclick="switchTab('submitWork'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📂 ส่งงาน</button>
+        <button onclick="switchTab('faq'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">❓ คู่มือการใช้งาน</button>
         <button onclick="switchTab('evaluation'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📋 แบบประเมิน</button>
         <button id="mobileAdminUserTab" onclick="switchTab('adminDashboard'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-amber-50 text-amber-800">📊 รายชื่อผู้สมัคร</button>
         <button id="mobileAdminCheckinTab" onclick="switchTab('adminCheckin'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-emerald-50 text-emerald-800">✅ เช็กชื่อหน้างาน</button>
@@ -163,11 +167,27 @@
       </div>
     </nav>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
-      <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center bg-white/85 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/60">
-        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 px-3.5 py-1 rounded-full text-xs font-black shadow-md shadow-orange-500/20 animate-pulse">⚡ WORKSHOP เชิงปฏิบัติการ</div>
-        <h1 class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
-        <p class="text-slate-600 text-sm font-medium">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in space-y-6">
+      
+      <!-- TAB 1: หน้าแรก (พร้อมระบบประกาศสำคัญ Announcements Banner) -->
+      <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center">
+        <!-- Announcements Banner -->
+        <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-3xl shadow-xl flex items-center justify-between gap-3 text-left animate-pulse">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📢</span>
+            <div>
+              <h4 class="font-black text-sm">ประกาศสำคัญจากค่าย</h4>
+              <p class="text-xs text-amber-100 font-medium">ยินดีต้อนรับน้องๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p>
+            </div>
+          </div>
+          <button onclick="switchTab('schedule')" class="bg-white text-orange-600 px-3 py-1.5 rounded-xl text-xs font-bold shadow-md hover:bg-orange-50 whitespace-nowrap">ดูตาราง</button>
+        </div>
+
+        <div class="bg-white/85 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/60">
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3.5 py-1 rounded-full text-xs font-black shadow-md mb-4">⚡ WORKSHOP เชิงปฏิบัติการ</div>
+          <h1 class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
+          <p class="text-slate-600 text-sm font-medium mt-3">ระบบจัดการกิจกรรมค่ายคอมพิวเตอร์ 2 วันเต็ม เต็มอิ่มกับความรู้ด้าน Vibe Coding, AI Prompts, API และ AR Game Development</p>
+        </div>
       </div>
 
       <!-- TAB 2: วิทยากร -->
@@ -197,14 +217,68 @@
         </div>
       </div>
 
-      <div id="tab-schedule" class="hidden text-center p-8 bg-white/85 rounded-3xl shadow-xl border border-white/60 animate-fade-in">กำหนดการอบรม</div>
+      <!-- TAB 3: กำหนดการ (Schedule) -->
+      <div id="tab-schedule" class="hidden space-y-6 animate-fade-in max-w-4xl mx-auto">
+        <div class="text-center">
+          <h2 class="text-3xl font-black text-slate-900">📅 กำหนดการค่ายคอมพิวเตอร์</h2>
+          <p class="text-xs text-slate-500 font-medium mt-1">ตารางเวลาตลอด 2 วัน (วันที่ 28 - 29 พฤศจิกายน 2569)</p>
+        </div>
 
-      <!-- TAB: ระบบส่งงาน -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- วันที่ 1 -->
+          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-4">
+            <div class="bg-blue-600 text-white px-4 py-2 rounded-2xl font-black text-xs text-center shadow-md">📅 วันที่ 28 พ.ย. 2569 (Day 1)</div>
+            <div class="space-y-3 text-xs">
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-blue-600 block">08:30 - 09:00 น.</span>
+                <span class="font-bold text-slate-800">ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-blue-600 block">09:00 - 12:00 น.</span>
+                <span class="font-bold text-slate-800">ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-blue-600 block">12:00 - 13:00 น.</span>
+                <span class="font-bold text-slate-800">พักรับประทานอาหารกลางวัน 🍽️</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-blue-600 block">13:00 - 16:00 น.</span>
+                <span class="font-bold text-slate-800">ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- วันที่ 2 -->
+          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-4">
+            <div class="bg-emerald-600 text-white px-4 py-2 rounded-2xl font-black text-xs text-center shadow-md">📅 วันที่ 29 พ.ย. 2569 (Day 2)</div>
+            <div class="space-y-3 text-xs">
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-emerald-600 block">08:30 - 09:00 น.</span>
+                <span class="font-bold text-slate-800">เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-emerald-600 block">09:00 - 12:00 น.</span>
+                <span class="font-bold text-slate-800">ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-emerald-600 block">12:00 - 13:00 น.</span>
+                <span class="font-bold text-slate-800">พักรับประทานอาหารกลางวัน 🍽️</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                <span class="font-bold text-emerald-600 block">13:00 - 15:30 น.</span>
+                <span class="font-bold text-slate-800">ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: ระบบส่งงาน (พร้อมปุ่มกดส่งแล้วเปลี่ยนสถานะ) -->
       <div id="tab-submitWork" class="hidden space-y-6 animate-fade-in">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60">
           <div>
             <h2 class="text-xl font-black text-slate-900">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-            <p class="text-xs text-slate-500 font-medium mt-1">เลือกส่งงานตามฐานหรือหัวข้อคำสั่งงานด้านล่าง</p>
+            <p class="text-xs text-slate-500 font-medium mt-1">คลิกส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p>
           </div>
           <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-blue-500/30">➕ เพิ่มคำสั่งงานใหม่</button>
         </div>
@@ -224,7 +298,30 @@
         </div>
       </div>
 
-      <div id="tab-evaluation" class="hidden text-center p-8 bg-white/85 rounded-3xl shadow-xl border border-white/60 animate-fade-in">แบบประเมินความพึงพอใจ</div>
+      <!-- TAB 5: คู่มือการใช้งาน (FAQ) -->
+      <div id="tab-faq" class="hidden space-y-6 animate-fade-in max-w-3xl mx-auto">
+        <div class="text-center">
+          <h2 class="text-3xl font-black text-slate-900">❓ คู่มือการใช้งานระบบ (FAQ)</h2>
+          <p class="text-xs text-slate-500 font-medium mt-1">คำถามที่พบบ่อยและวิธีใช้งานระบบสำหรับน้องๆ ผู้เข้าร่วมค่าย</p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
+            <h3 class="font-black text-slate-900 text-sm">Q: เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">A: ตรวจสอบว่ากรอก **เลขประจำตัวนักเรียน** และ **รหัสผ่าน** ถูกต้องหรือไม่ หากลืมรหัสผ่าน ให้กดที่ปุ่ม "🔑 ลืมรหัสผ่าน?" หน้าล็อกอินเพื่อติดต่อพี่ๆ สตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัสได้ทันทีครับ</p>
+          </div>
+          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
+            <h3 class="font-black text-slate-900 text-sm">Q: รหัสประจำตัวค่าย (Camp ID) ดูได้จากไหน?</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">A: รหัส Camp ID จะปรากฏขึ้นมาเป็น Pop-up ทันทีหลังจากที่คุณลงทะเบียนสำเร็จ (เช่น CAMP-1234) สามารถจดบันทึกไว้ใช้งานได้ครับ</p>
+          </div>
+          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
+            <h3 class="font-black text-slate-900 text-sm">Q: ระบบส่งงานใช้งานอย่างไร?</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">A: ไปที่แท็บ "📂 ส่งงาน" เลือกหัวข้อคำสั่งงานตามฐานที่ร่วมกิจกรรม แล้วคลิกปุ่มส่งงาน เมื่อส่งแล้วปุ่มจะเปลี่ยนเป็นสถานะสีเขียว "✓ ส่งงานแล้ว" เพื่อยืนยันความสำเร็จ</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-evaluation" class="hidden text-center p-8 bg-white/85 rounded-3xl shadow-xl border border-white/60 animate-fade-in max-w-3xl mx-auto">แบบประเมินความพึงพอใจ</div>
 
       <!-- TAB แอดมิน: รายชื่อผู้สมัคร -->
       <div id="tab-adminDashboard" class="hidden space-y-4 animate-fade-in">
@@ -248,7 +345,7 @@
         </div>
       </div>
 
-      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน (เสถียร ไม่ดีเลย์ด้วย Optimistic UI) -->
+      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน -->
       <div id="tab-adminCheckin" class="hidden space-y-6 animate-fade-in">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="bg-white/85 p-4 rounded-2xl border border-white/60 shadow-lg text-center">
@@ -309,23 +406,20 @@
     </main>
   </div>
 
-  <!-- Modal แจ้งเตือนลืมรหัสผ่าน -->
+  <!-- Modals -->
   <div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50 text-center">
       <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-md">🔑</div>
       <h3 class="text-xl font-black text-slate-900 mb-1">ลืมรหัสผ่านใช่ไหม?</h3>
       <p class="text-xs text-slate-500 font-medium mb-4">หากลืมรหัสผ่านเข้าสู่ระบบ กรุณาติดต่อครูผู้สอนหรือแอดมินประจำค่ายเพื่อรีเซ็ตรหัสผ่านได้ที่:</p>
-      
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 text-left space-y-2">
         <p class="text-xs font-bold text-slate-700">📞 โทร: 0xx-xxx-xxxx (ครูผู้ดูแล)</p>
         <p class="text-xs font-bold text-slate-700">💬 LINE Official: @pathumwilai-camp</p>
       </div>
-
       <button onclick="closeForgotPasswordModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">เข้าใจแล้ว</button>
     </div>
   </div>
 
-  <!-- Modal ลบรายชื่อนักเรียน -->
   <div id="deleteConfirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-4">
@@ -341,7 +435,6 @@
     </div>
   </div>
 
-  <!-- Modal ลบคำสั่งงาน -->
   <div id="deleteAssignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-4">
@@ -357,7 +450,6 @@
     </div>
   </div>
 
-  <!-- Modal เพิ่มคำสั่งงาน -->
   <div id="assignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-4">
@@ -386,7 +478,6 @@
     </div>
   </div>
 
-  <!-- Modal ล็อกอินแอดมิน -->
   <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-5">
@@ -401,7 +492,6 @@
     </div>
   </div>
 
-  <!-- Popup ลงทะเบียนสำเร็จ -->
   <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-white/50">
       <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold animate-bounce shadow-md">✓</div>
@@ -422,6 +512,7 @@
     let currentAdminUser = "";
     let allStudentsData = [];
     let selectedCheckinDay = 28;
+    let submittedWorks = {}; // เก็บสถานะการส่งงานของฝั่งผู้ใช้
 
     const teamMembers = [
       { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
@@ -471,10 +562,12 @@
     function filterTeam(type) {
       ['all', 'instructor', 'staff', 'advisor'].forEach(t => {
         const btn = document.getElementById(`btn-${t}`);
-        if (t === type) {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md transition-all transform scale-105";
-        } else {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all";
+        if (btn) {
+          if (t === type) {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md transition-all transform scale-105";
+          } else {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all";
+          }
         }
       });
       const advisorSec = document.getElementById("advisorSection");
@@ -550,16 +643,16 @@
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'evaluation', 'adminDashboard', 'adminCheckin'].forEach(t => {
+      ['home', 'instructors', 'schedule', 'submitWork', 'faq', 'evaluation', 'adminDashboard', 'adminCheckin'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
         
         const navBtn = document.getElementById(`nav-${t}`);
         if(navBtn) {
           if(t === tabName) {
-            navBtn.className = "nav-btn px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all font-bold";
+            navBtn.className = "nav-btn px-3 py-2 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all font-bold";
           } else {
-            navBtn.className = "nav-btn px-3.5 py-2 rounded-xl hover:bg-white/80 text-slate-700 transition-all font-bold";
+            navBtn.className = "nav-btn px-3 py-2 rounded-xl hover:bg-white/80 text-slate-700 transition-all font-bold";
           }
         }
       });
@@ -586,7 +679,14 @@
       toggleAuthView('register');
     }
 
-    // 1. ลงทะเบียน (ป้องกันเมลซ้ำและแสดงข้อความแจ้งเตือนทันที)
+    // ฟังก์ชันกดส่งงานแล้วเปลี่ยนสถานะ
+    function submitWorkItem(rowIdx) {
+      submittedWorks[rowIdx] = true;
+      loadAssignments();
+      alert("ส่งงานชิ้นนี้เรียบร้อยแล้ว!");
+    }
+
+    // 1. ลงทะเบียน
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
@@ -751,9 +851,7 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     });
 
-    // 4. บันทึกเช็กชื่อแบบเสถียร (Optimistic UI เปลี่ยนสถานะทันทีไม่ต้องรอโหลดเสร็จ)
     function updateCheckinStatus(rowIdx, day, status) {
-      // อัปเดตในตัวแปร local ทันทีเพื่อความลื่นไหล
       const student = allStudentsData.find(s => s.rowIdx === rowIdx);
       if (student) {
         if (day === 28) student.check28 = status;
@@ -766,11 +864,7 @@
         method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "updateCheckin", rowIdx: rowIdx, day: day, status: status })
-      })
-      .then(res => res.json())
-      .catch(err => {
-        console.error("บันทึกไม่สำเร็จ: " + err.message);
-      });
+      }).catch(err => console.error(err));
     }
 
     function setCheckinDay(day) {
@@ -914,12 +1008,18 @@
           let lists = { "1": "", "2": "", "3": "" };
           res.data.forEach(item => {
             if(lists[item.category] !== undefined) {
-              let deleteBtnHtml = isAdmin ? `<button onclick="promptDeleteAssignment(${item.rowIdx})" class="mt-2 text-rose-600 hover:underline text-[11px] font-bold block">🗑️ ลบคำสั่งงานนี้</button>` : "";
+              let isSubmitted = submittedWorks[item.rowIdx];
+              let btnHtml = isSubmitted 
+                ? `<button disabled class="mt-2 w-full bg-emerald-600 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md cursor-default">✓ ส่งงานแล้ว</button>`
+                : `<button onclick="submitWorkItem(${item.rowIdx})" class="mt-2 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md shadow-blue-500/25 transition-all">ส่งงานชิ้นนี้</button>`;
+
+              let deleteBtnHtml = isAdmin ? `<button onclick="promptDeleteAssignment(${item.rowIdx})" class="mt-1 text-rose-600 hover:underline text-[11px] font-bold block text-center w-full">🗑️ ลบคำสั่งงานนี้</button>` : "";
+              
               lists[item.category] += `
                 <div class="p-3.5 bg-white/70 border border-slate-100 rounded-2xl space-y-1 hover:shadow-md transition-all">
                   <h4 class="font-bold text-slate-800 text-xs">${item.title}</h4>
                   <p class="text-[11px] text-slate-500">${item.description}</p>
-                  <button class="mt-2 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md shadow-blue-500/20 transition-all">ส่งงานชิ้นนี้</button>
+                  ${btnHtml}
                   ${deleteBtnHtml}
                 </div>
               `;
