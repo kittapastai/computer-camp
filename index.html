@@ -273,7 +273,7 @@
         </div>
       </div>
 
-      <!-- TAB 4: ระบบส่งงาน (พร้อมปุ่มกดส่งแล้วเปลี่ยนสถานะ) -->
+      <!-- TAB 4: ระบบส่งงาน -->
       <div id="tab-submitWork" class="hidden space-y-6 animate-fade-in">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60">
           <div>
@@ -512,7 +512,7 @@
     let currentAdminUser = "";
     let allStudentsData = [];
     let selectedCheckinDay = 28;
-    let submittedWorks = {}; // เก็บสถานะการส่งงานของฝั่งผู้ใช้
+    let submittedWorks = {};
 
     const teamMembers = [
       { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
@@ -679,14 +679,12 @@
       toggleAuthView('register');
     }
 
-    // ฟังก์ชันกดส่งงานแล้วเปลี่ยนสถานะ
     function submitWorkItem(rowIdx) {
       submittedWorks[rowIdx] = true;
       loadAssignments();
       alert("ส่งงานชิ้นนี้เรียบร้อยแล้ว!");
     }
 
-    // 1. ลงทะเบียน
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
@@ -730,7 +728,6 @@
       });
     });
 
-    // 2. ล็อกอินนักเรียน
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const loginBtn = document.getElementById("loginBtn");
@@ -759,7 +756,6 @@
       });
     });
 
-    // 3. ล็อกอินแอดมิน
     document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const btn = document.getElementById("adminLoginBtn");
