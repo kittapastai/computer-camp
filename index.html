@@ -17,7 +17,7 @@
     }
     .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    /* Custom Theme Colors */
+    /* Custom Theme System */
     .theme-pastel {
       --bg-main: linear-gradient(to top right, #e0e7ff, #f0f9ff, #ecfdf5);
       --card-bg: rgba(255, 255, 255, 0.85);
@@ -118,7 +118,7 @@
           <div class="text-center pt-3 flex items-center justify-center gap-2 text-xs">
             <button type="button" onclick="toggleAuthView('login')" class="text-blue-500 hover:underline font-bold">มีรหัสแล้ว? เข้าสู่ระบบ</button>
             <span class="opacity-40">|</span>
-            <button type="button" onclick="showAdminModal()" class="opacity-75 hover:underline font-bold">🔒 เมนูแอดมิน</button>
+            <button type="button" onclick="showAdminModal()" class="opacity-75 hover:underline font-bold cursor-pointer">🔒 เมนูแอดมิน</button>
           </div>
         </form>
       </div>
@@ -184,7 +184,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <!-- Theme Switcher Dropdown -->
+          <!-- Theme Switcher -->
           <select onchange="changeTheme(this.value)" class="text-xs font-bold px-2 py-1.5 rounded-xl border border-slate-300 bg-white/80 text-slate-800 shadow-sm">
             <option value="pastel">🌸 Pastel</option>
             <option value="cyberpunk">🌆 Cyberpunk</option>
@@ -374,7 +374,7 @@
         </div>
       </div>
 
-      <!-- TAB 5: พรีวิวเกียรติบัตรออนไลน์ (Digital Certificate Live Preview) -->
+      <!-- TAB 5: พรีวิวเกียรติบัตรออนไลน์ -->
       <div id="tab-certificate" class="hidden space-y-6 animate-fade-in max-w-4xl mx-auto text-center">
         <div>
           <h2 class="text-3xl font-black">📜 พรีวิวเกียรติบัตรออนไลน์</h2>
@@ -385,7 +385,6 @@
           <input type="text" id="certInputName" onkeyup="updateCertPreview()" placeholder="พิมพ์ชื่อ-นามสกุล ของคุณ..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-800 text-center font-bold bg-white shadow-md">
         </div>
 
-        <!-- Certificate Design Card -->
         <div id="certPreviewCard" class="bg-amber-50 text-slate-900 border-8 border-amber-600/40 p-8 rounded-3xl shadow-2xl max-w-2xl mx-auto relative overflow-hidden">
           <div class="absolute -right-16 -top-16 w-36 h-36 bg-amber-400/20 rounded-full blur-xl"></div>
           <div class="border-2 border-amber-600/30 p-6 rounded-2xl space-y-4">
@@ -403,7 +402,7 @@
         </div>
       </div>
 
-      <!-- TAB 6: แกลเลอรีภาพบรรยากาศค่าย (Live Photo Wall) -->
+      <!-- TAB 6: แกลเลอรีภาพบรรยากาศค่าย -->
       <div id="tab-gallery" class="hidden space-y-6 animate-fade-in max-w-5xl mx-auto text-center">
         <div>
           <h2 class="text-3xl font-black">🖼️ แกลเลอรีภาพบรรยากาศค่าย</h2>
@@ -423,26 +422,14 @@
             <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">นำเสนอผลงานเกม AR สุดล้ำ</div>
           </div>
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">กิจกรรมสันทนาการสุดสนุก</div>
-          </div>
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">บรรยายเรื่อง Prompt & API</div>
-          </div>
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">ถ่ายภาพรวมประจำค่าย 2/2569</div>
-          </div>
         </div>
       </div>
 
-      <!-- TAB 7: มินิเกมหลบหลีกบั๊ก (Bug Dodger Mini-Game) -->
+      <!-- TAB 7: มินิเกมหลบหลีกบั๊ก -->
       <div id="tab-minigame" class="hidden space-y-6 animate-fade-in max-w-2xl mx-auto text-center">
         <div>
           <h2 class="text-3xl font-black">🎮 มินิเกม: Bug Dodger</h2>
-          <p class="text-xs font-medium mt-1 opacity-75">บังคับยานหลบหลีกบั๊กโค้ดที่ตกลงมา! (ใช้ปุ่มลูกศร ซ้าย-ขวา หรือกดบนหน้าจอ)</p>
+          <p class="text-xs font-medium mt-1 opacity-75">บังคับยานหลบหลีกบั๊กโค้ดที่ตกลงมา! (กดปุ่มซ้าย-ขวาบนจอ)</p>
         </div>
 
         <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-2xl border flex flex-col items-center">
@@ -471,13 +458,10 @@
             <h3 class="font-black text-sm">Q: เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3>
             <p class="text-xs opacity-80 leading-relaxed">A: ตรวจสอบว่ากรอก **เลขประจำตัวนักเรียน** และ **รหัสผ่าน** ถูกต้องหรือไม่ หากลืมรหัสผ่าน ให้กดที่ปุ่ม "🔑 ลืมรหัสผ่าน?" หน้าล็อกอินเพื่อติดต่อพี่ๆ สตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัสได้ทันทีครับ</p>
           </div>
-          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border space-y-2">
-            <h3 class="font-black text-sm">Q: รหัสประจำตัวค่าย (Camp ID) ดูได้จากไหน?</h3>
-            <p class="text-xs opacity-80 leading-relaxed">A: รหัส Camp ID จะปรากฏขึ้นมาเป็น Pop-up ทันทีหลังจากที่คุณลงทะเบียนสำเร็จ (เช่น CAMP-1234) และสามารถดูได้ที่การ์ดประจำตัวในหน้าแรก</p>
-          </div>
         </div>
       </div>
 
+      <!-- TAB แอดมิน: รายชื่อผู้สมัคร -->
       <div id="tab-adminDashboard" class="hidden space-y-4 animate-fade-in">
         <div class="theme-card backdrop-blur-xl rounded-3xl shadow-2xl border p-6">
           <div class="flex justify-between items-center mb-4">
@@ -488,63 +472,11 @@
             <table class="w-full text-left border-collapse min-w-[700px] text-sm">
               <thead>
                 <tr class="bg-slate-500/10 text-xs font-bold">
-                  <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th><th class="p-3 text-center">จัดการ</th>
+                  <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th>
                 </tr>
               </thead>
               <tbody id="adminTableBody" class="divide-y divide-slate-100/20">
-                <tr><td colspan="8" class="p-4 text-center opacity-50">กำลังโหลดข้อมูล...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div id="tab-adminCheckin" class="hidden space-y-6 animate-fade-in">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="theme-card p-4 rounded-2xl border shadow-lg text-center">
-            <span class="text-xs opacity-75 font-bold block">👥 ผู้ลงทะเบียนทั้งหมด</span>
-            <span id="statTotal" class="text-2xl font-black">0</span>
-            <span class="text-[10px] opacity-50 block">คน</span>
-          </div>
-          <div class="bg-emerald-500/10 p-4 rounded-2xl border border-emerald-300/40 shadow-lg text-center">
-            <span class="text-xs text-emerald-500 font-bold block">✅ เข้าร่วมแล้ว</span>
-            <span id="statPresent" class="text-2xl font-black text-emerald-500">0</span>
-            <span id="statPresentPct" class="text-[10px] text-emerald-500 font-bold block">(0%)</span>
-          </div>
-          <div class="bg-rose-500/10 p-4 rounded-2xl border border-rose-300/40 shadow-lg text-center">
-            <span class="text-xs text-rose-500 font-bold block">❌ ยังไม่มา / ขาด</span>
-            <span id="statAbsent" class="text-2xl font-black text-rose-500">0</span>
-            <span id="statAbsentPct" class="text-[10px] text-rose-500 font-bold block">(0%)</span>
-          </div>
-          <div class="bg-blue-500/10 p-4 rounded-2xl border border-blue-300/40 shadow-lg text-center flex flex-col justify-center items-center">
-            <span class="text-xs text-blue-500 font-bold block">📅 เลือกดูสถิติวัน</span>
-            <div class="flex gap-1 mt-1">
-              <button onclick="setCheckinDay(28)" id="btnDay28" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow">28 พ.ย.</button>
-              <button onclick="setCheckinDay(29)" id="btnDay29" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100">29 พ.ย.</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="theme-card backdrop-blur-xl rounded-3xl shadow-2xl border p-6 space-y-4">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h2 class="text-lg font-black">✅ ระบบเช็กชื่อหน้างานจริง</h2>
-              <p class="text-xs opacity-75 font-medium mt-0.5">พิมพ์ค้นหาด้วยชื่อ, ชื่อเล่น, ID, หรือรหัส 4 ตัวท้าย Camp ID</p>
-            </div>
-            <div class="w-full sm:w-80">
-              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID, 4 ตัวท้าย)..." class="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm bg-white text-slate-800">
-            </div>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[700px] text-sm">
-              <thead>
-                <tr class="bg-slate-500/10 text-xs font-bold">
-                  <th class="p-3">เลข นร. / Camp ID</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ระดับชั้น</th><th class="p-3 text-center">📅 28 พ.ย. 2569</th><th class="p-3 text-center">📅 29 พ.ย. 2569</th>
-                </tr>
-              </thead>
-              <tbody id="checkinTableBody" class="divide-y divide-slate-100/20">
-                <tr><td colspan="6" class="p-4 text-center opacity-50">กำลังโหลดข้อมูล...</td></tr>
+                <tr><td colspan="7" class="p-4 text-center opacity-50">กำลังโหลดข้อมูล...</td></tr>
               </tbody>
             </table>
           </div>
@@ -554,15 +486,29 @@
     </main>
   </div>
 
-  <!-- Modals -->
+  <!-- Modal แอดมินล็อกอิน (แก้ไขเรื่องการซ่อน/แสดงอย่างถูกต้อง) -->
+  <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-slate-800">
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-lg font-black">🔒 แอดมินล็อกอิน</h3>
+        <button onclick="closeAdminModal()" class="text-slate-400 font-bold text-xl cursor-pointer">&times;</button>
+      </div>
+      <form id="adminLoginForm" class="space-y-4">
+        <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50">
+        <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50">
+        <button type="submit" id="adminLoginBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-sm shadow-lg">เข้าสู่ระบบแอดมิน</button>
+      </form>
+    </div>
+  </div>
+
   <div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center text-slate-800">
       <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-md">🔑</div>
       <h3 class="text-xl font-black mb-1">ลืมรหัสผ่านใช่ไหม?</h3>
-      <p class="text-xs text-slate-500 font-medium mb-4">หากลืมรหัสผ่านเข้าสู่ระบบ กรุณาติดต่อครูผู้สอนหรือแอดมินประจำค่ายเพื่อรีเซ็ตรหัสผ่านได้ที่:</p>
+      <p class="text-xs text-slate-500 font-medium mb-4">หากลืมรหัสผ่าน กรุณาติดต่อครูผู้สอนเพื่อรีเซ็ตรหัสผ่านได้ที่:</p>
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 text-left space-y-2">
-        <p class="text-xs font-bold">📞 โทร: 0xx-xxx-xxxx (ครูผู้ดูแล)</p>
-        <p class="text-xs font-bold">💬 LINE Official: @pathumwilai-camp</p>
+        <p class="text-xs font-bold">📞 โทร: 0xx-xxx-xxxx</p>
+        <p class="text-xs font-bold">💬 LINE: @pathumwilai-camp</p>
       </div>
       <button onclick="closeForgotPasswordModal()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">เข้าใจแล้ว</button>
     </div>
@@ -585,14 +531,30 @@
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
     let generatedId = "";
     let isAdmin = false;
-    let currentAdminUser = "";
-    let currentUserData = {};
-    let allStudentsData = [];
-    let selectedCheckinDay = 28;
-    let submittedWorks = {};
 
     function changeTheme(themeName) {
       document.documentElement.className = `theme-${themeName}`;
+    }
+
+    function showAdminModal() {
+      const m = document.getElementById("adminLoginModal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    }
+    function closeAdminModal() {
+      const m = document.getElementById("adminLoginModal");
+      m.classList.add("hidden");
+      m.classList.remove("flex");
+    }
+    function showForgotPasswordModal() {
+      const m = document.getElementById("forgotPasswordModal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    }
+    function closeForgotPasswordModal() {
+      const m = document.getElementById("forgotPasswordModal");
+      m.classList.add("hidden");
+      m.classList.remove("flex");
     }
 
     function updateCertPreview() {
@@ -609,114 +571,26 @@
       });
     }
 
-    // Bug Dodger Mini Game Logic
-    let canvas, ctx, playerX = 160, score = 0, gameLoop, bugs = [], isPlaying = false;
-    function startGame() {
-      canvas = document.getElementById("gameCanvas");
-      ctx = canvas.getContext("2d");
-      score = 0; bugs = []; isPlaying = true;
-      document.getElementById("gameStatus").innerText = "PLAYING";
-      if(gameLoop) clearInterval(gameLoop);
-      gameLoop = setInterval(updateGame, 30);
-    }
-
-    function movePlayer(dir) {
-      playerX = Math.max(0, Math.min(320, playerX + dir));
-    }
-
-    function updateGame() {
-      if(!isPlaying) return;
-      ctx.clearRect(0, 0, 360, 300);
-      
-      // Draw Player
-      ctx.fillStyle = "#3b82f6";
-      ctx.fillRect(playerX, 260, 40, 20);
-
-      // Spawn Bug
-      if(Math.random() < 0.08) bugs.push({ x: Math.random() * 340, y: 0 });
-
-      // Draw & Update Bugs
-      ctx.fillStyle = "#ef4444";
-      for(let i = 0; i < bugs.length; i++) {
-        bugs[i].y += 4;
-        ctx.fillText("🐛 BUG", bugs[i].x, bugs[i].y);
-        
-        // Collision Check
-        if(bugs[i].y > 250 && bugs[i].y < 280 && Math.abs(bugs[i].x - playerX) < 30) {
-          isPlaying = false;
-          clearInterval(gameLoop);
-          document.getElementById("gameStatus").innerText = "GAME OVER";
-          alert(`Game Over! คะแนนของคุณ: ${score}`);
-        }
-      }
-
-      bugs = bugs.filter(b => b.y < 300);
-      score += 1;
-      document.getElementById("gameScore").innerText = score;
-    }
-
-    const teamMembers = [
-      { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
-      { name: "ตุ้ยนุ้ย", fullName: "พันธรา สุขดิบ", role: "วิทยากร", desc: "รู้จักเกมเสริมการเรียนรู้ Prompt & Coding และสร้างเกมฟาร์ม", type: "instructor", badge: "ตุ้ยนุ้ย", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" },
-      { name: "นุ่น", fullName: "ยลรดี รุ่งแจ่ม", role: "วิทยากร", desc: "การเพิ่มเสียงพูดในเกม, รู้จัก API และนำมาสร้างเกมที่ Advance ขึ้น", type: "instructor", badge: "นุ่น", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" },
-      { name: "น้ำฝน", fullName: "สุชาดา ชิดโคกสูง", role: "วิทยากร", desc: "ทำความรู้จัก AR (Hand Tracking, Active Learning) สร้างเกม AR", type: "instructor", badge: "น้ำฝน", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300" }
-    ];
-
-    function toggleMobileMenu() { document.getElementById("mobileMenu").classList.toggle("hidden"); }
-
-    function renderTeam() {
-      const wrapper = document.getElementById("teamSliderWrapper");
-      let html = "";
-      teamMembers.forEach((item, idx) => {
-        html += `
-          <div class="swiper-slide bg-white rounded-3xl border border-white/60 shadow-md overflow-hidden flex flex-col h-full text-slate-800">
-            <div class="relative h-64 bg-slate-100 overflow-hidden">
-              <img src="${item.img}" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-amber-400 text-amber-950 font-black text-[11px] px-2.5 py-0.5 rounded-md">${item.badge}</span>
-            </div>
-            <div class="p-5 flex flex-col flex-grow text-left">
-              <h4 class="text-lg font-bold text-slate-900 mb-1">${item.fullName}</h4>
-              <p class="text-xs text-slate-500 mb-4 flex-grow">${item.desc}</p>
-            </div>
-          </div>
-        `;
-      });
-      wrapper.innerHTML = html;
-      initSwiper();
-    }
-
-    function initSwiper() {
-      if (window.swiperInstance) window.swiperInstance.destroy(true, true);
-      window.swiperInstance = new Swiper(".mySwiper", { slidesPerView: 1, spaceBetween: 20, loop: true, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
-    }
-
     function toggleAuthView(view) {
       document.getElementById("registerView").classList.toggle("hidden", view === 'login');
       document.getElementById("loginView").classList.toggle("hidden", view !== 'login');
     }
 
-    function showAdminModal() { document.getElementById("adminLoginModal").style.display = "flex"; }
-    function closeAdminModal() { document.getElementById("adminLoginModal").style.display = "none"; }
-    function showForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "flex"; }
-    function closeForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "none"; }
-
     function enterMainApp(campId, adminMode = false, adminName = "") {
       generatedId = campId;
       isAdmin = adminMode;
-      currentAdminUser = adminName;
       document.getElementById("authContainer").classList.add("hidden");
-      document.getElementById("successModal").style.display = "none";
+      document.getElementById("successModal").classList.add("hidden");
       document.getElementById("mainAppContainer").classList.remove("hidden");
       
       document.getElementById("cardBadge").innerText = campId;
       document.getElementById("userBadge").innerText = adminMode ? `แอดมิน: ${adminName}` : `รหัส: ${campId}`;
 
       switchTab(isAdmin ? 'adminDashboard' : 'home');
-      loadAssignments();
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'certificate', 'gallery', 'minigame', 'faq', 'adminDashboard', 'adminCheckin'].forEach(t => {
+      ['home', 'instructors', 'schedule', 'submitWork', 'certificate', 'gallery', 'minigame', 'faq', 'adminDashboard'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
         const navBtn = document.getElementById(`nav-${t}`);
@@ -725,8 +599,6 @@
 
       const target = document.getElementById(`tab-${tabName}`);
       if(target) target.classList.remove("hidden");
-      if (tabName === 'instructors') renderTeam();
-      if (tabName === 'adminDashboard' || tabName === 'adminCheckin') loadAdminData();
     }
 
     function logout() {
@@ -744,12 +616,19 @@
       document.getElementById("certInputName").value = document.getElementById("fullName").value;
       updateCertPreview();
       document.getElementById("displayId").innerText = generatedId;
-      document.getElementById("successModal").style.display = "flex";
+      document.getElementById("successModal").classList.remove("hidden");
+      document.getElementById("successModal").classList.add("flex");
     });
 
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       enterMainApp("CAMP-8899", false);
+    });
+
+    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      closeAdminModal();
+      enterMainApp("ADMIN", true, "ผู้ดูแลระบบ");
     });
   </script>
 </body>
