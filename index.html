@@ -486,7 +486,7 @@
     </main>
   </div>
 
-  <!-- Modal แอดมินล็อกอิน (แก้ไขเรื่องการซ่อน/แสดงอย่างถูกต้อง) -->
+  <!-- Modal แอดมินล็อกอิน -->
   <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-slate-800">
       <div class="flex justify-between items-center mb-5">
@@ -528,7 +528,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
     let generatedId = "";
     let isAdmin = false;
 
@@ -538,23 +537,31 @@
 
     function showAdminModal() {
       const m = document.getElementById("adminLoginModal");
-      m.classList.remove("hidden");
-      m.classList.add("flex");
+      if (m) {
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+      }
     }
     function closeAdminModal() {
       const m = document.getElementById("adminLoginModal");
-      m.classList.add("hidden");
-      m.classList.remove("flex");
+      if (m) {
+        m.classList.add("hidden");
+        m.classList.remove("flex");
+      }
     }
     function showForgotPasswordModal() {
       const m = document.getElementById("forgotPasswordModal");
-      m.classList.remove("hidden");
-      m.classList.add("flex");
+      if (m) {
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+      }
     }
     function closeForgotPasswordModal() {
       const m = document.getElementById("forgotPasswordModal");
-      m.classList.add("hidden");
-      m.classList.remove("flex");
+      if (m) {
+        m.classList.add("hidden");
+        m.classList.remove("flex");
+      }
     }
 
     function updateCertPreview() {
@@ -581,6 +588,7 @@
       isAdmin = adminMode;
       document.getElementById("authContainer").classList.add("hidden");
       document.getElementById("successModal").classList.add("hidden");
+      document.getElementById("successModal").classList.remove("flex");
       document.getElementById("mainAppContainer").classList.remove("hidden");
       
       document.getElementById("cardBadge").innerText = campId;
