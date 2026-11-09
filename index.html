@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="theme-pastel">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <style>
     .swiper-wrapper { transition-timing-function: linear !important; }
     @keyframes fadeIn {
@@ -14,13 +16,46 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Custom Theme Colors */
+    .theme-pastel {
+      --bg-main: linear-gradient(to top right, #e0e7ff, #f0f9ff, #ecfdf5);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-main: #1e293b;
+      --accent: #2563eb;
+      --border-color: rgba(255, 255, 255, 0.6);
+    }
+    .theme-cyberpunk {
+      --bg-main: linear-gradient(to top right, #0f051d, #290849, #4c0519);
+      --card-bg: rgba(26, 11, 46, 0.85);
+      --text-main: #f472b6;
+      --accent: #ec4899;
+      --border-color: rgba(236, 72, 153, 0.3);
+    }
+    .theme-matrix {
+      --bg-main: #050505;
+      --card-bg: rgba(10, 25, 10, 0.9);
+      --text-main: #22c55e;
+      --accent: #16a34a;
+      --border-color: rgba(34, 197, 94, 0.4);
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    .theme-card {
+      background-color: var(--card-bg);
+      border-color: var(--border-color);
+    }
   </style>
 </head>
-<body class="bg-gradient-to-tr from-indigo-100 via-sky-50 to-emerald-50 font-sans text-slate-800 antialiased min-h-screen selection:bg-blue-500 selection:text-white">
+<body class="font-sans antialiased min-h-screen selection:bg-blue-500 selection:text-white">
 
   <!-- 1. ส่วนเข้าสู่ระบบ / ลงทะเบียน -->
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4 animate-fade-in">
-    <div class="w-full max-w-md bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/65">
+    <div class="w-full max-w-md theme-card backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border">
       
       <!-- ฟอร์มลงทะเบียน -->
       <div id="registerView" class="animate-fade-in">
@@ -30,23 +65,23 @@
               <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-12 h-12 object-contain filter drop-shadow">
             </div>
           </div>
-          <h1 class="text-2xl font-black bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 bg-clip-text text-transparent">ค่ายคอมพิวเตอร์ 2/2569</h1>
-          <p class="text-xs font-semibold text-slate-500 mt-1">โรงเรียนปทุมวิไล จังหวัดปทุมธานี</p>
+          <h1 class="text-2xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">ค่ายคอมพิวเตอร์ 2/2569</h1>
+          <p class="text-xs font-semibold opacity-75 mt-1">โรงเรียนปทุมวิไล จังหวัดปทุมธานี</p>
         </div>
 
         <form id="registerForm" class="space-y-3.5">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">อีเมล</label>
-            <input type="email" id="email" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="example@email.com">
+            <label class="block text-xs font-bold mb-1">อีเมล</label>
+            <input type="email" id="email" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="example@email.com">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
-              <input type="text" id="studentId" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="12345">
+              <label class="block text-xs font-bold mb-1">เลขประจำตัวนักเรียน</label>
+              <input type="text" id="studentId" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="12345">
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">คำนำหน้า</label>
-              <select id="title" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 focus:ring-2 focus:ring-blue-500">
+              <label class="block text-xs font-bold mb-1">คำนำหน้า</label>
+              <select id="title" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 text-slate-800 focus:ring-2 focus:ring-blue-500">
                 <option value="">เลือก</option>
                 <option value="เด็กชาย">เด็กชาย</option><option value="เด็กหญิง">เด็กหญิง</option>
                 <option value="นาย">นาย</option><option value="นางสาว">นางสาว</option>
@@ -54,36 +89,36 @@
             </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ-นามสกุล</label>
-            <input type="text" id="fullName" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="สมชาย ใจดี">
+            <label class="block text-xs font-bold mb-1">ชื่อ-นามสกุล</label>
+            <input type="text" id="fullName" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="สมชาย ใจดี">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อเล่น</label>
-              <input type="text" id="nickname" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="บอย">
+              <label class="block text-xs font-bold mb-1">ชื่อเล่น</label>
+              <input type="text" id="nickname" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="บอย">
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">ระดับชั้น</label>
-              <select id="grade" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 focus:ring-2 focus:ring-blue-500">
+              <label class="block text-xs font-bold mb-1">ระดับชั้น</label>
+              <select id="grade" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 text-slate-800 focus:ring-2 focus:ring-blue-500">
                 <option value="">เลือกห้อง</option>
-                <option value="ม.1/1">ม.1/1</option><option value="ม.1/2">ม.1/2</option><option value="ม.1/3">ม.1/3</option><option value="ม.1/4">ม.1/4</option><option value="ม.1/5">ม.1/5</option><option value="ม.1/6">ม.1/6</option><option value="ม.1/7">ม.1/7</option><option value="ม.1/8">ม.1/8</option><option value="ม.1/9">ม.1/9</option><option value="ม.1/10">ม.1/10</option><option value="ม.1/11">ม.1/11</option><option value="ม.1/12">ม.1/12</option><option value="ม.1/13">ม.1/13</option><option value="ม.1/14">ม.1/14</option><option value="ม.1/15">ม.1/15</option>
+                <option value="ม.1/1">ม.1/1</option><option value="ม.1/2">ม.1/2</option><option value="ม.1/3">ม.1/3</option><option value="ม.1/4">ม.1/4</option><option value="ม.1/5">ม.1/5</option><option value="ม.1/6">ม.1/6</option><option value="ม.1/7">ม.1/7</option><option value="ม.1/8">ม.1/8</option><option value="ม.1/9">ม.1/9</option><option value="ม.1/10">ม.1/10</option>
               </select>
             </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสผ่านสำหรับเข้าสู่ระบบ</label>
-            <input type="password" id="password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="ตั้งรหัสผ่าน">
+            <label class="block text-xs font-bold mb-1">รหัสผ่านสำหรับเข้าสู่ระบบ</label>
+            <input type="password" id="password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="ตั้งรหัสผ่าน">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">เหตุผลที่อยากเข้าค่าย</label>
-            <textarea id="reason" rows="2" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70" placeholder="เหตุผลสั้นๆ"></textarea>
+            <label class="block text-xs font-bold mb-1">เหตุผลที่อยากเข้าค่าย</label>
+            <textarea id="reason" rows="2" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white/70 text-slate-800" placeholder="เหตุผลสั้นๆ"></textarea>
           </div>
           <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl transition-all transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30 text-sm">ยืนยันการลงทะเบียน</button>
           
           <div class="text-center pt-3 flex items-center justify-center gap-2 text-xs">
-            <button type="button" onclick="toggleAuthView('login')" class="text-blue-600 hover:underline font-bold">มีรหัสแล้ว? เข้าสู่ระบบ</button>
-            <span class="text-slate-300">|</span>
-            <button type="button" onclick="showAdminModal()" class="text-slate-600 hover:underline font-bold">🔒 เมนูแอดมิน</button>
+            <button type="button" onclick="toggleAuthView('login')" class="text-blue-500 hover:underline font-bold">มีรหัสแล้ว? เข้าสู่ระบบ</button>
+            <span class="opacity-40">|</span>
+            <button type="button" onclick="showAdminModal()" class="opacity-75 hover:underline font-bold">🔒 เมนูแอดมิน</button>
           </div>
         </form>
       </div>
@@ -96,23 +131,23 @@
               <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-12 h-12 object-contain filter drop-shadow">
             </div>
           </div>
-          <h1 class="text-2xl font-black text-slate-900">เข้าสู่ระบบค่าย</h1>
-          <p class="text-xs text-slate-500 mt-1">ค่ายคอมพิวเตอร์ 2/2569</p>
+          <h1 class="text-2xl font-black">เข้าสู่ระบบค่าย</h1>
+          <p class="text-xs opacity-75 mt-1">ค่ายคอมพิวเตอร์ 2/2569</p>
         </div>
         <form id="loginForm" class="space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
-            <input type="text" id="loginStudentId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70">
+            <label class="block text-xs font-bold mb-1">เลขประจำตัวนักเรียน</label>
+            <input type="text" id="loginStudentId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 text-slate-800">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสผ่าน</label>
-            <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70">
+            <label class="block text-xs font-bold mb-1">รหัสผ่าน</label>
+            <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 text-slate-800">
           </div>
           <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-blue-500/30">เข้าสู่ระบบ</button>
           
           <div class="flex items-center justify-between pt-2">
-            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-bold">← ลงทะเบียนใหม่</button>
-            <button type="button" onclick="showForgotPasswordModal()" class="text-xs text-rose-600 hover:underline font-bold">🔑 ลืมรหัสผ่าน?</button>
+            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-500 hover:underline font-bold">← ลงทะเบียนใหม่</button>
+            <button type="button" onclick="showForgotPasswordModal()" class="text-xs text-rose-500 hover:underline font-bold">🔑 ลืมรหัสผ่าน?</button>
           </div>
         </form>
       </div>
@@ -122,54 +157,65 @@
 
   <!-- 2. ส่วนหน้าหลัก -->
   <div id="mainAppContainer" class="hidden min-h-screen flex flex-col animate-fade-in">
-    <nav class="bg-white/85 backdrop-blur-md border-b border-white/40 sticky top-0 z-40 shadow-sm">
+    <nav class="theme-card backdrop-blur-md border-b sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
         <div onclick="switchTab('home')" class="flex items-center gap-3 cursor-pointer group">
           <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain transform group-hover:scale-110 transition-transform">
           <div class="leading-tight">
-            <span class="text-sm font-black bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent block">โรงเรียนปทุมวิไล</span>
-            <span class="text-xs text-blue-600 font-bold">ค่ายคอมพิวเตอร์ 2/2569</span>
+            <span class="text-sm font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent block">โรงเรียนปทุมวิไล</span>
+            <span class="text-xs text-blue-500 font-bold">ค่ายคอมพิวเตอร์ 2/2569</span>
           </div>
         </div>
 
         <!-- Desktop Menu -->
-        <div class="hidden lg:flex items-center space-x-1 text-xs font-bold text-slate-700">
+        <div class="hidden lg:flex items-center space-x-1 text-xs font-bold">
           <button id="nav-home" onclick="switchTab('home')" class="nav-btn px-3 py-2 rounded-xl transition-all">🏠 หน้าแรก</button>
           <button id="nav-instructors" onclick="switchTab('instructors')" class="nav-btn px-3 py-2 rounded-xl transition-all">👥 วิทยากร</button>
           <button id="nav-schedule" onclick="switchTab('schedule')" class="nav-btn px-3 py-2 rounded-xl transition-all">📅 กำหนดการ</button>
           <button id="nav-submitWork" onclick="switchTab('submitWork')" class="nav-btn px-3 py-2 rounded-xl transition-all">📂 ส่งงาน</button>
+          <button id="nav-certificate" onclick="switchTab('certificate')" class="nav-btn px-3 py-2 rounded-xl transition-all">📜 เกียรติบัตร</button>
+          <button id="nav-gallery" onclick="switchTab('gallery')" class="nav-btn px-3 py-2 rounded-xl transition-all">🖼️ แกลเลอรี</button>
+          <button id="nav-minigame" onclick="switchTab('minigame')" class="nav-btn px-3 py-2 rounded-xl transition-all">🎮 มินิเกม</button>
           <button id="nav-faq" onclick="switchTab('faq')" class="nav-btn px-3 py-2 rounded-xl transition-all">❓ คู่มือการใช้</button>
-          <button id="nav-evaluation" onclick="switchTab('evaluation')" class="nav-btn px-3 py-2 rounded-xl transition-all">📋 แบบประเมิน</button>
           
-          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="nav-btn hidden px-3 py-2 rounded-xl bg-amber-400/20 text-amber-900 border border-amber-300/50 transition-all">📊 รายชื่อผู้สมัคร</button>
-          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="nav-btn hidden px-3 py-2 rounded-xl bg-emerald-400/20 text-emerald-900 border border-emerald-300/50 transition-all">✅ เช็กชื่อหน้างาน</button>
+          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="nav-btn hidden px-3 py-2 rounded-xl bg-amber-400/20 text-amber-500 border border-amber-300/50 transition-all">📊 รายชื่อผู้สมัคร</button>
+          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="nav-btn hidden px-3 py-2 rounded-xl bg-emerald-400/20 text-emerald-500 border border-emerald-300/50 transition-all">✅ เช็กชื่อหน้างาน</button>
         </div>
 
-        <div class="flex items-center gap-3">
-          <span id="userBadge" class="bg-blue-600 text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-md shadow-blue-500/20">รหัส: -</span>
-          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">☰</button>
-          <button onclick="logout()" class="hidden lg:block text-xs text-red-600 hover:underline font-bold">ออกจากระบบ</button>
+        <div class="flex items-center gap-2">
+          <!-- Theme Switcher Dropdown -->
+          <select onchange="changeTheme(this.value)" class="text-xs font-bold px-2 py-1.5 rounded-xl border border-slate-300 bg-white/80 text-slate-800 shadow-sm">
+            <option value="pastel">🌸 Pastel</option>
+            <option value="cyberpunk">🌆 Cyberpunk</option>
+            <option value="matrix">💻 Matrix</option>
+          </select>
+
+          <span id="userBadge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">รหัส: -</span>
+          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-slate-100/50 font-bold">☰</button>
+          <button onclick="logout()" class="hidden lg:block text-xs text-red-500 hover:underline font-bold">ออกจากระบบ</button>
         </div>
       </div>
 
       <!-- Mobile Menu -->
-      <div id="mobileMenu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 p-4 space-y-2 text-sm font-bold text-slate-700 animate-fade-in">
-        <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">🏠 หน้าแรก</button>
-        <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">👥 วิทยากร</button>
-        <button onclick="switchTab('schedule'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📅 กำหนดการ</button>
-        <button onclick="switchTab('submitWork'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📂 ส่งงาน</button>
-        <button onclick="switchTab('faq'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">❓ คู่มือการใช้งาน</button>
-        <button onclick="switchTab('evaluation'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📋 แบบประเมิน</button>
-        <button id="mobileAdminUserTab" onclick="switchTab('adminDashboard'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-amber-50 text-amber-800">📊 รายชื่อผู้สมัคร</button>
-        <button id="mobileAdminCheckinTab" onclick="switchTab('adminCheckin'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-emerald-50 text-emerald-800">✅ เช็กชื่อหน้างาน</button>
-        <button onclick="logout()" class="w-full text-left py-2 px-3 text-red-600 border-t mt-2">ออกจากระบบ</button>
+      <div id="mobileMenu" class="hidden lg:hidden theme-card border-b p-4 space-y-2 text-sm font-bold animate-fade-in">
+        <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">🏠 หน้าแรก</button>
+        <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">👥 วิทยากร</button>
+        <button onclick="switchTab('schedule'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📅 กำหนดการ</button>
+        <button onclick="switchTab('submitWork'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📂 ส่งงาน</button>
+        <button onclick="switchTab('certificate'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📜 พรีวิวเกียรติบัตร</button>
+        <button onclick="switchTab('gallery'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">🖼️ แกลเลอรีภาพค่าย</button>
+        <button onclick="switchTab('minigame'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">🎮 มินิเกมหลบหลีกบั๊ก</button>
+        <button onclick="switchTab('faq'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">❓ คู่มือการใช้งาน</button>
+        <button id="mobileAdminUserTab" onclick="switchTab('adminDashboard'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-amber-500/20 text-amber-500">📊 รายชื่อผู้สมัคร</button>
+        <button id="mobileAdminCheckinTab" onclick="switchTab('adminCheckin'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-emerald-500/20 text-emerald-500">✅ เช็กชื่อหน้างาน</button>
+        <button onclick="logout()" class="w-full text-left py-2 px-3 text-red-500 border-t mt-2">ออกจากระบบ</button>
       </div>
     </nav>
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in space-y-6">
       
-      <!-- TAB 1: หน้าแรก (พร้อมระบบประกาศสำคัญ Announcements Banner) -->
+      <!-- TAB 1: หน้าแรก + นามบัตรดิจิทัล -->
       <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center">
         <!-- Announcements Banner -->
         <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-3xl shadow-xl flex items-center justify-between gap-3 text-left animate-pulse">
@@ -183,18 +229,50 @@
           <button onclick="switchTab('schedule')" class="bg-white text-orange-600 px-3 py-1.5 rounded-xl text-xs font-bold shadow-md hover:bg-orange-50 whitespace-nowrap">ดูตาราง</button>
         </div>
 
-        <div class="bg-white/85 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/60">
+        <!-- Digital Student ID Card -->
+        <div id="digitalCard" class="bg-gradient-to-br from-indigo-900 via-slate-900 to-blue-900 text-white p-6 rounded-3xl shadow-2xl border border-blue-400/30 text-left relative overflow-hidden transform hover:scale-[1.01] transition-all">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain">
+              <div>
+                <h3 class="font-black text-sm tracking-wide">PATHUMWILAI COMPUTER CAMP</h3>
+                <p class="text-[10px] text-blue-300 font-bold">บัตรประจำตัวผู้เข้าร่วมค่าย 2/2569</p>
+              </div>
+            </div>
+            <span id="cardBadge" class="bg-blue-500/30 text-blue-300 border border-blue-400/40 font-mono text-xs px-3 py-1 rounded-full font-bold">CAMP-XXXX</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 my-4">
+            <div>
+              <span class="text-[10px] text-slate-400 block font-semibold">ชื่อ-นามสกุล</span>
+              <span id="cardName" class="font-bold text-sm text-slate-100">กำลังโหลด...</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-slate-400 block font-semibold">ชื่อเล่น / ระดับชั้น</span>
+              <span id="cardGrade" class="font-bold text-sm text-slate-100">กำลังโหลด...</span>
+            </div>
+          </div>
+
+          <!-- บาร์โค้ดจำลอง -->
+          <div class="pt-2 border-t border-white/10 flex justify-between items-center">
+            <div class="font-mono text-xs tracking-widest text-slate-400">||||| |||| ||||| ||| ||||||</div>
+            <button onclick="downloadIDCard()" class="text-[11px] bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-xl font-bold transition-all shadow-md">📷 ดาวน์โหลดการ์ด</button>
+          </div>
+        </div>
+
+        <div class="theme-card backdrop-blur-xl p-8 rounded-3xl shadow-2xl border">
           <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3.5 py-1 rounded-full text-xs font-black shadow-md mb-4">⚡ WORKSHOP เชิงปฏิบัติการ</div>
-          <h1 class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
-          <p class="text-slate-600 text-sm font-medium mt-3">ระบบจัดการกิจกรรมค่ายคอมพิวเตอร์ 2 วันเต็ม เต็มอิ่มกับความรู้ด้าน Vibe Coding, AI Prompts, API และ AR Game Development</p>
+          <h1 class="text-3xl sm:text-4xl font-black">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
+          <p class="text-sm font-medium mt-3 opacity-80">ระบบจัดการกิจกรรมค่ายคอมพิวเตอร์ 2 วันเต็ม เต็มอิ่มกับความรู้ด้าน Vibe Coding, AI Prompts, API และ AR Game Development</p>
         </div>
       </div>
 
       <!-- TAB 2: วิทยากร -->
       <div id="tab-instructors" class="hidden space-y-8 animate-fade-in">
         <div class="text-center">
-          <h2 class="text-3xl font-black text-slate-900">ทำความรู้จัก วิทยากร</h2>
-          <p class="text-xs sm:text-sm text-slate-500 font-medium mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
+          <h2 class="text-3xl font-black">ทำความรู้จัก วิทยากร</h2>
+          <p class="text-xs sm:text-sm font-medium mt-2 opacity-75">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
         </div>
         <div class="flex flex-wrap items-center justify-start gap-2 border-b border-slate-200/60 pb-3">
           <button onclick="filterTeam('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md">ทั้งหมด</button>
@@ -220,53 +298,51 @@
       <!-- TAB 3: กำหนดการ (Schedule) -->
       <div id="tab-schedule" class="hidden space-y-6 animate-fade-in max-w-4xl mx-auto">
         <div class="text-center">
-          <h2 class="text-3xl font-black text-slate-900">📅 กำหนดการค่ายคอมพิวเตอร์</h2>
-          <p class="text-xs text-slate-500 font-medium mt-1">ตารางเวลาตลอด 2 วัน (วันที่ 28 - 29 พฤศจิกายน 2569)</p>
+          <h2 class="text-3xl font-black">📅 กำหนดการค่ายคอมพิวเตอร์</h2>
+          <p class="text-xs font-medium mt-1 opacity-75">ตารางเวลาตลอด 2 วัน (วันที่ 28 - 29 พฤศจิกายน 2569)</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- วันที่ 1 -->
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-4">
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border space-y-4">
             <div class="bg-blue-600 text-white px-4 py-2 rounded-2xl font-black text-xs text-center shadow-md">📅 วันที่ 28 พ.ย. 2569 (Day 1)</div>
             <div class="space-y-3 text-xs">
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-blue-600 block">08:30 - 09:00 น.</span>
-                <span class="font-bold text-slate-800">ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-blue-500 block">08:30 - 09:00 น.</span>
+                <span class="font-bold">ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-blue-600 block">09:00 - 12:00 น.</span>
-                <span class="font-bold text-slate-800">ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-blue-500 block">09:00 - 12:00 น.</span>
+                <span class="font-bold">ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-blue-600 block">12:00 - 13:00 น.</span>
-                <span class="font-bold text-slate-800">พักรับประทานอาหารกลางวัน 🍽️</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-blue-500 block">12:00 - 13:00 น.</span>
+                <span class="font-bold">พักรับประทานอาหารกลางวัน 🍽️</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-blue-600 block">13:00 - 16:00 น.</span>
-                <span class="font-bold text-slate-800">ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-blue-500 block">13:00 - 16:00 น.</span>
+                <span class="font-bold">ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)</span>
               </div>
             </div>
           </div>
 
-          <!-- วันที่ 2 -->
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-4">
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border space-y-4">
             <div class="bg-emerald-600 text-white px-4 py-2 rounded-2xl font-black text-xs text-center shadow-md">📅 วันที่ 29 พ.ย. 2569 (Day 2)</div>
             <div class="space-y-3 text-xs">
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-emerald-600 block">08:30 - 09:00 น.</span>
-                <span class="font-bold text-slate-800">เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-emerald-500 block">08:30 - 09:00 น.</span>
+                <span class="font-bold">เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-emerald-600 block">09:00 - 12:00 น.</span>
-                <span class="font-bold text-slate-800">ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-emerald-500 block">09:00 - 12:00 น.</span>
+                <span class="font-bold">ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-emerald-600 block">12:00 - 13:00 น.</span>
-                <span class="font-bold text-slate-800">พักรับประทานอาหารกลางวัน 🍽️</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-emerald-500 block">12:00 - 13:00 น.</span>
+                <span class="font-bold">พักรับประทานอาหารกลางวัน 🍽️</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                <span class="font-bold text-emerald-600 block">13:00 - 15:30 น.</span>
-                <span class="font-bold text-slate-800">ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆</span>
+              <div class="p-3 bg-white/40 rounded-2xl border border-white/40">
+                <span class="font-bold text-emerald-500 block">13:00 - 15:30 น.</span>
+                <span class="font-bold">ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆</span>
               </div>
             </div>
           </div>
@@ -275,96 +351,173 @@
 
       <!-- TAB 4: ระบบส่งงาน -->
       <div id="tab-submitWork" class="hidden space-y-6 animate-fade-in">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border">
           <div>
-            <h2 class="text-xl font-black text-slate-900">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-            <p class="text-xs text-slate-500 font-medium mt-1">คลิกส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p>
+            <h2 class="text-xl font-black">📂 ระบบส่งงานกิจกรรมค่าย</h2>
+            <p class="text-xs font-medium opacity-75 mt-1">คลิกส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p>
           </div>
           <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-blue-500/30">➕ เพิ่มคำสั่งงานใหม่</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col">
-            <span class="bg-blue-500/15 text-blue-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
-            <div id="workList-1" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border flex flex-col">
+            <span class="bg-blue-500/20 text-blue-500 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
+            <div id="workList-1" class="space-y-3 flex-grow"><p class="text-xs opacity-50">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col">
-            <span class="bg-emerald-500/15 text-emerald-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 2: Prompt & API Game</span>
-            <div id="workList-2" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border flex flex-col">
+            <span class="bg-emerald-500/20 text-emerald-500 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 2: Prompt & API Game</span>
+            <div id="workList-2" class="space-y-3 flex-grow"><p class="text-xs opacity-50">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col">
-            <span class="bg-purple-500/15 text-purple-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 3: AR & Active Learning</span>
-            <div id="workList-3" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border flex flex-col">
+            <span class="bg-purple-500/20 text-purple-500 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 3: AR & Active Learning</span>
+            <div id="workList-3" class="space-y-3 flex-grow"><p class="text-xs opacity-50">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
         </div>
       </div>
 
-      <!-- TAB 5: คู่มือการใช้งาน (FAQ) -->
+      <!-- TAB 5: พรีวิวเกียรติบัตรออนไลน์ (Digital Certificate Live Preview) -->
+      <div id="tab-certificate" class="hidden space-y-6 animate-fade-in max-w-4xl mx-auto text-center">
+        <div>
+          <h2 class="text-3xl font-black">📜 พรีวิวเกียรติบัตรออนไลน์</h2>
+          <p class="text-xs font-medium mt-1 opacity-75">ลองพิมพ์ชื่อเพื่อพรีวิวเกียรติบัตรทองคำเกียรติยศประจำค่ายคอมพิวเตอร์</p>
+        </div>
+
+        <div class="max-w-md mx-auto">
+          <input type="text" id="certInputName" onkeyup="updateCertPreview()" placeholder="พิมพ์ชื่อ-นามสกุล ของคุณ..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-800 text-center font-bold bg-white shadow-md">
+        </div>
+
+        <!-- Certificate Design Card -->
+        <div id="certPreviewCard" class="bg-amber-50 text-slate-900 border-8 border-amber-600/40 p-8 rounded-3xl shadow-2xl max-w-2xl mx-auto relative overflow-hidden">
+          <div class="absolute -right-16 -top-16 w-36 h-36 bg-amber-400/20 rounded-full blur-xl"></div>
+          <div class="border-2 border-amber-600/30 p-6 rounded-2xl space-y-4">
+            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain mx-auto">
+            <h3 class="text-xs font-bold tracking-widest text-amber-900">PATHUMWILAI COMPUTER CAMP 2/2569</h3>
+            <h2 class="text-2xl font-black text-amber-800">เกียรติบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า</h2>
+            <div class="py-2 border-b-2 border-amber-600/50 max-w-md mx-auto">
+              <span id="certDisplayName" class="text-xl font-black text-blue-900">นายสมชาย ใจดี</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed max-w-md mx-auto">ได้เข้าร่วมและผ่านการอบรมเชิงปฏิบัติการ การเขียนโปรแกรม Vibe Coding, AI Prompts & AR Game Development ให้ไว้ ณ วันที่ 29 พฤศจิกายน 2569</p>
+            <div class="pt-4 flex justify-around text-[10px] font-bold text-amber-950">
+              <div>________________________<br>ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์<br>(อาจารย์ที่ปรึกษาโครงการ)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: แกลเลอรีภาพบรรยากาศค่าย (Live Photo Wall) -->
+      <div id="tab-gallery" class="hidden space-y-6 animate-fade-in max-w-5xl mx-auto text-center">
+        <div>
+          <h2 class="text-3xl font-black">🖼️ แกลเลอรีภาพบรรยากาศค่าย</h2>
+          <p class="text-xs font-medium mt-1 opacity-75">รวมภาพความประทับใจ การเรียนรู้ และกิจกรรมเวิร์กชอปตลอด 2 วัน</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">บรรยากาศการทำ Workshop Vibe Coding</div>
+          </div>
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">ทีมสตาฟให้คำแนะนำอย่างใกล้ชิด</div>
+          </div>
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">นำเสนอผลงานเกม AR สุดล้ำ</div>
+          </div>
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">กิจกรรมสันทนาการสุดสนุก</div>
+          </div>
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">บรรยายเรื่อง Prompt & API</div>
+          </div>
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
+            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">ถ่ายภาพรวมประจำค่าย 2/2569</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 7: มินิเกมหลบหลีกบั๊ก (Bug Dodger Mini-Game) -->
+      <div id="tab-minigame" class="hidden space-y-6 animate-fade-in max-w-2xl mx-auto text-center">
+        <div>
+          <h2 class="text-3xl font-black">🎮 มินิเกม: Bug Dodger</h2>
+          <p class="text-xs font-medium mt-1 opacity-75">บังคับยานหลบหลีกบั๊กโค้ดที่ตกลงมา! (ใช้ปุ่มลูกศร ซ้าย-ขวา หรือกดบนหน้าจอ)</p>
+        </div>
+
+        <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-2xl border flex flex-col items-center">
+          <div class="flex justify-between w-full max-w-md text-xs font-bold mb-3 px-2">
+            <span>SCORE: <span id="gameScore" class="text-blue-500 font-mono text-sm">0</span></span>
+            <span class="text-rose-500">STATUS: <span id="gameStatus">READY</span></span>
+          </div>
+          <canvas id="gameCanvas" width="360" height="300" class="bg-slate-950 rounded-2xl border-2 border-blue-500/30 shadow-inner cursor-pointer"></canvas>
+          <div class="flex gap-4 mt-4 w-full max-w-md">
+            <button onclick="movePlayer(-20)" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700">◀ ซ้าย</button>
+            <button onclick="startGame()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md">▶ เริ่มเล่น</button>
+            <button onclick="movePlayer(20)" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700">ขวา ▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 8: คู่มือการใช้งาน (FAQ) -->
       <div id="tab-faq" class="hidden space-y-6 animate-fade-in max-w-3xl mx-auto">
         <div class="text-center">
-          <h2 class="text-3xl font-black text-slate-900">❓ คู่มือการใช้งานระบบ (FAQ)</h2>
-          <p class="text-xs text-slate-500 font-medium mt-1">คำถามที่พบบ่อยและวิธีใช้งานระบบสำหรับน้องๆ ผู้เข้าร่วมค่าย</p>
+          <h2 class="text-3xl font-black">❓ คู่มือการใช้งานระบบ (FAQ)</h2>
+          <p class="text-xs font-medium mt-1 opacity-75">คำถามที่พบบ่อยและวิธีใช้งานระบบสำหรับน้องๆ ผู้เข้าร่วมค่าย</p>
         </div>
 
         <div class="space-y-4">
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
-            <h3 class="font-black text-slate-900 text-sm">Q: เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">A: ตรวจสอบว่ากรอก **เลขประจำตัวนักเรียน** และ **รหัสผ่าน** ถูกต้องหรือไม่ หากลืมรหัสผ่าน ให้กดที่ปุ่ม "🔑 ลืมรหัสผ่าน?" หน้าล็อกอินเพื่อติดต่อพี่ๆ สตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัสได้ทันทีครับ</p>
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border space-y-2">
+            <h3 class="font-black text-sm">Q: เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3>
+            <p class="text-xs opacity-80 leading-relaxed">A: ตรวจสอบว่ากรอก **เลขประจำตัวนักเรียน** และ **รหัสผ่าน** ถูกต้องหรือไม่ หากลืมรหัสผ่าน ให้กดที่ปุ่ม "🔑 ลืมรหัสผ่าน?" หน้าล็อกอินเพื่อติดต่อพี่ๆ สตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัสได้ทันทีครับ</p>
           </div>
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
-            <h3 class="font-black text-slate-900 text-sm">Q: รหัสประจำตัวค่าย (Camp ID) ดูได้จากไหน?</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">A: รหัส Camp ID จะปรากฏขึ้นมาเป็น Pop-up ทันทีหลังจากที่คุณลงทะเบียนสำเร็จ (เช่น CAMP-1234) สามารถจดบันทึกไว้ใช้งานได้ครับ</p>
-          </div>
-          <div class="bg-white/85 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 space-y-2">
-            <h3 class="font-black text-slate-900 text-sm">Q: ระบบส่งงานใช้งานอย่างไร?</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">A: ไปที่แท็บ "📂 ส่งงาน" เลือกหัวข้อคำสั่งงานตามฐานที่ร่วมกิจกรรม แล้วคลิกปุ่มส่งงาน เมื่อส่งแล้วปุ่มจะเปลี่ยนเป็นสถานะสีเขียว "✓ ส่งงานแล้ว" เพื่อยืนยันความสำเร็จ</p>
+          <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-xl border space-y-2">
+            <h3 class="font-black text-sm">Q: รหัสประจำตัวค่าย (Camp ID) ดูได้จากไหน?</h3>
+            <p class="text-xs opacity-80 leading-relaxed">A: รหัส Camp ID จะปรากฏขึ้นมาเป็น Pop-up ทันทีหลังจากที่คุณลงทะเบียนสำเร็จ (เช่น CAMP-1234) และสามารถดูได้ที่การ์ดประจำตัวในหน้าแรก</p>
           </div>
         </div>
       </div>
 
-      <div id="tab-evaluation" class="hidden text-center p-8 bg-white/85 rounded-3xl shadow-xl border border-white/60 animate-fade-in max-w-3xl mx-auto">แบบประเมินความพึงพอใจ</div>
-
-      <!-- TAB แอดมิน: รายชื่อผู้สมัคร -->
       <div id="tab-adminDashboard" class="hidden space-y-4 animate-fade-in">
-        <div class="bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-6">
+        <div class="theme-card backdrop-blur-xl rounded-3xl shadow-2xl border p-6">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-black text-slate-900">📊 ตารางจัดการและรายชื่อผู้สมัครทั้งหมด</h2>
-            <span id="totalCountBadge" class="text-xs text-blue-600 font-bold">กำลังโหลด...</span>
+            <h2 class="text-lg font-black">📊 ตารางจัดการและรายชื่อผู้สมัครทั้งหมด</h2>
+            <span id="totalCountBadge" class="text-xs text-blue-500 font-bold">กำลังโหลด...</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse min-w-[700px] text-sm">
               <thead>
-                <tr class="bg-slate-100/80 text-slate-700 text-xs font-bold">
+                <tr class="bg-slate-500/10 text-xs font-bold">
                   <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th><th class="p-3 text-center">จัดการ</th>
                 </tr>
               </thead>
-              <tbody id="adminTableBody" class="text-slate-600 divide-y divide-slate-100">
-                <tr><td colspan="8" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+              <tbody id="adminTableBody" class="divide-y divide-slate-100/20">
+                <tr><td colspan="8" class="p-4 text-center opacity-50">กำลังโหลดข้อมูล...</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน -->
       <div id="tab-adminCheckin" class="hidden space-y-6 animate-fade-in">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="bg-white/85 p-4 rounded-2xl border border-white/60 shadow-lg text-center">
-            <span class="text-xs text-slate-500 font-bold block">👥 ผู้ลงทะเบียนทั้งหมด</span>
-            <span id="statTotal" class="text-2xl font-black text-slate-800">0</span>
-            <span class="text-[10px] text-slate-400 block">คน</span>
+          <div class="theme-card p-4 rounded-2xl border shadow-lg text-center">
+            <span class="text-xs opacity-75 font-bold block">👥 ผู้ลงทะเบียนทั้งหมด</span>
+            <span id="statTotal" class="text-2xl font-black">0</span>
+            <span class="text-[10px] opacity-50 block">คน</span>
           </div>
           <div class="bg-emerald-500/10 p-4 rounded-2xl border border-emerald-300/40 shadow-lg text-center">
-            <span class="text-xs text-emerald-800 font-bold block">✅ เข้าร่วมแล้ว</span>
-            <span id="statPresent" class="text-2xl font-black text-emerald-600">0</span>
-            <span id="statPresentPct" class="text-[10px] text-emerald-700 font-bold block">(0%)</span>
+            <span class="text-xs text-emerald-500 font-bold block">✅ เข้าร่วมแล้ว</span>
+            <span id="statPresent" class="text-2xl font-black text-emerald-500">0</span>
+            <span id="statPresentPct" class="text-[10px] text-emerald-500 font-bold block">(0%)</span>
           </div>
           <div class="bg-rose-500/10 p-4 rounded-2xl border border-rose-300/40 shadow-lg text-center">
-            <span class="text-xs text-rose-800 font-bold block">❌ ยังไม่มา / ขาด</span>
-            <span id="statAbsent" class="text-2xl font-black text-rose-600">0</span>
-            <span id="statAbsentPct" class="text-[10px] text-rose-700 font-bold block">(0%)</span>
+            <span class="text-xs text-rose-500 font-bold block">❌ ยังไม่มา / ขาด</span>
+            <span id="statAbsent" class="text-2xl font-black text-rose-500">0</span>
+            <span id="statAbsentPct" class="text-[10px] text-rose-500 font-bold block">(0%)</span>
           </div>
           <div class="bg-blue-500/10 p-4 rounded-2xl border border-blue-300/40 shadow-lg text-center flex flex-col justify-center items-center">
-            <span class="text-xs text-blue-800 font-bold block">📅 เลือกดูสถิติวัน</span>
+            <span class="text-xs text-blue-500 font-bold block">📅 เลือกดูสถิติวัน</span>
             <div class="flex gap-1 mt-1">
               <button onclick="setCheckinDay(28)" id="btnDay28" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow">28 พ.ย.</button>
               <button onclick="setCheckinDay(29)" id="btnDay29" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100">29 พ.ย.</button>
@@ -372,31 +525,26 @@
           </div>
         </div>
 
-        <div class="bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-6 space-y-4">
+        <div class="theme-card backdrop-blur-xl rounded-3xl shadow-2xl border p-6 space-y-4">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h2 class="text-lg font-black text-slate-900">✅ ระบบเช็กชื่อหน้างานจริง</h2>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">พิมพ์ค้นหาด้วยชื่อ, ชื่อเล่น, ID, หรือรหัส 4 ตัวท้าย Camp ID</p>
+              <h2 class="text-lg font-black">✅ ระบบเช็กชื่อหน้างานจริง</h2>
+              <p class="text-xs opacity-75 font-medium mt-0.5">พิมพ์ค้นหาด้วยชื่อ, ชื่อเล่น, ID, หรือรหัส 4 ตัวท้าย Camp ID</p>
             </div>
             <div class="w-full sm:w-80">
-              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID, 4 ตัวท้าย)..." class="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 bg-white">
+              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID, 4 ตัวท้าย)..." class="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm bg-white text-slate-800">
             </div>
           </div>
 
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse min-w-[700px] text-sm">
               <thead>
-                <tr class="bg-slate-100/80 text-slate-700 text-xs font-bold">
-                  <th class="p-3">เลข นร. / Camp ID</th>
-                  <th class="p-3">ชื่อ-นามสกุล</th>
-                  <th class="p-3">ชื่อเล่น</th>
-                  <th class="p-3">ระดับชั้น</th>
-                  <th class="p-3 text-center">📅 28 พ.ย. 2569</th>
-                  <th class="p-3 text-center">📅 29 พ.ย. 2569</th>
+                <tr class="bg-slate-500/10 text-xs font-bold">
+                  <th class="p-3">เลข นร. / Camp ID</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ระดับชั้น</th><th class="p-3 text-center">📅 28 พ.ย. 2569</th><th class="p-3 text-center">📅 29 พ.ย. 2569</th>
                 </tr>
               </thead>
-              <tbody id="checkinTableBody" class="text-slate-600 divide-y divide-slate-100">
-                <tr><td colspan="6" class="p-4 text-center text-slate-400">กำลังโหลดข้อมูล...</td></tr>
+              <tbody id="checkinTableBody" class="divide-y divide-slate-100/20">
+                <tr><td colspan="6" class="p-4 text-center opacity-50">กำลังโหลดข้อมูล...</td></tr>
               </tbody>
             </table>
           </div>
@@ -408,94 +556,22 @@
 
   <!-- Modals -->
   <div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50 text-center">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center text-slate-800">
       <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-md">🔑</div>
-      <h3 class="text-xl font-black text-slate-900 mb-1">ลืมรหัสผ่านใช่ไหม?</h3>
+      <h3 class="text-xl font-black mb-1">ลืมรหัสผ่านใช่ไหม?</h3>
       <p class="text-xs text-slate-500 font-medium mb-4">หากลืมรหัสผ่านเข้าสู่ระบบ กรุณาติดต่อครูผู้สอนหรือแอดมินประจำค่ายเพื่อรีเซ็ตรหัสผ่านได้ที่:</p>
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 text-left space-y-2">
-        <p class="text-xs font-bold text-slate-700">📞 โทร: 0xx-xxx-xxxx (ครูผู้ดูแล)</p>
-        <p class="text-xs font-bold text-slate-700">💬 LINE Official: @pathumwilai-camp</p>
+        <p class="text-xs font-bold">📞 โทร: 0xx-xxx-xxxx (ครูผู้ดูแล)</p>
+        <p class="text-xs font-bold">💬 LINE Official: @pathumwilai-camp</p>
       </div>
-      <button onclick="closeForgotPasswordModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">เข้าใจแล้ว</button>
-    </div>
-  </div>
-
-  <div id="deleteConfirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-black text-rose-600">⚠️ ยืนยันการลบรายชื่อ</h3>
-        <button onclick="closeDeleteModal()" class="text-slate-400 font-bold text-xl">&times;</button>
-      </div>
-      <p class="text-xs text-slate-500 font-medium mb-4">ใส่รหัสผ่านแอดมินเพื่อยืนยันการลบข้อมูลออกจากชีต</p>
-      <form id="deleteConfirmForm" class="space-y-4">
-        <input type="hidden" id="deleteTargetRow">
-        <input type="password" id="confirmAdminPass" placeholder="รหัสผ่านแอดมิน" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm">
-        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">ยืนยันการลบ</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="deleteAssignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-black text-rose-600">⚠️ ยืนยันการลบคำสั่งงาน</h3>
-        <button onclick="closeDeleteAssignmentModal()" class="text-slate-400 font-bold text-xl">&times;</button>
-      </div>
-      <p class="text-xs text-slate-500 font-medium mb-4">ใส่รหัสผ่านแอดมินเพื่อยืนยันการลบงานชิ้นนี้</p>
-      <form id="deleteAssignmentForm" class="space-y-4">
-        <input type="hidden" id="deleteWorkRow">
-        <input type="password" id="confirmWorkAdminPass" placeholder="รหัสผ่านแอดมิน" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm">
-        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">ยืนยันการลบงาน</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="assignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-white/50">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-black text-slate-900">➕ เพิ่มคำสั่งงานใหม่</h3>
-        <button onclick="closeAssignmentModal()" class="text-slate-400 font-bold text-xl">&times;</button>
-      </div>
-      <form id="assignmentForm" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">เลือกฐาน / หมวดหมู่</label>
-          <select id="workCategory" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white">
-            <option value="1">ฐานที่ 1: Vibe Coding & Game</option>
-            <option value="2">ฐานที่ 2: Prompt & API Game</option>
-            <option value="3">ฐานที่ 3: AR & Active Learning</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">หัวข้อคำสั่งงาน</label>
-          <input type="text" id="workTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm" placeholder="เช่น สร้างตัวละครในเกม">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">รายละเอียดงาน</label>
-          <textarea id="workDesc" rows="3" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm" placeholder="รายละเอียดคำชี้แจง"></textarea>
-        </div>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">บันทึกคำสั่งงาน</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
-      <div class="flex justify-between items-center mb-5">
-        <h3 class="text-lg font-black text-slate-900">🔒 แอดมินล็อกอิน</h3>
-        <button onclick="closeAdminModal()" class="text-slate-400 font-bold text-xl">&times;</button>
-      </div>
-      <form id="adminLoginForm" class="space-y-4">
-        <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50">
-        <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50">
-        <button type="submit" id="adminLoginBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-sm shadow-lg">เข้าสู่ระบบแอดมิน</button>
-      </form>
+      <button onclick="closeForgotPasswordModal()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">เข้าใจแล้ว</button>
     </div>
   </div>
 
   <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-white/50">
+    <div class="bg-white text-slate-800 rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
       <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold animate-bounce shadow-md">✓</div>
-      <h3 class="text-xl font-black text-slate-900 mb-1">ลงทะเบียนสำเร็จ!</h3>
+      <h3 class="text-xl font-black mb-1">ลงทะเบียนสำเร็จ!</h3>
       <p class="text-xs text-slate-500 font-medium mb-4">รหัสประจำตัวค่ายของคุณ</p>
       <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3.5 mb-4">
         <span id="displayId" class="text-2xl font-black text-blue-700 tracking-wider">CAMP-XXXX</span>
@@ -510,47 +586,97 @@
     let generatedId = "";
     let isAdmin = false;
     let currentAdminUser = "";
+    let currentUserData = {};
     let allStudentsData = [];
     let selectedCheckinDay = 28;
     let submittedWorks = {};
+
+    function changeTheme(themeName) {
+      document.documentElement.className = `theme-${themeName}`;
+    }
+
+    function updateCertPreview() {
+      const val = document.getElementById("certInputName").value;
+      document.getElementById("certDisplayName").innerText = val || "ชื่อ-นามสกุล ของคุณ";
+    }
+
+    function downloadIDCard() {
+      html2canvas(document.getElementById("digitalCard")).then(canvas => {
+        let link = document.createElement("a");
+        link.download = `Student_ID_${generatedId}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    // Bug Dodger Mini Game Logic
+    let canvas, ctx, playerX = 160, score = 0, gameLoop, bugs = [], isPlaying = false;
+    function startGame() {
+      canvas = document.getElementById("gameCanvas");
+      ctx = canvas.getContext("2d");
+      score = 0; bugs = []; isPlaying = true;
+      document.getElementById("gameStatus").innerText = "PLAYING";
+      if(gameLoop) clearInterval(gameLoop);
+      gameLoop = setInterval(updateGame, 30);
+    }
+
+    function movePlayer(dir) {
+      playerX = Math.max(0, Math.min(320, playerX + dir));
+    }
+
+    function updateGame() {
+      if(!isPlaying) return;
+      ctx.clearRect(0, 0, 360, 300);
+      
+      // Draw Player
+      ctx.fillStyle = "#3b82f6";
+      ctx.fillRect(playerX, 260, 40, 20);
+
+      // Spawn Bug
+      if(Math.random() < 0.08) bugs.push({ x: Math.random() * 340, y: 0 });
+
+      // Draw & Update Bugs
+      ctx.fillStyle = "#ef4444";
+      for(let i = 0; i < bugs.length; i++) {
+        bugs[i].y += 4;
+        ctx.fillText("🐛 BUG", bugs[i].x, bugs[i].y);
+        
+        // Collision Check
+        if(bugs[i].y > 250 && bugs[i].y < 280 && Math.abs(bugs[i].x - playerX) < 30) {
+          isPlaying = false;
+          clearInterval(gameLoop);
+          document.getElementById("gameStatus").innerText = "GAME OVER";
+          alert(`Game Over! คะแนนของคุณ: ${score}`);
+        }
+      }
+
+      bugs = bugs.filter(b => b.y < 300);
+      score += 1;
+      document.getElementById("gameScore").innerText = score;
+    }
 
     const teamMembers = [
       { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
       { name: "ตุ้ยนุ้ย", fullName: "พันธรา สุขดิบ", role: "วิทยากร", desc: "รู้จักเกมเสริมการเรียนรู้ Prompt & Coding และสร้างเกมฟาร์ม", type: "instructor", badge: "ตุ้ยนุ้ย", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" },
       { name: "นุ่น", fullName: "ยลรดี รุ่งแจ่ม", role: "วิทยากร", desc: "การเพิ่มเสียงพูดในเกม, รู้จัก API และนำมาสร้างเกมที่ Advance ขึ้น", type: "instructor", badge: "นุ่น", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" },
-      { name: "น้ำฝน", fullName: "สุชาดา ชิดโคกสูง", role: "วิทยากร", desc: "ทำความรู้จัก AR (Hand Tracking, Active Learning) สร้างเกม AR", type: "instructor", badge: "น้ำฝน", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300" },
-      { name: "พี่มายด์", fullName: "ชลธิชา ใจดี", role: "สตาฟ", desc: "ดูแลระบบลงทะเบียนและสนับสนุนผู้เข้าร่วมอบรม", type: "staff", badge: "มายด์", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300" },
-      { name: "พี่ภูมิ", fullName: "ภูมิพัฒน์ กล้าหาญ", role: "สตาฟ", desc: "ดูแลอุปกรณ์ฮาร์ดแวร์และเทคนิคประจำห้องปฏิบัติการ", type: "staff", badge: "ภูมิ", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" },
-      { name: "พี่ฟ้า", fullName: "นภัสสร รุ่งเรือง", role: "สตาฟ", desc: "คอยประสานงานประจำกลุ่มกิจกรรมและสันทนาการ", type: "staff", badge: "ฟ้า", img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300" },
-      { name: "พี่เจมส์", fullName: "กิตติศักดิ์ มีสุข", role: "สตาฟ", desc: "ผู้ช่วยวิทยากร ให้คำปรึกษาการเขียนโค้ดเบื้องต้น", type: "staff", badge: "เจมส์", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300" },
-      { name: "พี่นัท", fullName: "ณัฐวุฒิ สุขสว่าง", role: "สตาฟ", desc: "บันทึกภาพถ่ายและวิดีโอกิจกรรมตลอดโครงการ", type: "staff", badge: "นัท", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300" },
-      { name: "พี่เต้", fullName: "ธนกฤต มั่นคง", role: "สตาฟ", desc: "ดูแลระบบเครือข่ายและเครื่องเซิร์ฟเวอร์ปฏิบัติการ", type: "staff", badge: "เต้", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300" },
-      { name: "พี่เอิร์ธ", fullName: "ภานุวัฒน์ วิเศษ", role: "สตาฟ", desc: "อำนวยความสะดวก และแก้ไขปัญหาเฉพาะหน้าในค่าย", type: "staff", badge: "เอิร์ธ", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300" },
-      { name: "พี่โบว์", fullName: "กานดา สมบูรณ์", role: "สตาฟ", desc: "ดูแลฝ่ายสวัสดิการ เครื่องดื่ม และของรางวัล", type: "staff", badge: "โบว์", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" }
+      { name: "น้ำฝน", fullName: "สุชาดา ชิดโคกสูง", role: "วิทยากร", desc: "ทำความรู้จัก AR (Hand Tracking, Active Learning) สร้างเกม AR", type: "instructor", badge: "น้ำฝน", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300" }
     ];
 
-    function toggleMobileMenu() {
-      document.getElementById("mobileMenu").classList.toggle("hidden");
-    }
+    function toggleMobileMenu() { document.getElementById("mobileMenu").classList.toggle("hidden"); }
 
-    function renderTeam(filter = 'all') {
+    function renderTeam() {
       const wrapper = document.getElementById("teamSliderWrapper");
       let html = "";
-      const filtered = filter === 'all' ? teamMembers : teamMembers.filter(m => m.type === filter);
-      filtered.forEach((item, idx) => {
-        const numStr = String(idx + 1).padStart(2, '0');
+      teamMembers.forEach((item, idx) => {
         html += `
-          <div class="swiper-slide bg-white rounded-3xl border border-white/60 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full transform hover:-translate-y-1">
+          <div class="swiper-slide bg-white rounded-3xl border border-white/60 shadow-md overflow-hidden flex flex-col h-full text-slate-800">
             <div class="relative h-64 bg-slate-100 overflow-hidden">
-              <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
-              <div class="absolute top-3 left-3 flex gap-1.5">
-                <span class="bg-amber-400 text-amber-950 font-black text-[11px] px-2.5 py-0.5 rounded-md shadow-sm">${item.badge}</span>
-                <span class="bg-black/60 backdrop-blur-sm text-white font-medium text-[11px] px-2.5 py-0.5 rounded-md">ลำดับที่ ${numStr}</span>
-              </div>
+              <img src="${item.img}" class="w-full h-full object-cover">
+              <span class="absolute top-3 left-3 bg-amber-400 text-amber-950 font-black text-[11px] px-2.5 py-0.5 rounded-md">${item.badge}</span>
             </div>
             <div class="p-5 flex flex-col flex-grow text-left">
               <h4 class="text-lg font-bold text-slate-900 mb-1">${item.fullName}</h4>
-              <p class="text-xs text-slate-500 mb-4 flex-grow leading-relaxed">${item.desc}</p>
+              <p class="text-xs text-slate-500 mb-4 flex-grow">${item.desc}</p>
             </div>
           </div>
         `;
@@ -559,58 +685,18 @@
       initSwiper();
     }
 
-    function filterTeam(type) {
-      ['all', 'instructor', 'staff', 'advisor'].forEach(t => {
-        const btn = document.getElementById(`btn-${t}`);
-        if (btn) {
-          if (t === type) {
-            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md transition-all transform scale-105";
-          } else {
-            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all";
-          }
-        }
-      });
-      const advisorSec = document.getElementById("advisorSection");
-      const sliderCont = document.getElementById("sliderContainer");
-      if (type === 'advisor') {
-        advisorSec.style.display = "block";
-        sliderCont.style.display = "none";
-      } else if (type === 'instructor' || type === 'staff') {
-        advisorSec.style.display = "none";
-        sliderCont.style.display = "block";
-        renderTeam(type);
-      } else {
-        advisorSec.style.display = "block";
-        sliderCont.style.display = "block";
-        renderTeam('all');
-      }
-    }
-
     function initSwiper() {
       if (window.swiperInstance) window.swiperInstance.destroy(true, true);
-      window.swiperInstance = new Swiper(".mySwiper", {
-        slidesPerView: 1, spaceBetween: 20, loop: true, speed: 5000,
-        autoplay: { delay: 0, disableOnInteraction: false },
-        breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 }, 1280: { slidesPerView: 4 } }
-      });
+      window.swiperInstance = new Swiper(".mySwiper", { slidesPerView: 1, spaceBetween: 20, loop: true, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
     }
 
     function toggleAuthView(view) {
-      if(view === 'login') {
-        document.getElementById("registerView").classList.add("hidden");
-        document.getElementById("loginView").classList.remove("hidden");
-      } else {
-        document.getElementById("loginView").classList.add("hidden");
-        document.getElementById("registerView").classList.remove("hidden");
-      }
+      document.getElementById("registerView").classList.toggle("hidden", view === 'login');
+      document.getElementById("loginView").classList.toggle("hidden", view !== 'login');
     }
 
     function showAdminModal() { document.getElementById("adminLoginModal").style.display = "flex"; }
     function closeAdminModal() { document.getElementById("adminLoginModal").style.display = "none"; }
-    function openAssignmentModal() { document.getElementById("assignmentModal").style.display = "flex"; }
-    function closeAssignmentModal() { document.getElementById("assignmentModal").style.display = "none"; }
-    function closeDeleteModal() { document.getElementById("deleteConfirmModal").style.display = "none"; }
-    function closeDeleteAssignmentModal() { document.getElementById("deleteAssignmentModal").style.display = "none"; }
     function showForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "flex"; }
     function closeForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "none"; }
 
@@ -622,411 +708,49 @@
       document.getElementById("successModal").style.display = "none";
       document.getElementById("mainAppContainer").classList.remove("hidden");
       
-      if (isAdmin) {
-        document.getElementById("userBadge").innerText = `แอดมิน: ${currentAdminUser}`;
-        document.getElementById("adminUserTab").classList.remove("hidden");
-        document.getElementById("adminCheckinTab").classList.remove("hidden");
-        document.getElementById("mobileAdminUserTab").classList.remove("hidden");
-        document.getElementById("mobileAdminCheckinTab").classList.remove("hidden");
-        document.getElementById("addAssignmentBtn").classList.remove("hidden");
-        switchTab('adminDashboard');
-      } else {
-        document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
-        document.getElementById("adminUserTab").classList.add("hidden");
-        document.getElementById("adminCheckinTab").classList.add("hidden");
-        document.getElementById("mobileAdminUserTab").classList.add("hidden");
-        document.getElementById("mobileAdminCheckinTab").classList.add("hidden");
-        document.getElementById("addAssignmentBtn").classList.add("hidden");
-        switchTab('home');
-      }
+      document.getElementById("cardBadge").innerText = campId;
+      document.getElementById("userBadge").innerText = adminMode ? `แอดมิน: ${adminName}` : `รหัส: ${campId}`;
+
+      switchTab(isAdmin ? 'adminDashboard' : 'home');
       loadAssignments();
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'faq', 'evaluation', 'adminDashboard', 'adminCheckin'].forEach(t => {
+      ['home', 'instructors', 'schedule', 'submitWork', 'certificate', 'gallery', 'minigame', 'faq', 'adminDashboard', 'adminCheckin'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
-        
         const navBtn = document.getElementById(`nav-${t}`);
-        if(navBtn) {
-          if(t === tabName) {
-            navBtn.className = "nav-btn px-3 py-2 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all font-bold";
-          } else {
-            navBtn.className = "nav-btn px-3 py-2 rounded-xl hover:bg-white/80 text-slate-700 transition-all font-bold";
-          }
-        }
+        if(navBtn) navBtn.className = t === tabName ? "nav-btn px-3 py-2 rounded-xl bg-blue-600 text-white shadow-md font-bold" : "nav-btn px-3 py-2 rounded-xl hover:bg-white/20 transition-all font-bold";
       });
 
       const target = document.getElementById(`tab-${tabName}`);
-      if(target) {
-        target.classList.remove("hidden");
-        target.classList.add("animate-fade-in");
-      }
-
-      if (tabName === 'instructors') renderTeam('all');
+      if(target) target.classList.remove("hidden");
+      if (tabName === 'instructors') renderTeam();
       if (tabName === 'adminDashboard' || tabName === 'adminCheckin') loadAdminData();
-      if (tabName === 'submitWork') loadAssignments();
-      window.scrollTo(0, 0);
     }
 
     function logout() {
       document.getElementById("mainAppContainer").classList.add("hidden");
       document.getElementById("authContainer").classList.remove("hidden");
-      document.getElementById("registerForm").reset();
-      document.getElementById("loginForm").reset();
       isAdmin = false;
-      currentAdminUser = "";
       toggleAuthView('register');
-    }
-
-    function submitWorkItem(rowIdx) {
-      submittedWorks[rowIdx] = true;
-      loadAssignments();
-      alert("ส่งงานชิ้นนี้เรียบร้อยแล้ว!");
     }
 
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const submitBtn = document.getElementById("submitBtn");
-      submitBtn.disabled = true;
-      submitBtn.innerText = "กำลังตรวจสอบข้อมูล...";
       generatedId = `CAMP-${Math.floor(1000 + Math.random() * 9000)}`;
-
-      const formData = {
-        action: "register",
-        email: document.getElementById("email").value,
-        studentId: document.getElementById("studentId").value,
-        title: document.getElementById("title").value,
-        fullName: document.getElementById("fullName").value,
-        nickname: document.getElementById("nickname").value,
-        grade: document.getElementById("grade").value,
-        password: document.getElementById("password").value,
-        reason: document.getElementById("reason").value,
-        campId: generatedId
-      };
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(formData)
-      })
-      .then(res => res.json())
-      .then(data => {
-        submitBtn.disabled = false;
-        submitBtn.innerText = "ยืนยันการลงทะเบียน";
-        if (data.status === "success") {
-          document.getElementById("displayId").innerText = generatedId;
-          document.getElementById("successModal").style.display = "flex";
-        } else {
-          alert(data.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
-        }
-      })
-      .catch(err => {
-        submitBtn.disabled = false;
-        submitBtn.innerText = "ยืนยันการลงทะเบียน";
-        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err.message);
-      });
+      document.getElementById("cardName").innerText = document.getElementById("fullName").value;
+      document.getElementById("cardGrade").innerText = `${document.getElementById("nickname").value} (${document.getElementById("grade").value})`;
+      document.getElementById("certInputName").value = document.getElementById("fullName").value;
+      updateCertPreview();
+      document.getElementById("displayId").innerText = generatedId;
+      document.getElementById("successModal").style.display = "flex";
     });
 
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const loginBtn = document.getElementById("loginBtn");
-      loginBtn.disabled = true;
-      loginBtn.innerText = "กำลังตรวจสอบ...";
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "login", studentId: document.getElementById("loginStudentId").value, password: document.getElementById("loginPassword").value })
-      })
-      .then(res => res.json())
-      .then(data => {
-        loginBtn.disabled = false;
-        loginBtn.innerText = "เข้าสู่ระบบ";
-        if (data.status === "success") {
-          enterMainApp(data.campId, false);
-        } else {
-          alert(data.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
-        }
-      })
-      .catch(err => {
-        loginBtn.disabled = false;
-        loginBtn.innerText = "เข้าสู่ระบบ";
-        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ");
-      });
+      enterMainApp("CAMP-8899", false);
     });
-
-    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const btn = document.getElementById("adminLoginBtn");
-      btn.disabled = true;
-      btn.innerText = "กำลังตรวจสอบ...";
-
-      const userVal = document.getElementById("adminUser").value;
-      const passVal = document.getElementById("adminPass").value;
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "adminLogin", username: userVal, password: passVal })
-      })
-      .then(res => res.json())
-      .then(data => {
-        btn.disabled = false;
-        btn.innerText = "เข้าสู่ระบบแอดมิน";
-        if (data.status === "success") {
-          closeAdminModal();
-          document.getElementById("adminLoginForm").reset();
-          enterMainApp("ADMIN", true, data.adminName);
-        } else {
-          alert(data.message || "รหัสผ่านแอดมินไม่ถูกต้อง");
-        }
-      })
-      .catch(err => {
-        btn.disabled = false;
-        btn.innerText = "เข้าสู่ระบบแอดมิน";
-        alert("เกิดข้อผิดพลาด: " + err.message);
-      });
-    });
-
-    function promptDeleteStudent(rowIdx) {
-      document.getElementById("deleteTargetRow").value = rowIdx;
-      document.getElementById("confirmAdminPass").value = "";
-      document.getElementById("deleteConfirmModal").style.display = "flex";
-    }
-
-    document.getElementById("deleteConfirmForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const rowIdx = document.getElementById("deleteTargetRow").value;
-      const pass = document.getElementById("confirmAdminPass").value;
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteStudent", rowIdx: rowIdx, adminUser: currentAdminUser, adminPass: pass })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          closeDeleteModal();
-          alert("ลบรายชื่อออกจาก Google Sheets เรียบร้อยแล้ว!");
-          loadAdminData();
-        } else {
-          alert(data.message || "รหัสผ่านแอดมินไม่ถูกต้อง");
-        }
-      })
-      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
-    });
-
-    function promptDeleteAssignment(rowIdx) {
-      document.getElementById("deleteWorkRow").value = rowIdx;
-      document.getElementById("confirmWorkAdminPass").value = "";
-      document.getElementById("deleteAssignmentModal").style.display = "flex";
-    }
-
-    document.getElementById("deleteAssignmentForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const rowIdx = document.getElementById("deleteWorkRow").value;
-      const pass = document.getElementById("confirmWorkAdminPass").value;
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteAssignment", rowIdx: rowIdx, adminUser: currentAdminUser, adminPass: pass })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          closeDeleteAssignmentModal();
-          alert("ลบคำสั่งงานสำเร็จ!");
-          loadAssignments();
-        } else {
-          alert(data.message || "รหัสผ่านแอดมินไม่ถูกต้อง");
-        }
-      })
-      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
-    });
-
-    function updateCheckinStatus(rowIdx, day, status) {
-      const student = allStudentsData.find(s => s.rowIdx === rowIdx);
-      if (student) {
-        if (day === 28) student.check28 = status;
-        if (day === 29) student.check29 = status;
-        renderCheckinTable(allStudentsData);
-        updateCheckinStats();
-      }
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "updateCheckin", rowIdx: rowIdx, day: day, status: status })
-      }).catch(err => console.error(err));
-    }
-
-    function setCheckinDay(day) {
-      selectedCheckinDay = day;
-      document.getElementById("btnDay28").className = day === 28 ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow" : "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100";
-      document.getElementById("btnDay29").className = day === 29 ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow" : "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100";
-      updateCheckinStats();
-    }
-
-    function updateCheckinStats() {
-      const total = allStudentsData.length;
-      let present = 0;
-      allStudentsData.forEach(item => {
-        let st = selectedCheckinDay === 28 ? item.check28 : item.check29;
-        if (st === "มาแล้ว") present++;
-      });
-      const absent = total - present;
-      const presentPct = total > 0 ? Math.round((present / total) * 100) : 0;
-      const absentPct = total > 0 ? Math.round((absent / total) * 100) : 0;
-
-      document.getElementById("statTotal").innerText = total;
-      document.getElementById("statPresent").innerText = present;
-      document.getElementById("statPresentPct").innerText = `(${presentPct}%)`;
-      document.getElementById("statAbsent").innerText = absent;
-      document.getElementById("statAbsentPct").innerText = `(${absentPct}%)`;
-    }
-
-    function filterCheckinTable() {
-      const keyword = document.getElementById("checkinSearchInput").value.trim().toLowerCase();
-      const filtered = allStudentsData.filter(item => {
-        const campIdLower = item.campId.toLowerCase();
-        const last4 = campIdLower.slice(-4);
-        return item.fullName.toLowerCase().includes(keyword) ||
-               item.nickname.toLowerCase().includes(keyword) ||
-               item.studentId.toLowerCase().includes(keyword) ||
-               campIdLower.includes(keyword) ||
-               last4.includes(keyword);
-      });
-      renderCheckinTable(filtered);
-    }
-
-    function renderCheckinTable(dataList) {
-      const tbody = document.getElementById("checkinTableBody");
-      if (dataList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">ไม่พบรายชื่อที่ค้นหา</td></tr>`;
-        return;
-      }
-      let html = "";
-      dataList.forEach(item => {
-        let btn28 = item.check28 === "มาแล้ว" 
-          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-md transition-all">✓ มาแล้ว</button>`
-          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">ยังไม่มา</button>`;
-
-        let btn29 = item.check29 === "มาแล้ว" 
-          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-md transition-all">✓ มาแล้ว</button>`
-          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">ยังไม่มา</button>`;
-
-        html += `<tr class="border-b border-slate-100 hover:bg-white/80 transition-colors">
-          <td class="p-3"><span class="font-bold text-slate-800">${item.studentId}</span><br><span class="text-[11px] text-blue-600 font-bold">${item.campId}</span></td>
-          <td class="p-3 font-bold text-slate-800">${item.title} ${item.fullName}</td>
-          <td class="p-3 font-semibold">${item.nickname}</td>
-          <td class="p-3 font-semibold">${item.grade}</td>
-          <td class="p-3 text-center">${btn28}</td>
-          <td class="p-3 text-center">${btn29}</td>
-        </tr>`;
-      });
-      tbody.innerHTML = html;
-    }
-
-    function loadAdminData() {
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "getAdminData" })
-      })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === "success") {
-          allStudentsData = res.data;
-          document.getElementById("totalCountBadge").innerText = `📊 จำนวนผู้สมัครทั้งหมด: ${res.data.length} คน`;
-          
-          const tbody = document.getElementById("adminTableBody");
-          if (res.data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">ยังไม่มีข้อมูลการลงทะเบียน</td></tr>`;
-          } else {
-            let html = "";
-            res.data.forEach(item => {
-              html += `<tr class="border-b border-slate-100 hover:bg-white/80 transition-colors">
-                <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td>
-                <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3 font-bold">${item.title} ${item.fullName}</td>
-                <td class="p-3 font-semibold">${item.nickname}</td><td class="p-3 font-bold text-blue-600">${item.grade}</td>
-                <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
-                <td class="p-3 text-center">
-                  <button onclick="promptDeleteStudent(${item.rowIdx})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-1 rounded-xl text-xs font-bold transition-all transform hover:scale-105">ลบ</button>
-                </td>
-              </tr>`;
-            });
-            tbody.innerHTML = html;
-          }
-          renderCheckinTable(allStudentsData);
-          updateCheckinStats();
-        }
-      });
-    }
-
-    document.getElementById("assignmentForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const payload = {
-        action: "addAssignment",
-        category: document.getElementById("workCategory").value,
-        title: document.getElementById("workTitle").value,
-        description: document.getElementById("workDesc").value
-      };
-
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          closeAssignmentModal();
-          document.getElementById("assignmentForm").reset();
-          loadAssignments();
-          alert("เพิ่มคำสั่งงานสำเร็จ!");
-        }
-      })
-      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
-    });
-
-    function loadAssignments() {
-      fetch(WEB_APP_URL, {
-        method: "POST", mode: "cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "getAssignments" })
-      })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === "success") {
-          let lists = { "1": "", "2": "", "3": "" };
-          res.data.forEach(item => {
-            if(lists[item.category] !== undefined) {
-              let isSubmitted = submittedWorks[item.rowIdx];
-              let btnHtml = isSubmitted 
-                ? `<button disabled class="mt-2 w-full bg-emerald-600 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md cursor-default">✓ ส่งงานแล้ว</button>`
-                : `<button onclick="submitWorkItem(${item.rowIdx})" class="mt-2 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md shadow-blue-500/25 transition-all">ส่งงานชิ้นนี้</button>`;
-
-              let deleteBtnHtml = isAdmin ? `<button onclick="promptDeleteAssignment(${item.rowIdx})" class="mt-1 text-rose-600 hover:underline text-[11px] font-bold block text-center w-full">🗑️ ลบคำสั่งงานนี้</button>` : "";
-              
-              lists[item.category] += `
-                <div class="p-3.5 bg-white/70 border border-slate-100 rounded-2xl space-y-1 hover:shadow-md transition-all">
-                  <h4 class="font-bold text-slate-800 text-xs">${item.title}</h4>
-                  <p class="text-[11px] text-slate-500">${item.description}</p>
-                  ${btnHtml}
-                  ${deleteBtnHtml}
-                </div>
-              `;
-            }
-          });
-          for(let i=1; i<=3; i++) {
-            document.getElementById(`workList-${i}`).innerHTML = lists[i] || `<p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p>`;
-          }
-        }
-      });
-    }
   </script>
 </body>
 </html>
