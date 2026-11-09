@@ -13,7 +13,7 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   </style>
 </head>
 <body class="bg-gradient-to-tr from-indigo-100 via-sky-50 to-emerald-50 font-sans text-slate-800 antialiased min-h-screen selection:bg-blue-500 selection:text-white">
@@ -22,6 +22,7 @@
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4 animate-fade-in">
     <div class="w-full max-w-md bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/60">
       
+      <!-- ฟอร์มลงทะเบียน -->
       <div id="registerView" class="animate-fade-in">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
@@ -87,6 +88,7 @@
         </form>
       </div>
 
+      <!-- ฟอร์มเข้าสู่ระบบ + ปุ่มลืมรหัสผ่าน -->
       <div id="loginView" class="hidden animate-fade-in">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
@@ -107,8 +109,10 @@
             <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70">
           </div>
           <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-blue-500/30">เข้าสู่ระบบ</button>
-          <div class="text-center pt-2">
-            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-bold">← ยังไม่เคยลงทะเบียน?</button>
+          
+          <div class="flex items-center justify-between pt-2">
+            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-bold">← ลงทะเบียนใหม่</button>
+            <button type="button" onclick="showForgotPasswordModal()" class="text-xs text-rose-600 hover:underline font-bold">🔑 ลืมรหัสผ่าน?</button>
           </div>
         </form>
       </div>
@@ -121,7 +125,6 @@
     <nav class="bg-white/85 backdrop-blur-md border-b border-white/40 sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        <!-- โลโก้คลิกแล้วกลับหน้าแรก -->
         <div onclick="switchTab('home')" class="flex items-center gap-3 cursor-pointer group">
           <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain transform group-hover:scale-110 transition-transform">
           <div class="leading-tight">
@@ -130,7 +133,6 @@
           </div>
         </div>
 
-        <!-- Desktop Menu พร้อม Active Background Highlight -->
         <div class="hidden lg:flex items-center space-x-1.5 text-xs font-bold text-slate-700">
           <button id="nav-home" onclick="switchTab('home')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">🏠 หน้าแรก</button>
           <button id="nav-instructors" onclick="switchTab('instructors')" class="nav-btn px-3.5 py-2 rounded-xl transition-all">👥 วิทยากร</button>
@@ -149,7 +151,6 @@
         </div>
       </div>
 
-      <!-- Mobile Dropdown Menu -->
       <div id="mobileMenu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 p-4 space-y-2 text-sm font-bold text-slate-700 animate-fade-in">
         <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">🏠 หน้าแรก</button>
         <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">👥 วิทยากร</button>
@@ -247,7 +248,7 @@
         </div>
       </div>
 
-      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน (รองรับค้นหา 4 ตัวท้าย Camp ID) -->
+      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน (เสถียร ไม่ดีเลย์ด้วย Optimistic UI) -->
       <div id="tab-adminCheckin" class="hidden space-y-6 animate-fade-in">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="bg-white/85 p-4 rounded-2xl border border-white/60 shadow-lg text-center">
@@ -278,7 +279,7 @@
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <h2 class="text-lg font-black text-slate-900">✅ ระบบเช็กชื่อหน้างานจริง</h2>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">พิมพ์ค้นหาด้วยชื่อ, ชื่อเล่น, ID, หรือรหัส 4 ตัวท้าย Camp ID (เช่น 1234)</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">พิมพ์ค้นหาด้วยชื่อ, ชื่อเล่น, ID, หรือรหัส 4 ตัวท้าย Camp ID</p>
             </div>
             <div class="w-full sm:w-80">
               <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID, 4 ตัวท้าย)..." class="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 bg-white">
@@ -306,6 +307,22 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Modal แจ้งเตือนลืมรหัสผ่าน -->
+  <div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50 text-center">
+      <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-md">🔑</div>
+      <h3 class="text-xl font-black text-slate-900 mb-1">ลืมรหัสผ่านใช่ไหม?</h3>
+      <p class="text-xs text-slate-500 font-medium mb-4">หากลืมรหัสผ่านเข้าสู่ระบบ กรุณาติดต่อครูผู้สอนหรือแอดมินประจำค่ายเพื่อรีเซ็ตรหัสผ่านได้ที่:</p>
+      
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 text-left space-y-2">
+        <p class="text-xs font-bold text-slate-700">📞 โทร: 0xx-xxx-xxxx (ครูผู้ดูแล)</p>
+        <p class="text-xs font-bold text-slate-700">💬 LINE Official: @pathumwilai-camp</p>
+      </div>
+
+      <button onclick="closeForgotPasswordModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm shadow-lg">เข้าใจแล้ว</button>
+    </div>
   </div>
 
   <!-- Modal ลบรายชื่อนักเรียน -->
@@ -501,6 +518,8 @@
     function closeAssignmentModal() { document.getElementById("assignmentModal").style.display = "none"; }
     function closeDeleteModal() { document.getElementById("deleteConfirmModal").style.display = "none"; }
     function closeDeleteAssignmentModal() { document.getElementById("deleteAssignmentModal").style.display = "none"; }
+    function showForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "flex"; }
+    function closeForgotPasswordModal() { document.getElementById("forgotPasswordModal").style.display = "none"; }
 
     function enterMainApp(campId, adminMode = false, adminName = "") {
       generatedId = campId;
@@ -535,7 +554,6 @@
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
         
-        // อัปเดตพื้นหลังจางๆ ของปุ่มเมนู (Active Pill)
         const navBtn = document.getElementById(`nav-${t}`);
         if(navBtn) {
           if(t === tabName) {
@@ -568,12 +586,12 @@
       toggleAuthView('register');
     }
 
-    // 1. ลงทะเบียน
+    // 1. ลงทะเบียน (ป้องกันเมลซ้ำและแสดงข้อความแจ้งเตือนทันที)
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
       submitBtn.disabled = true;
-      submitBtn.innerText = "กำลังบันทึกข้อมูล...";
+      submitBtn.innerText = "กำลังตรวจสอบข้อมูล...";
       generatedId = `CAMP-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const formData = {
@@ -590,20 +608,25 @@
       };
 
       fetch(WEB_APP_URL, {
-        method: "POST", mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        method: "POST", mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(formData)
       })
-      .then(() => {
+      .then(res => res.json())
+      .then(data => {
         submitBtn.disabled = false;
         submitBtn.innerText = "ยืนยันการลงทะเบียน";
-        document.getElementById("displayId").innerText = generatedId;
-        document.getElementById("successModal").style.display = "flex";
+        if (data.status === "success") {
+          document.getElementById("displayId").innerText = generatedId;
+          document.getElementById("successModal").style.display = "flex";
+        } else {
+          alert(data.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
+        }
       })
       .catch(err => {
         submitBtn.disabled = false;
         submitBtn.innerText = "ยืนยันการลงทะเบียน";
-        alert("เกิดข้อผิดพลาด: " + err.message);
+        alert("เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err.message);
       });
     });
 
@@ -699,7 +722,6 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     });
 
-    // ลบคำสั่งงาน
     function promptDeleteAssignment(rowIdx) {
       document.getElementById("deleteWorkRow").value = rowIdx;
       document.getElementById("confirmWorkAdminPass").value = "";
@@ -729,20 +751,26 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     });
 
-    // บันทึกเช็กชื่อ
+    // 4. บันทึกเช็กชื่อแบบเสถียร (Optimistic UI เปลี่ยนสถานะทันทีไม่ต้องรอโหลดเสร็จ)
     function updateCheckinStatus(rowIdx, day, status) {
+      // อัปเดตในตัวแปร local ทันทีเพื่อความลื่นไหล
+      const student = allStudentsData.find(s => s.rowIdx === rowIdx);
+      if (student) {
+        if (day === 28) student.check28 = status;
+        if (day === 29) student.check29 = status;
+        renderCheckinTable(allStudentsData);
+        updateCheckinStats();
+      }
+
       fetch(WEB_APP_URL, {
         method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "updateCheckin", rowIdx: rowIdx, day: day, status: status })
       })
       .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          loadAdminData();
-        }
-      })
-      .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
+      .catch(err => {
+        console.error("บันทึกไม่สำเร็จ: " + err.message);
+      });
     }
 
     function setCheckinDay(day) {
@@ -770,12 +798,11 @@
       document.getElementById("statAbsentPct").innerText = `(${absentPct}%)`;
     }
 
-    // ค้นหารองรับ 4 ตัวท้าย Camp ID ด้วย (เช่น 1234)
     function filterCheckinTable() {
       const keyword = document.getElementById("checkinSearchInput").value.trim().toLowerCase();
       const filtered = allStudentsData.filter(item => {
         const campIdLower = item.campId.toLowerCase();
-        const last4 = campIdLower.slice(-4); // เอา 4 ตัวท้าย
+        const last4 = campIdLower.slice(-4);
         return item.fullName.toLowerCase().includes(keyword) ||
                item.nickname.toLowerCase().includes(keyword) ||
                item.studentId.toLowerCase().includes(keyword) ||
@@ -814,7 +841,6 @@
     }
 
     function loadAdminData() {
-      document.getElementById("totalCountBadge").innerText = "กำลังโหลดข้อมูล...";
       fetch(WEB_APP_URL, {
         method: "POST", mode: "cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
