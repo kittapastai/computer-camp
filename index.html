@@ -9,45 +9,44 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     .swiper-wrapper { transition-timing-function: linear !important; }
-    /* Custom Smooth Animation Classes */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-fade-in {
-      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100 font-sans text-slate-800 antialiased min-h-screen">
+<body class="bg-gradient-to-tr from-indigo-100 via-sky-50 to-emerald-50 font-sans text-slate-800 antialiased min-h-screen selection:bg-blue-500 selection:text-white">
 
   <!-- 1. ส่วนเข้าสู่ระบบ / ลงทะเบียน -->
   <div id="authContainer" class="min-h-screen flex items-center justify-center p-4 animate-fade-in">
-    <div class="w-full max-w-md bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/50 transition-all duration-300">
+    <div class="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/60 transition-all duration-300">
       
       <!-- ฟอร์มลงทะเบียน -->
       <div id="registerView" class="animate-fade-in">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
-            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain transform hover:scale-110 transition-transform duration-300">
+            <div class="p-3 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl shadow-lg shadow-blue-500/30 transform hover:rotate-6 transition-transform">
+              <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-12 h-12 object-contain filter drop-shadow">
+            </div>
           </div>
-          <h1 class="text-2xl font-black text-slate-900 tracking-tight">ค่ายคอมพิวเตอร์ 2/2569</h1>
-          <p class="text-xs text-slate-500 mt-1">โรงเรียนปทุมวิไล จังหวัดปทุมธานี</p>
+          <h1 class="text-2xl font-black bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 bg-clip-text text-transparent tracking-tight">ค่ายคอมพิวเตอร์ 2/2569</h1>
+          <p class="text-xs font-semibold text-slate-500 mt-1">โรงเรียนปทุมวิไล จังหวัดปทุมธานี</p>
         </div>
 
         <form id="registerForm" class="space-y-3.5">
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">อีเมล</label>
-            <input type="email" id="email" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="example@email.com">
+            <label class="block text-xs font-bold text-slate-700 mb-1">อีเมล</label>
+            <input type="email" id="email" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="example@email.com">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
-              <input type="text" id="studentId" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="12345">
+              <label class="block text-xs font-bold text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
+              <input type="text" id="studentId" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="12345">
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">คำนำหน้า</label>
-              <select id="title" required class="w-full px-3.5 py-2 border rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200">
+              <label class="block text-xs font-bold text-slate-700 mb-1">คำนำหน้า</label>
+              <select id="title" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
                 <option value="">เลือก</option>
                 <option value="เด็กชาย">เด็กชาย</option><option value="เด็กหญิง">เด็กหญิง</option>
                 <option value="นาย">นาย</option><option value="นางสาว">นางสาว</option>
@@ -55,36 +54,36 @@
             </div>
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">ชื่อ-นามสกุล</label>
-            <input type="text" id="fullName" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="สมชาย ใจดี">
+            <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ-นามสกุล</label>
+            <input type="text" id="fullName" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="สมชาย ใจดี">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">ชื่อเล่น</label>
-              <input type="text" id="nickname" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="บอย">
+              <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อเล่น</label>
+              <input type="text" id="nickname" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="บอย">
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">ระดับชั้น</label>
-              <select id="grade" required class="w-full px-3.5 py-2 border rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200">
+              <label class="block text-xs font-bold text-slate-700 mb-1">ระดับชั้น</label>
+              <select id="grade" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white/70 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
                 <option value="">เลือกห้อง</option>
                 <option value="ม.1/1">ม.1/1</option><option value="ม.1/2">ม.1/2</option><option value="ม.1/3">ม.1/3</option><option value="ม.1/4">ม.1/4</option><option value="ม.1/5">ม.1/5</option><option value="ม.1/6">ม.1/6</option><option value="ม.1/7">ม.1/7</option><option value="ม.1/8">ม.1/8</option><option value="ม.1/9">ม.1/9</option><option value="ม.1/10">ม.1/10</option><option value="ม.1/11">ม.1/11</option><option value="ม.1/12">ม.1/12</option><option value="ม.1/13">ม.1/13</option><option value="ม.1/14">ม.1/14</option><option value="ม.1/15">ม.1/15</option>
               </select>
             </div>
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">รหัสผ่านสำหรับเข้าสู่ระบบ</label>
-            <input type="password" id="password" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="ตั้งรหัสผ่าน">
+            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสผ่านสำหรับเข้าสู่ระบบ</label>
+            <input type="password" id="password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="ตั้งรหัสผ่าน">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">เหตุผลที่อยากเข้าค่าย</label>
-            <textarea id="reason" rows="2" required class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200" placeholder="เหตุผลสั้นๆ"></textarea>
+            <label class="block text-xs font-bold text-slate-700 mb-1">เหตุผลที่อยากเข้าค่าย</label>
+            <textarea id="reason" rows="2" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70 transition-all" placeholder="เหตุผลสั้นๆ"></textarea>
           </div>
-          <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-blue-500/25 text-sm">ยืนยันการลงทะเบียน</button>
+          <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-blue-500/30 text-sm">ยืนยันการลงทะเบียน</button>
           
           <div class="text-center pt-3 flex items-center justify-center gap-2 text-xs">
-            <button type="button" onclick="toggleAuthView('login')" class="text-blue-600 hover:underline font-medium transition-colors">มีรหัสแล้ว? เข้าสู่ระบบ</button>
+            <button type="button" onclick="toggleAuthView('login')" class="text-blue-600 hover:underline font-bold transition-colors">มีรหัสแล้ว? เข้าสู่ระบบ</button>
             <span class="text-slate-300">|</span>
-            <button type="button" onclick="showAdminModal()" class="text-slate-600 hover:underline font-medium transition-colors">🔒 เมนูแอดมิน</button>
+            <button type="button" onclick="showAdminModal()" class="text-slate-600 hover:underline font-bold transition-colors">🔒 เมนูแอดมิน</button>
           </div>
         </form>
       </div>
@@ -93,23 +92,25 @@
       <div id="loginView" class="hidden animate-fade-in">
         <div class="text-center mb-6">
           <div class="flex justify-center mb-3">
-            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain transform hover:scale-110 transition-transform duration-300">
+            <div class="p-3 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl shadow-lg shadow-blue-500/30">
+              <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-12 h-12 object-contain filter drop-shadow">
+            </div>
           </div>
           <h1 class="text-2xl font-black text-slate-900 tracking-tight">เข้าสู่ระบบค่าย</h1>
           <p class="text-xs text-slate-500 mt-1">ค่ายคอมพิวเตอร์ 2/2569</p>
         </div>
         <form id="loginForm" class="space-y-4">
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
-            <input type="text" id="loginStudentId" required class="w-full px-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">เลขประจำตัวนักเรียน</label>
+            <input type="text" id="loginStudentId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-700 mb-1">รหัสผ่าน</label>
-            <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสผ่าน</label>
+            <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white/70">
           </div>
-          <button type="submit" id="loginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/25">เข้าสู่ระบบ</button>
+          <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30">เข้าสู่ระบบ</button>
           <div class="text-center pt-2">
-            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-medium">← ยังไม่เคยลงทะเบียน?</button>
+            <button type="button" onclick="toggleAuthView('register')" class="text-xs text-blue-600 hover:underline font-bold">← ยังไม่เคยลงทะเบียน?</button>
           </div>
         </form>
       </div>
@@ -119,58 +120,75 @@
 
   <!-- 2. ส่วนหน้าหลัก -->
   <div id="mainAppContainer" class="hidden min-h-screen flex flex-col animate-fade-in">
-    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm transition-all">
+    <nav class="bg-white/80 backdrop-blur-md border-b border-white/40 sticky top-0 z-40 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain transform hover:rotate-6 transition-transform">
           <div class="leading-tight">
-            <span class="text-sm font-bold text-slate-900 block">โรงเรียนปทุมวิไล</span>
-            <span class="text-xs text-blue-600 font-semibold">ค่ายคอมพิวเตอร์ 2/2569</span>
+            <span class="text-sm font-black bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent block">โรงเรียนปทุมวิไล</span>
+            <span class="text-xs text-blue-600 font-bold">ค่ายคอมพิวเตอร์ 2/2569</span>
           </div>
         </div>
-        <div class="hidden md:flex items-center space-x-1 text-sm font-medium text-slate-700">
-          <button onclick="switchTab('home')" class="px-3 py-2 rounded-xl hover:bg-slate-100 transition-all duration-200">🏠 หน้าแรก</button>
-          <button onclick="switchTab('instructors')" class="px-3 py-2 rounded-xl hover:bg-slate-100 transition-all duration-200">👥 วิทยากร</button>
-          <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-xl hover:bg-slate-100 transition-all duration-200">📅 กำหนดการ</button>
-          <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-xl hover:bg-slate-100 transition-all duration-200">📂 ส่งงาน</button>
-          <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-xl hover:bg-slate-100 transition-all duration-200">📋 แบบประเมิน</button>
+
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex items-center space-x-1.5 text-xs font-bold text-slate-700">
+          <button onclick="switchTab('home')" class="px-3 py-2 rounded-xl hover:bg-white/80 transition-all">🏠 หน้าแรก</button>
+          <button onclick="switchTab('instructors')" class="px-3 py-2 rounded-xl hover:bg-white/80 transition-all">👥 วิทยากร</button>
+          <button onclick="switchTab('schedule')" class="px-3 py-2 rounded-xl hover:bg-white/80 transition-all">📅 กำหนดการ</button>
+          <button onclick="switchTab('submitWork')" class="px-3 py-2 rounded-xl hover:bg-white/80 transition-all">📂 ส่งงาน</button>
+          <button onclick="switchTab('evaluation')" class="px-3 py-2 rounded-lg hover:bg-white/80 transition-all">📋 แบบประเมิน</button>
           
-          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="hidden px-3 py-2 rounded-xl bg-amber-50 text-amber-800 font-bold hover:bg-amber-100 transition-all duration-200 transform hover:scale-105">📊 รายชื่อผู้สมัคร</button>
-          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="hidden px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold hover:bg-emerald-100 transition-all duration-200 transform hover:scale-105">✅ เช็กชื่อหน้างาน</button>
+          <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="hidden px-3.5 py-2 rounded-xl bg-amber-400/20 text-amber-900 border border-amber-300/50 hover:bg-amber-400/30 transition-all">📊 รายชื่อผู้สมัคร</button>
+          <button id="adminCheckinTab" onclick="switchTab('adminCheckin')" class="hidden px-3.5 py-2 rounded-xl bg-emerald-400/20 text-emerald-900 border border-emerald-300/50 hover:bg-emerald-400/30 transition-all">✅ เช็กชื่อหน้างาน</button>
         </div>
+
         <div class="flex items-center gap-3">
-          <span id="userBadge" class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200 shadow-sm">รหัส: -</span>
-          <button onclick="logout()" class="text-xs text-red-600 hover:text-red-700 hover:underline font-medium transition-colors">ออกจากระบบ</button>
+          <span id="userBadge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md shadow-blue-500/20">รหัส: -</span>
+          <!-- Mobile Menu Toggle Button -->
+          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">☰</button>
+          <button onclick="logout()" class="hidden lg:block text-xs text-red-600 hover:underline font-bold">ออกจากระบบ</button>
         </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 p-4 space-y-2 text-sm font-bold text-slate-700 animate-fade-in">
+        <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">🏠 หน้าแรก</button>
+        <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">👥 วิทยากร</button>
+        <button onclick="switchTab('schedule'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📅 กำหนดการ</button>
+        <button onclick="switchTab('submitWork'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📂 ส่งงาน</button>
+        <button onclick="switchTab('evaluation'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-slate-100">📋 แบบประเมิน</button>
+        <button id="mobileAdminUserTab" onclick="switchTab('adminDashboard'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-amber-50 text-amber-800">📊 รายชื่อผู้สมัคร</button>
+        <button id="mobileAdminCheckinTab" onclick="switchTab('adminCheckin'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-emerald-50 text-emerald-800">✅ เช็กชื่อหน้างาน</button>
+        <button onclick="logout()" class="w-full text-left py-2 px-3 text-red-600 border-t mt-2">ออกจากระบบ</button>
       </div>
     </nav>
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
-      <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-slate-100 transition-all duration-300">
-        <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold border border-amber-200 animate-pulse">⚡ WORKSHOP เชิงปฏิบัติการ</div>
-        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
-        <p class="text-slate-600 text-sm">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
+      <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/60 transition-all">
+        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 px-3.5 py-1 rounded-full text-xs font-black shadow-md shadow-orange-500/20 animate-pulse">⚡ WORKSHOP เชิงปฏิบัติการ</div>
+        <h1 class="text-3xl sm:text-4xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent leading-tight">ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1>
+        <p class="text-slate-600 text-sm font-medium">ยินดีต้อนรับเข้าสู่ระบบค่ายคอมพิวเตอร์ คุณได้เข้าสู่ระบบเรียบร้อยแล้ว</p>
       </div>
 
       <!-- TAB 2: วิทยากร -->
       <div id="tab-instructors" class="hidden space-y-8 animate-fade-in">
         <div class="text-center">
           <h2 class="text-3xl font-black text-slate-900">ทำความรู้จัก วิทยากร</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
+          <p class="text-xs sm:text-sm text-slate-500 font-medium mt-2">ทีมวิทยากรผู้อยู่เบื้องหลังการรวบรวมเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
         </div>
-        <div class="flex flex-wrap items-center justify-start gap-2 border-b border-slate-200 pb-3">
-          <button onclick="filterTeam('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition-all duration-200 transform hover:scale-105">ทั้งหมด</button>
-          <button onclick="filterTeam('instructor')" id="btn-instructor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all duration-200 transform hover:scale-105">👥 วิทยากร</button>
-          <button onclick="filterTeam('staff')" id="btn-staff" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all duration-200 transform hover:scale-105">🧑‍💻 สตาฟ</button>
-          <button onclick="filterTeam('advisor')" id="btn-advisor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all duration-200 transform hover:scale-105">⭐ ครู / ที่ปรึกษา</button>
+        <div class="flex flex-wrap items-center justify-start gap-2 border-b border-slate-200/60 pb-3">
+          <button onclick="filterTeam('all')" id="btn-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md transition-all transform hover:scale-105">ทั้งหมด</button>
+          <button onclick="filterTeam('instructor')" id="btn-instructor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-700 border hover:bg-slate-100 transition-all transform hover:scale-105">👥 วิทยากร</button>
+          <button onclick="filterTeam('staff')" id="btn-staff" class="px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-700 border hover:bg-slate-100 transition-all transform hover:scale-105">🧑‍💻 สตาฟ</button>
+          <button onclick="filterTeam('advisor')" id="btn-advisor" class="px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-700 border hover:bg-slate-100 transition-all transform hover:scale-105">⭐ ครู / ที่ปรึกษา</button>
         </div>
-        <div id="advisorSection" class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-6 sm:p-8 shadow-md transition-all duration-300">
-          <div class="inline-flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4 shadow-sm">👑 ที่ปรึกษาโครงการ</div>
+        <div id="advisorSection" class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+          <div class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold mb-4">👑 ที่ปรึกษาโครงการ</div>
           <div class="flex flex-col sm:flex-row items-center gap-6">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" alt="ที่ปรึกษา" class="w-32 h-32 rounded-2xl object-cover shadow-lg border-4 border-white transform hover:scale-105 transition-transform duration-300">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" alt="ที่ปรึกษา" class="w-32 h-32 rounded-2xl object-cover shadow-2xl border-4 border-white/30 transform hover:scale-105 transition-transform">
             <div class="text-center sm:text-left">
-              <h3 class="text-2xl font-bold text-slate-900">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3>
-              <p class="text-xs text-blue-600 font-bold mt-1">อาจารย์ที่ปรึกษาประจำโครงการ</p>
+              <h3 class="text-2xl font-black">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3>
+              <p class="text-xs text-blue-200 font-bold mt-1">อาจารย์ที่ปรึกษาประจำโครงการ</p>
             </div>
           </div>
         </div>
@@ -179,46 +197,46 @@
         </div>
       </div>
 
-      <div id="tab-schedule" class="hidden text-center p-8 bg-white rounded-3xl shadow-xl border border-slate-100 animate-fade-in">กำหนดการอบรม</div>
+      <div id="tab-schedule" class="hidden text-center p-8 bg-white/80 rounded-3xl shadow-xl border border-white/60 animate-fade-in">กำหนดการอบรม</div>
 
       <!-- TAB: ระบบส่งงาน -->
       <div id="tab-submitWork" class="hidden space-y-6 animate-fade-in">
-        <div class="flex justify-between items-center bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60">
           <div>
-            <h2 class="text-xl font-bold text-slate-900">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-            <p class="text-xs text-slate-500 mt-1">เลือกส่งงานตามฐานหรือหัวข้อคำสั่งงานด้านล่าง</p>
+            <h2 class="text-xl font-black text-slate-900">📂 ระบบส่งงานกิจกรรมค่าย</h2>
+            <p class="text-xs text-slate-500 font-medium mt-1">เลือกส่งงานตามฐานหรือหัวข้อคำสั่งงานด้านล่าง</p>
           </div>
-          <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 transform hover:scale-105 shadow-md shadow-blue-500/20">➕ เพิ่มคำสั่งงานใหม่</button>
+          <button id="addAssignmentBtn" onclick="openAssignmentModal()" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">➕ เพิ่มคำสั่งงานใหม่</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 flex flex-col transition-all duration-300 hover:shadow-2xl">
-            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
+          <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col transition-all hover:shadow-2xl">
+            <span class="bg-blue-500/15 text-blue-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 1: Vibe Coding & Game</span>
             <div id="workList-1" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
-          <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 flex flex-col transition-all duration-300 hover:shadow-2xl">
-            <span class="bg-emerald-100 text-emerald-700 font-bold text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 2: Prompt & API Game</span>
+          <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col transition-all hover:shadow-2xl">
+            <span class="bg-emerald-500/15 text-emerald-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 2: Prompt & API Game</span>
             <div id="workList-2" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
-          <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 flex flex-col transition-all duration-300 hover:shadow-2xl">
-            <span class="bg-purple-100 text-purple-700 font-bold text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 3: AR & Active Learning</span>
+          <div class="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60 flex flex-col transition-all hover:shadow-2xl">
+            <span class="bg-purple-500/15 text-purple-700 font-black text-xs px-3 py-1 rounded-full w-max mb-3">ฐานที่ 3: AR & Active Learning</span>
             <div id="workList-3" class="space-y-3 flex-grow"><p class="text-xs text-slate-400">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
           </div>
         </div>
       </div>
 
-      <div id="tab-evaluation" class="hidden text-center p-8 bg-white rounded-3xl shadow-xl border border-slate-100 animate-fade-in">แบบประเมินความพึงพอใจ</div>
+      <div id="tab-evaluation" class="hidden text-center p-8 bg-white/80 rounded-3xl shadow-xl border border-white/60 animate-fade-in">แบบประเมินความพึงพอใจ</div>
 
       <!-- TAB แอดมิน: รายชื่อผู้สมัคร -->
       <div id="tab-adminDashboard" class="hidden space-y-4 animate-fade-in">
-        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6">
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-6">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold text-slate-900">📊 ตารางจัดการและรายชื่อผู้สมัครทั้งหมด</h2>
-            <span id="totalCountBadge" class="text-xs text-blue-600 font-semibold">กำลังโหลด...</span>
+            <h2 class="text-lg font-black text-slate-900">📊 ตารางจัดการและรายชื่อผู้สมัครทั้งหมด</h2>
+            <span id="totalCountBadge" class="text-xs text-blue-600 font-bold">กำลังโหลด...</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse min-w-[700px] text-sm">
               <thead>
-                <tr class="bg-slate-100 text-slate-700 text-xs">
+                <tr class="bg-slate-100/80 text-slate-700 text-xs font-bold">
                   <th class="p-3">เวลา</th><th class="p-3">อีเมล</th><th class="p-3">เลข นร.</th><th class="p-3">ชื่อ-นามสกุล</th><th class="p-3">ชื่อเล่น</th><th class="p-3">ห้อง</th><th class="p-3">Camp ID</th><th class="p-3 text-center">จัดการ</th>
                 </tr>
               </thead>
@@ -230,23 +248,51 @@
         </div>
       </div>
 
-      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน -->
+      <!-- TAB แอดมิน: ระบบเช็กชื่อหน้างาน (พร้อมกล่องสรุปยอดมา/ขาด) -->
       <div id="tab-adminCheckin" class="hidden space-y-6 animate-fade-in">
-        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6 space-y-4">
+        
+        <!-- กล่องสรุปยอดมา-ขาด เรียลไทม์ -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white/80 backdrop-blur-xl p-4 rounded-2xl border border-white/60 shadow-lg text-center">
+            <span class="text-xs text-slate-500 font-bold block">👥 ผู้ลงทะเบียนทั้งหมด</span>
+            <span id="statTotal" class="text-2xl font-black text-slate-800">0</span>
+            <span class="text-[10px] text-slate-400 block">คน</span>
+          </div>
+          <div class="bg-emerald-500/10 backdrop-blur-xl p-4 rounded-2xl border border-emerald-300/40 shadow-lg text-center">
+            <span class="text-xs text-emerald-800 font-bold block">✅ เข้าร่วมแล้ว</span>
+            <span id="statPresent" class="text-2xl font-black text-emerald-600">0</span>
+            <span id="statPresentPct" class="text-[10px] text-emerald-700 font-bold block">(0%)</span>
+          </div>
+          <div class="bg-rose-500/10 backdrop-blur-xl p-4 rounded-2xl border border-rose-300/40 shadow-lg text-center">
+            <span class="text-xs text-rose-800 font-bold block">❌ ยังไม่มา / ขาด</span>
+            <span id="statAbsent" class="text-2xl font-black text-rose-600">0</span>
+            <span id="statAbsentPct" class="text-[10px] text-rose-700 font-bold block">(0%)</span>
+          </div>
+          <div class="bg-blue-500/10 backdrop-blur-xl p-4 rounded-2xl border border-blue-300/40 shadow-lg text-center flex flex-col justify-center items-center">
+            <span class="text-xs text-blue-800 font-bold block">📅 เลือกดูสถิติวัน</span>
+            <div class="flex gap-1 mt-1">
+              <button onclick="setCheckinDay(28)" id="btnDay28" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow">28 พ.ย.</button>
+              <button onclick="setCheckinDay(29)" id="btnDay29" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100">29 พ.ย.</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ตารางเช็กชื่อ -->
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-6 space-y-4">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h2 class="text-lg font-bold text-slate-900">✅ ระบบเช็กชื่อหน้างานจริง</h2>
-              <p class="text-xs text-slate-500 mt-0.5">ค้นหาชื่อ นามสกุล ชื่อเล่น หรือ ID แล้วกดเช็กชื่อแยกตามวัน</p>
+              <h2 class="text-lg font-black text-slate-900">✅ ระบบเช็กชื่อหน้างานจริง</h2>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">กดปุ่มเช็กชื่อเพื่อบันทึกสถานะลง Google Sheets ทันที</p>
             </div>
             <div class="w-full sm:w-72">
-              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID)..." class="w-full px-4 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all">
+              <input type="text" id="checkinSearchInput" onkeyup="filterCheckinTable()" placeholder="🔍 ค้นหา (ชื่อ, ชื่อเล่น, ID)..." class="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
             </div>
           </div>
 
           <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[750px] text-sm">
+            <table class="w-full text-left border-collapse min-w-[700px] text-sm">
               <thead>
-                <tr class="bg-slate-100 text-slate-700 text-xs">
+                <tr class="bg-slate-100/80 text-slate-700 text-xs font-bold">
                   <th class="p-3">เลข นร. / Camp ID</th>
                   <th class="p-3">ชื่อ-นามสกุล</th>
                   <th class="p-3">ชื่อเล่น</th>
@@ -266,76 +312,86 @@
     </main>
   </div>
 
+  <!-- Modal ปรับโฉมใหม่ ล็อกอินแอดมิน -->
+  <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50 relative overflow-hidden">
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"></div>
+      <div class="flex justify-between items-center mb-5">
+        <div class="flex items-center gap-2">
+          <div class="p-2 bg-slate-900 text-white rounded-xl shadow-md text-xs">🔒</div>
+          <h3 class="text-lg font-black text-slate-900">แอดมินล็อกอิน</h3>
+        </div>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+      </div>
+      <form id="adminLoginForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อผู้ใช้แอดมิน (Username)</label>
+          <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none bg-slate-50">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">รหัสผ่าน (Password)</label>
+          <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none bg-slate-50">
+        </div>
+        <button type="submit" id="adminLoginBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-lg shadow-slate-900/30">เข้าสู่ระบบแอดมิน</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal ยืนยันรหัสผ่านเพื่อลบรายชื่อ -->
-  <div id="deleteConfirmModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
+  <div id="deleteConfirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold text-red-600">⚠️ ยืนยันการลบรายชื่อ</h3>
+        <h3 class="text-lg font-black text-rose-600">⚠️ ยืนยันการลบรายชื่อ</h3>
         <button onclick="closeDeleteModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
       </div>
-      <p class="text-xs text-slate-500 mb-4">โปรดใส่รหัสผ่านแอดมินของคุณเพื่อยืนยันการลบข้อมูลออกจากชีต</p>
+      <p class="text-xs text-slate-500 font-medium mb-4">โปรดใส่รหัสผ่านแอดมินเพื่อยืนยันการลบข้อมูลออกจาก Google Sheets</p>
       <form id="deleteConfirmForm" class="space-y-4">
         <input type="hidden" id="deleteTargetRow">
-        <input type="password" id="confirmAdminPass" placeholder="รหัสผ่านแอดมิน" required class="w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
-        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-red-500/20">ยืนยันการลบ</button>
+        <input type="password" id="confirmAdminPass" placeholder="รหัสผ่านแอดมิน" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none">
+        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-rose-500/30">ยืนยันการลบ</button>
       </form>
     </div>
   </div>
 
   <!-- Modal เพิ่มคำสั่งงาน -->
-  <div id="assignmentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
+  <div id="assignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-white/50">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold">➕ เพิ่มคำสั่งงานใหม่</h3>
+        <h3 class="text-lg font-black text-slate-900">➕ เพิ่มคำสั่งงานใหม่</h3>
         <button onclick="closeAssignmentModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
       </div>
       <form id="assignmentForm" class="space-y-4">
         <div>
-          <label class="block text-xs font-medium text-slate-700 mb-1">เลือกฐาน / หมวดหมู่</label>
-          <select id="workCategory" class="w-full px-3.5 py-2.5 border rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="block text-xs font-bold text-slate-700 mb-1">เลือกฐาน / หมวดหมู่</label>
+          <select id="workCategory" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500">
             <option value="1">ฐานที่ 1: Vibe Coding & Game</option>
             <option value="2">ฐานที่ 2: Prompt & API Game</option>
             <option value="3">ฐานที่ 3: AR & Active Learning</option>
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-slate-700 mb-1">หัวข้อคำสั่งงาน</label>
-          <input type="text" id="workTitle" required class="w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="เช่น สร้างตัวละครในเกม">
+          <label class="block text-xs font-bold text-slate-700 mb-1">หัวข้อคำสั่งงาน</label>
+          <input type="text" id="workTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500" placeholder="เช่น สร้างตัวละครในเกม">
         </div>
         <div>
-          <label class="block text-xs font-medium text-slate-700 mb-1">รายละเอียดงาน</label>
-          <textarea id="workDesc" rows="3" required class="w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="รายละเอียดคำชี้แจง"></textarea>
+          <label class="block text-xs font-bold text-slate-700 mb-1">รายละเอียดงาน</label>
+          <textarea id="workDesc" rows="3" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500" placeholder="รายละเอียดคำชี้แจง"></textarea>
         </div>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20">บันทึกคำสั่งงาน</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal ล็อกอินแอดมิน -->
-  <div id="adminLoginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold">🔒 เข้าสู่ระบบแอดมิน</h3>
-        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
-      </div>
-      <form id="adminLoginForm" class="space-y-4">
-        <input type="text" id="adminUser" placeholder="Username" required class="w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-slate-800 focus:outline-none">
-        <input type="password" id="adminPass" placeholder="Password" required class="w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-slate-800 focus:outline-none">
-        <button type="submit" id="adminLoginBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-slate-900/25">ยืนยัน</button>
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/30">บันทึกคำสั่งงาน</button>
       </form>
     </div>
   </div>
 
   <!-- Popup ลงทะเบียนสำเร็จ -->
-  <div id="successModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 animate-fade-in">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-slate-100">
-      <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold animate-bounce">✓</div>
-      <h3 class="text-xl font-bold text-slate-900 mb-1">ลงทะเบียนสำเร็จ!</h3>
-      <p class="text-xs text-slate-500 mb-4">รหัสประจำตัวค่ายของคุณ</p>
+  <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-white/50">
+      <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold animate-bounce shadow-md">✓</div>
+      <h3 class="text-xl font-black text-slate-900 mb-1">ลงทะเบียนสำเร็จ!</h3>
+      <p class="text-xs text-slate-500 font-medium mb-4">รหัสประจำตัวค่ายของคุณ</p>
       <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3.5 mb-4 shadow-inner">
-        <span id="displayId" class="text-2xl font-extrabold text-blue-700 tracking-wider">CAMP-XXXX</span>
+        <span id="displayId" class="text-2xl font-black text-blue-700 tracking-wider">CAMP-XXXX</span>
       </div>
-      <button onclick="enterMainApp(generatedId, false)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/25">เข้าสู่หน้าหลัก</button>
+      <button onclick="enterMainApp(generatedId, false)" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/30">เข้าสู่หน้าหลัก</button>
     </div>
   </div>
 
@@ -346,6 +402,7 @@
     let isAdmin = false;
     let currentAdminUser = "";
     let allStudentsData = [];
+    let selectedCheckinDay = 28;
 
     const teamMembers = [
       { name: "สายไหม", fullName: "สายไหม สุขดี", role: "วิทยากร", desc: "รู้จักกับทฤษฎีเกม การ Vibe Coding และเครื่องมือ", type: "instructor", badge: "สายไหม", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" },
@@ -362,6 +419,10 @@
       { name: "พี่โบว์", fullName: "กานดา สมบูรณ์", role: "สตาฟ", desc: "ดูแลฝ่ายสวัสดิการ เครื่องดื่ม และของรางวัล", type: "staff", badge: "โบว์", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" }
     ];
 
+    function toggleMobileMenu() {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    }
+
     function renderTeam(filter = 'all') {
       const wrapper = document.getElementById("teamSliderWrapper");
       let html = "";
@@ -369,11 +430,11 @@
       filtered.forEach((item, idx) => {
         const numStr = String(idx + 1).padStart(2, '0');
         html += `
-          <div class="swiper-slide bg-white rounded-3xl border border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full transform hover:-translate-y-1">
+          <div class="swiper-slide bg-white rounded-3xl border border-white/60 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full transform hover:-translate-y-1">
             <div class="relative h-64 bg-slate-100 overflow-hidden">
               <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
               <div class="absolute top-3 left-3 flex gap-1.5">
-                <span class="bg-amber-400 text-amber-950 font-bold text-[11px] px-2.5 py-0.5 rounded-md shadow-sm">${item.badge}</span>
+                <span class="bg-amber-400 text-amber-950 font-black text-[11px] px-2.5 py-0.5 rounded-md shadow-sm">${item.badge}</span>
                 <span class="bg-black/60 backdrop-blur-sm text-white font-medium text-[11px] px-2.5 py-0.5 rounded-md">ลำดับที่ ${numStr}</span>
               </div>
             </div>
@@ -392,9 +453,9 @@
       ['all', 'instructor', 'staff', 'advisor'].forEach(t => {
         const btn = document.getElementById(`btn-${t}`);
         if (t === type) {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md transition-all duration-200 transform scale-105";
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md transition-all transform scale-105";
         } else {
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all duration-200";
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-white/80 text-slate-600 border border-slate-200 hover:bg-slate-100 transition-all";
         }
       });
       const advisorSec = document.getElementById("advisorSection");
@@ -450,12 +511,16 @@
         document.getElementById("userBadge").innerText = `แอดมิน: ${currentAdminUser}`;
         document.getElementById("adminUserTab").classList.remove("hidden");
         document.getElementById("adminCheckinTab").classList.remove("hidden");
+        document.getElementById("mobileAdminUserTab").classList.remove("hidden");
+        document.getElementById("mobileAdminCheckinTab").classList.remove("hidden");
         document.getElementById("addAssignmentBtn").classList.remove("hidden");
         switchTab('adminDashboard');
       } else {
         document.getElementById("userBadge").innerText = `รหัส: ${campId}`;
         document.getElementById("adminUserTab").classList.add("hidden");
         document.getElementById("adminCheckinTab").classList.add("hidden");
+        document.getElementById("mobileAdminUserTab").classList.add("hidden");
+        document.getElementById("mobileAdminCheckinTab").classList.add("hidden");
         document.getElementById("addAssignmentBtn").classList.add("hidden");
         switchTab('home');
       }
@@ -575,7 +640,7 @@
       .then(res => res.json())
       .then(data => {
         btn.disabled = false;
-        btn.innerText = "ยืนยัน";
+        btn.innerText = "เข้าสู่ระบบแอดมิน";
         if (data.status === "success") {
           closeAdminModal();
           document.getElementById("adminLoginForm").reset();
@@ -586,7 +651,7 @@
       })
       .catch(err => {
         btn.disabled = false;
-        btn.innerText = "ยืนยัน";
+        btn.innerText = "เข้าสู่ระบบแอดมิน";
         alert("เกิดข้อผิดพลาด: " + err.message);
       });
     });
@@ -636,6 +701,31 @@
       .catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
     }
 
+    function setCheckinDay(day) {
+      selectedCheckinDay = day;
+      document.getElementById("btnDay28").className = day === 28 ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow" : "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100";
+      document.getElementById("btnDay29").className = day === 29 ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-600 text-white shadow" : "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-blue-100";
+      updateCheckinStats();
+    }
+
+    function updateCheckinStats() {
+      const total = allStudentsData.length;
+      let present = 0;
+      allStudentsData.forEach(item => {
+        let st = selectedCheckinDay === 28 ? item.check28 : item.check29;
+        if (st === "มาแล้ว") present++;
+      });
+      const absent = total - present;
+      const presentPct = total > 0 ? Math.round((present / total) * 100) : 0;
+      const absentPct = total > 0 ? Math.round((absent / total) * 100) : 0;
+
+      document.getElementById("statTotal").innerText = total;
+      document.getElementById("statPresent").innerText = present;
+      document.getElementById("statPresentPct").innerText = `(${presentPct}%)`;
+      document.getElementById("statAbsent").innerText = absent;
+      document.getElementById("statAbsentPct").innerText = `(${absentPct}%)`;
+    }
+
     function filterCheckinTable() {
       const keyword = document.getElementById("checkinSearchInput").value.toLowerCase();
       const filtered = allStudentsData.filter(item => {
@@ -656,18 +746,18 @@
       let html = "";
       dataList.forEach(item => {
         let btn28 = item.check28 === "มาแล้ว" 
-          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-sm transition-all transform hover:scale-105">✓ มาแล้ว</button>`
-          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all">ยังไม่มา</button>`;
+          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-md transition-all transform hover:scale-105">✓ มาแล้ว</button>`
+          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 28, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">ยังไม่มา</button>`;
 
         let btn29 = item.check29 === "มาแล้ว" 
-          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-sm transition-all transform hover:scale-105">✓ มาแล้ว</button>`
-          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all">ยังไม่มา</button>`;
+          ? `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'ยังไม่มา')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-md transition-all transform hover:scale-105">✓ มาแล้ว</button>`
+          : `<button onclick="updateCheckinStatus(${item.rowIdx}, 29, 'มาแล้ว')" class="bg-slate-200 hover:bg-emerald-100 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">ยังไม่มา</button>`;
 
-        html += `<tr class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors">
-          <td class="p-3"><span class="font-bold text-slate-800">${item.studentId}</span><br><span class="text-[11px] text-blue-600 font-semibold">${item.campId}</span></td>
-          <td class="p-3 font-semibold text-slate-800">${item.title} ${item.fullName}</td>
-          <td class="p-3">${item.nickname}</td>
-          <td class="p-3">${item.grade}</td>
+        html += `<tr class="border-b border-slate-100 hover:bg-white/80 transition-colors">
+          <td class="p-3"><span class="font-bold text-slate-800">${item.studentId}</span><br><span class="text-[11px] text-blue-600 font-bold">${item.campId}</span></td>
+          <td class="p-3 font-bold text-slate-800">${item.title} ${item.fullName}</td>
+          <td class="p-3 font-semibold">${item.nickname}</td>
+          <td class="p-3 font-semibold">${item.grade}</td>
           <td class="p-3 text-center">${btn28}</td>
           <td class="p-3 text-center">${btn29}</td>
         </tr>`;
@@ -694,19 +784,20 @@
           } else {
             let html = "";
             res.data.forEach(item => {
-              html += `<tr class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors">
+              html += `<tr class="border-b border-slate-100 hover:bg-white/80 transition-colors">
                 <td class="p-3">${item.timestamp}</td><td class="p-3 text-slate-500">${item.email}</td>
-                <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3">${item.title} ${item.fullName}</td>
-                <td class="p-3">${item.nickname}</td><td class="p-3 font-semibold text-blue-600">${item.grade}</td>
+                <td class="p-3 font-medium text-slate-800">${item.studentId}</td><td class="p-3 font-bold">${item.title} ${item.fullName}</td>
+                <td class="p-3 font-semibold">${item.nickname}</td><td class="p-3 font-bold text-blue-600">${item.grade}</td>
                 <td class="p-3 text-blue-600 font-bold">${item.campId}</td>
                 <td class="p-3 text-center">
-                  <button onclick="promptDeleteStudent(${item.rowIdx})" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-lg text-xs font-semibold transition-all transform hover:scale-105">ลบ</button>
+                  <button onclick="promptDeleteStudent(${item.rowIdx})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-1 rounded-xl text-xs font-bold transition-all transform hover:scale-105">ลบ</button>
                 </td>
               </tr>`;
             });
             tbody.innerHTML = html;
           }
           renderCheckinTable(allStudentsData);
+          updateCheckinStats();
         }
       });
     }
@@ -750,10 +841,10 @@
           res.data.forEach(item => {
             if(lists[item.category] !== undefined) {
               lists[item.category] += `
-                <div class="p-3.5 bg-slate-50/80 border border-slate-100 rounded-2xl space-y-1 hover:shadow-md transition-all duration-200">
+                <div class="p-3.5 bg-white/70 border border-slate-100 rounded-2xl space-y-1 hover:shadow-md transition-all">
                   <h4 class="font-bold text-slate-800 text-xs">${item.title}</h4>
                   <p class="text-[11px] text-slate-500">${item.description}</p>
-                  <button class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-1.5 rounded-xl text-[11px] font-semibold transition-all shadow-sm">ส่งงานชิ้นนี้</button>
+                  <button class="mt-2 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-1.5 rounded-xl text-[11px] font-bold shadow-md shadow-blue-500/20 transition-all">ส่งงานชิ้นนี้</button>
                 </div>
               `;
             }
