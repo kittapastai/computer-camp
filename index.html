@@ -11,49 +11,72 @@
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-top,0px)}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
 background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
 h1,h2,h3,button,.badge{font-family:'Prompt','IBM Plex Sans Thai',sans-serif}
 h1,h2{line-height:1.25;letter-spacing:-.01em}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Smooth Animation Base */
+.card, .btn, input, select, textarea, .side {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .card{background:var(--card);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);border-radius:22px;padding:1.5rem}
 .wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
 .narrow{max-width:760px;margin:0 auto}
 .stack>*+*{margin-top:1.25rem}
 .center{text-align:center}.muted{opacity:.75;font-size:.88rem}
-.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--shadow)}
-.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--shadow)}
+.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease;}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
 .btn.block{width:100%}.btn.ghost{background:var(--card);color:var(--text)}
-.link{background:none;border:0;color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.link{background:none;border:0;color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:opacity 0.2s;}
+.link:hover{opacity:0.7;}
 label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.25rem}
 input,select,textarea{width:100%;font:inherit;font-size:.9rem;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:12px;background:#fff;color:#1b1f3b}
 input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
 .field+.field,.row+.field,.field+.row,.row+.row{margin-top:.8rem}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 
-/* แก้ไขปัญหาเลย์เอาต์หน้า Auth ซ้อนกัน */
-.auth{min-height:100vh;display:flex;flex-direction:row;width:100%;}
-.side{flex:1;background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border-right:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:6px 6px 0 var(--shadow);overflow-y:auto;}
+/* แก้ไขหน้า Auth และกล่อง Side ให้กลับมาสมบูรณ์ พร้อมแอนิเมชันเปิดตัว FadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth{min-height:100vh;display:flex;flex-direction:row;width:100%;animation:fadeIn 0.5s ease-out;}
+.side{flex:1;background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:6px 6px 0 var(--shadow);overflow-y:auto;}
 .pane{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto;}
-.pane .card{width:100%;max-width:440px}
+.pane .card{width:100%;max-width:440px;animation:fadeIn 0.4s ease-out;}
 .pane h1{text-align:left}
+
+.side .who1{display:flex;align-items:center;gap:.8rem;font-family:'Prompt',sans-serif;font-weight:700;line-height:1.25}
+.side .who1 span{font-size:1.5rem;width:48px;height:48px;display:grid;place-items:center;background:#fff;border-radius:14px;color:#1b1f3b;box-shadow:3px 3px 0 rgba(0,0,0,0.2)}
+.side .who1 small{display:block;font-weight:500;opacity:.8;font-size:.78rem}
+.side h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800}
+.side .when{margin-top:.6rem;display:inline-block;font-size:.85rem;font-weight:600;padding:.3rem .9rem;border:1.5px solid rgba(255,255,255,.55);border-radius:99px}
+.side h3{font-size:.95rem;font-weight:700;margin-bottom:.8rem}
+.side ol{list-style:none;padding:0;display:grid;gap:.7rem}
+.side li{display:flex;gap:.8rem;align-items:flex-start;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:.75rem .9rem;transition:background 0.2s;}
+.side li:hover{background:rgba(255,255,255,.2);}
+.side li i{font:800 .95rem 'Prompt',sans-serif;font-style:normal;flex:none;width:30px;height:30px;border-radius:10px;background:#fff;color:#1b2a8a;display:grid;place-items:center}
+.side li b{display:block;font-size:.92rem}.side li small{opacity:.85;font-size:.8rem}
+.crew{display:flex;flex-wrap:wrap;gap:.5rem}
+.crew span{display:flex;align-items:center;gap:.45rem;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);border-radius:99px;padding:.25rem .8rem .25rem .3rem}
+.crew em{font:800 .75rem 'Prompt',sans-serif;font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#1b1f3b}
+.side .adv{margin-top:.7rem;font-size:.8rem;opacity:.85}
 
 @media(max-width:900px){
   .auth{flex-direction:column;}
-  .side{padding:1.5rem;gap:1rem;border-right:0;border-bottom:2px solid var(--ink);flex:none;}
+  .side{padding:1.5rem;gap:1rem;border:2px solid var(--ink);flex:none;margin:1rem 1rem 0 1rem;}
   .side .more{display:none}
   .side .when{margin-bottom:0}
   .side .pitch{margin-top:.5rem}
-  .pane{flex:none;padding:2rem 1rem;}
+  .pane{flex:none;padding:1rem 1rem 2rem 1rem;}
 }
-
-.logo{font-size:2.4rem;width:68px;height:68px;display:grid;place-items:center;margin:0 auto .6rem;border:2px solid var(--ink);border-radius:18px;background:var(--soft);box-shadow:4px 4px 0 var(--shadow)}
-.auth h1{font-size:1.55rem;font-weight:800}
-.auth form{margin-top:1.2rem}
-.auth .links{display:flex;justify-content:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap}
 
 /* nav */
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--card);border-bottom:2px solid var(--ink)}
@@ -62,22 +85,22 @@ nav::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-
 .brand{display:flex;align-items:center;gap:.6rem;cursor:pointer;font-family:'Prompt',sans-serif;font-weight:800;line-height:1.2;font-size:.9rem;background:none;border:0;color:inherit;text-align:left}
 .brand small{display:block;color:var(--accent);font-weight:600;font-size:.72rem}
 .menu{display:flex;gap:.3rem;flex-wrap:wrap}
-.menu button{font-weight:600;font-size:.8rem;padding:.45rem .75rem;border-radius:12px;border:2px solid transparent;background:none;color:inherit;cursor:pointer}
+.menu button{font-weight:600;font-size:.8rem;padding:.45rem .75rem;border-radius:12px;border:2px solid transparent;background:none;color:inherit;cursor:pointer;transition:all 0.2s;}
 .menu button:hover{border-color:var(--ink);background:var(--soft)}
 .menu button.on{background:var(--accent);color:var(--on);border-color:var(--ink);box-shadow:3px 3px 0 var(--shadow)}
 .menu .adm{color:var(--ok)}
 .tools{display:flex;align-items:center;gap:.5rem}
-.tools select{width:auto;font-size:.75rem;padding:.35rem .5rem}
 .badge{font-size:.72rem;font-weight:700;padding:.3rem .7rem;border-radius:99px;background:var(--accent);color:var(--on);border:2px solid var(--ink);white-space:nowrap}
 #burger{display:none}
 @media(max-width:900px){
  #burger{display:block;padding:.4rem .7rem}
- .menu{display:none;width:100%;flex-direction:column;padding:.6rem 1rem 1rem;border-top:2px solid var(--ink)}
+ .menu{display:none;width:100%;flex-direction:column;padding:.6rem 1rem 1rem;border-top:2px solid var(--ink);animation:fadeIn 0.2s ease-out;}
  .menu.open{display:flex}.menu button{text-align:left}
  nav .bar{flex-wrap:wrap}.menu{order:3}
  .card{box-shadow:4px 4px 0 var(--shadow)}
 }
-/* home */
+/* home & sections */
+main>section {animation: fadeIn 0.35s ease-in-out;}
 .notice{display:flex;gap:.8rem;align-items:center;justify-content:space-between;text-align:left;background:#f59e0b;color:#3b1d00;border:2px solid #7c2d12;box-shadow:5px 5px 0 #7c2d12;border-radius:20px;padding:1rem 1.2rem}
 .notice p{font-size:.82rem}.notice h3{font-size:.95rem}
 .notice .btn{background:#fff;color:#7c2d12;border-color:#7c2d12;box-shadow:3px 3px 0 #7c2d12;white-space:nowrap;padding:.45rem .8rem;font-size:.8rem}
@@ -89,7 +112,8 @@ h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
 /* team */
 .advisor{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;background:var(--accent);color:var(--on)}
 .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.3rem}
-.person{padding:0;overflow:hidden}
+.person{padding:0;overflow:hidden;transition:transform 0.2s, box-shadow 0.2s;}
+.person:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--shadow);}
 .av{height:150px;display:grid;place-items:center;font:800 3.4rem 'Prompt',sans-serif;border-bottom:2px solid var(--ink)}
 .person div+div{padding:1rem 1.2rem}
 .person h3{font-size:1.05rem}.person small{display:block;color:var(--accent);font-weight:600;margin-bottom:.3rem}
@@ -97,7 +121,8 @@ h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
 /* schedule */
 .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
 .day h3{font-size:.95rem;text-align:center;padding:.5rem;border:2px solid var(--ink);border-radius:14px;background:var(--accent);color:var(--on);margin-bottom:1rem}
-.slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem}
+.slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem;transition:transform 0.15s;}
+.slot:hover{transform:translateX(4px);}
 .slot+.slot{margin-top:.7rem}.slot b{display:block;font-family:'Prompt',sans-serif;font-size:.8rem;color:var(--accent)}
 /* work */
 .bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
@@ -110,13 +135,14 @@ table{width:100%;min-width:680px;border-collapse:collapse;font-size:.86rem}
 th{text-align:left;padding:.7rem;border-bottom:2px solid var(--ink);background:var(--soft);font-family:'Prompt',sans-serif}
 td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .mono{font-family:ui-monospace,monospace}
-.ck{font-size:.78rem;padding:.35rem .7rem;border-radius:10px;border:2px solid var(--ink);cursor:pointer;font-weight:600;background:var(--card);color:var(--bad)}
+.ck{font-size:.78rem;padding:.35rem .7rem;border-radius:10px;border:2px solid var(--ink);cursor:pointer;font-weight:600;background:var(--card);color:var(--bad);transition:all 0.2s;}
+.ck:hover{opacity:0.85;}
 .ck.y{background:var(--ok);color:#fff}
 .dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem}.dayb .btn{padding:.25rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
 .head h2{font-size:1.15rem;font-weight:800}
 /* modal */
-.modal{position:fixed;inset:0;background:rgba(15,15,35,.6);display:grid;place-items:center;padding:1rem;z-index:50}
+.modal{position:fixed;inset:0;background:rgba(15,15,35,.6);backdrop-filter:blur(4px);display:grid;place-items:center;padding:1rem;z-index:50;animation:fadeIn 0.2s ease-out;}
 .modal .card{max-width:380px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
 .modal h3{font-size:1.2rem;margin-bottom:.6rem}
 .camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed #3b5bdb;border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:#3b5bdb;letter-spacing:.06em}
@@ -257,43 +283,43 @@ function authView(v){$("regView").hidden=v==="login";$("loginView").hidden=v!=="
 function buildMenu(){$("menu").innerHTML=tabs.concat(admin?adminTabs:[]).map(t=>`<button id="nav-${t[0]}" class="${adminTabs.includes(t)?'adm':''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("")+`<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`}
 
 async function tab(n){
-  cur=n;
-  document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!=="tab-"+n);
-  document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("on",b.id==="nav-"+n));
-  $("menu").classList.remove("open");
-  
-  if(n==="adminDashboard" || n==="adminCheckin") {
-    await fetchAdminData();
-  }
-  if(n==="adminDashboard")renderAdmin();
-  if(n==="adminCheckin")renderCheckin();
-  window.scrollTo(0,0);
+ cur=n;
+ document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!=="tab-"+n);
+ document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("on",b.id==="nav-"+n));
+ $("menu").classList.remove("open");
+ 
+ if(n==="adminDashboard" || n==="adminCheckin") {
+   await fetchAdminData();
+ }
+ if(n==="adminDashboard")renderAdmin();
+ if(n==="adminCheckin")renderCheckin();
+ window.scrollTo({top:0, behavior:'smooth'});
 }
 
 async function fetchAdminData() {
-  try {
-    let res = await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({ action: "getAdminData" })
-    });
-    let json = await res.json();
-    if(json.status === "success") {
-      students = json.data.map(item => ({
-        t: item.timestamp,
-        email: item.email,
-        sid: item.studentId,
-        name: `${item.title}${item.fullName}`,
-        nick: item.nickname,
-        grade: item.grade,
-        camp: item.campId,
-        rowIdx: item.rowIdx,
-        c28: item.check28 === "มาแล้ว",
-        c29: item.check29 === "มาแล้ว"
-      }));
-    }
-  } catch(err) {
-    console.error("Error fetching data:", err);
-  }
+ try {
+   let res = await fetch(WEB_APP_URL, {
+     method: "POST",
+     body: JSON.stringify({ action: "getAdminData" })
+   });
+   let json = await res.json();
+   if(json.status === "success") {
+     students = json.data.map(item => ({
+       t: item.timestamp,
+       email: item.email,
+       sid: item.studentId,
+       name: `${item.title}${item.fullName}`,
+       nick: item.nickname,
+       grade: item.grade,
+       camp: item.campId,
+       rowIdx: item.rowIdx,
+       c28: item.check28 === "มาแล้ว",
+       c29: item.check29 === "มาแล้ว"
+     }));
+   }
+ } catch(err) {
+   console.error("Error fetching data:", err);
+ }
 }
 
 function enter(id,isAdmin,name){newId=id;admin=isAdmin;hide("okModal");$("auth").hidden=true;$("app").hidden=false;
@@ -301,110 +327,110 @@ function enter(id,isAdmin,name){newId=id;admin=isAdmin;hide("okModal");$("auth")
 function logout(){$("app").hidden=true;$("auth").hidden=false;admin=false;authView("reg")}
 
 function renderAdmin(){
-  $("total").textContent=`ทั้งหมด ${students.length} คน`;
-  $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
+ $("total").textContent=`ทั้งหมด ${students.length} คน`;
+ $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
 }
 
 function renderCheckin(){
-  const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
-  $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
-  const q=$("q").value.trim().toLowerCase();
-  const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
-  const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
-  $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,28)}${b(s,i,29)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
+ const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
+ $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
+ const q=$("q").value.trim().toLowerCase();
+ const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
+ const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
+ $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,28)}${b(s,i,29)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
 }
 
 function setDay(d){day=d;$("d28").className="btn"+(d===28?"":" ghost");$("d29").className="btn"+(d===29?"":" ghost");renderCheckin()}
 
 async function toggle(i,d){
-  students[i]["c"+d]=!students[i]["c"+d];
-  renderCheckin();
-  try {
-    await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        action: "updateCheckin",
-        rowIdx: students[i].rowIdx,
-        day: d,
-        status: students[i]["c"+d] ? "มาแล้ว" : "ยังไม่มา"
-      })
-    });
-  } catch(err) {
-    console.error("Update checkin error:", err);
-  }
+ students[i]["c"+d]=!students[i]["c"+d];
+ renderCheckin();
+ try {
+   await fetch(WEB_APP_URL, {
+     method: "POST",
+     body: JSON.stringify({
+       action: "updateCheckin",
+       rowIdx: students[i].rowIdx,
+       day: d,
+       status: students[i]["c"+d] ? "มาแล้ว" : "ยังไม่มา"
+     })
+   });
+ } catch(err) {
+   console.error("Update checkin error:", err);
+ }
 }
 
 $("regForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  newId="CAMP-"+Math.floor(1000+Math.random()*9000);
-  let payload={
-    action: "register",
-    email: $("email").value,
-    studentId: $("studentId").value,
-    title: $("title").value,
-    fullName: $("fullName").value,
-    nickname: $("nickname").value,
-    grade: $("grade").value,
-    password: $("password").value,
-    reason: $("reason").value,
-    campId: newId
-  };
+ e.preventDefault();
+ newId="CAMP-"+Math.floor(1000+Math.random()*9000);
+ let payload={
+   action: "register",
+   email: $("email").value,
+   studentId: $("studentId").value,
+   title: $("title").value,
+   fullName: $("fullName").value,
+   nickname: $("nickname").value,
+   grade: $("grade").value,
+   password: $("password").value,
+   reason: $("reason").value,
+   campId: newId
+ };
 
-  try {
-    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-    let json = await res.json();
-    if(json.status === "success") {
-      $("campId").textContent=newId;
-      show("okModal");
-    } else {
-      alert(json.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
-    }
-  } catch(err) {
-    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
-  }
+ try {
+   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+   let json = await res.json();
+   if(json.status === "success") {
+     $("campId").textContent=newId;
+     show("okModal");
+   } else {
+     alert(json.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
+   }
+ } catch(err) {
+   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ }
 });
 
 $("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  let payload={
-    action: "login",
-    studentId: $("lid").value,
-    password: $("lpw").value
-  };
+ e.preventDefault();
+ let payload={
+   action: "login",
+   studentId: $("lid").value,
+   password: $("lpw").value
+ };
 
-  try {
-    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-    let json = await res.json();
-    if(json.status === "success") {
-      enter(json.campId, false);
-    } else {
-      alert(json.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
-    }
-  } catch(err) {
-    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
-  }
+ try {
+   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+   let json = await res.json();
+   if(json.status === "success") {
+     enter(json.campId, false);
+   } else {
+     alert(json.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+   }
+ } catch(err) {
+   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ }
 });
 
 $("adminForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  let payload={
-    action: "adminLogin",
-    username: $("au").value,
-    password: $("ap").value
-  };
+ e.preventDefault();
+ let payload={
+   action: "adminLogin",
+   username: $("au").value,
+   password: $("ap").value
+ };
 
-  try {
-    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-    let json = await res.json();
-    if(json.status === "success") {
-      hide("adminModal");
-      enter("ADMIN", true, json.adminName);
-    } else {
-      alert(json.message || "ชื่อผู้ใช้หรือรหัสผ่านแอดมินไม่ถูกต้อง");
-    }
-  } catch(err) {
-    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
-  }
+ try {
+   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+   let json = await res.json();
+   if(json.status === "success") {
+     hide("adminModal");
+     enter("ADMIN", true, json.adminName);
+   } else {
+     alert(json.message || "ชื่อผู้ใช้หรือรหัสผ่านแอดมินไม่ถูกต้อง");
+   }
+ } catch(err) {
+   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ }
 });
 </script>
 </body>
