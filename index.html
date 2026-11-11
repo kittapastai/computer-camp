@@ -10,7 +10,7 @@
 <style>
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
 background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
@@ -59,7 +59,6 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-
   vertical-align: middle;
 }
 
-/* แก้ไขหน้า Auth และกล่อง Side ให้กลับมาสมบูรณ์ พร้อมแอนิเมชันเปิดตัว FadeIn */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -67,7 +66,18 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-
 
 .auth{min-height:100vh;display:flex;flex-direction:row;width:100%;animation:fadeIn 0.5s ease-out;}
 .side{flex:1;background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:6px 6px 0 var(--shadow);overflow-y:auto;}
-.pane{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto;}
+
+/* ใส่สกรีนโทนลายจุด (Halftone / Dot Screen Tone) ที่พื้นหลังฝั่งขวา */
+.pane{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1.5rem;
+  overflow-y:auto;
+  background-image: radial-gradient(rgba(59, 91, 219, 0.12) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
 .pane .card{width:100%;max-width:440px;animation:fadeIn 0.4s ease-out;}
 .pane h1{text-align:left}
 
@@ -378,7 +388,6 @@ async function toggle(i,d){
  }
 }
 
-// ลงทะเบียนพร้อมอนิเมชันกำลังดำเนินการ
 $("regForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const btn = $("regSubmitBtn");
@@ -417,7 +426,6 @@ $("regForm").addEventListener("submit",async e=>{
  }
 });
 
-// ล็อกอินนักเรียนพร้อมอนิเมชันกำลังดำเนินการ
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const btn = $("loginSubmitBtn");
@@ -447,7 +455,6 @@ $("loginForm").addEventListener("submit",async e=>{
  }
 });
 
-// ล็อกอินแอดมินพร้อมอนิเมชันกำลังดำเนินการ
 $("adminForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const btn = $("adminSubmitBtn");
