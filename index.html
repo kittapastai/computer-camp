@@ -237,14 +237,252 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 <div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อครูผู้สอนเพื่อรีเซ็ตรหัสผ่านที่:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0xx-xxx-xxxx<br>💬 LINE: @pathumwilai-camp</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
 <div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสประจำตัวค่ายของคุณ</p><div class="camp" id="campId">CAMP-XXXX</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
 
+<!DOCTYPE html>
+<html lang="th" data-theme="pastel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ค่ายคอมพิวเตอร์ 2/2569 - โรงเรียนปทุมวิไล</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
+*{box-sizing:border-box;margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
+background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg)}
+h1,h2,h3,button,.badge{font-family:'Prompt','IBM Plex Sans Thai',sans-serif}
+h1,h2{line-height:1.25;letter-spacing:-.01em}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);border-radius:22px;padding:1.5rem}
+.wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.narrow{max-width:760px;margin:0 auto}
+.stack>*+*{margin-top:1.25rem}
+.center{text-align:center}.muted{opacity:.75;font-size:.88rem}
+.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--shadow)}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--shadow)}
+.btn.block{width:100%}.btn.ghost{background:var(--card);color:var(--text)}
+.link{background:none;border:0;color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.25rem}
+input,select,textarea{width:100%;font:inherit;font-size:.9rem;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:12px;background:#fff;color:#1b1f3b}
+input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
+.field+.field,.row+.field,.field+.row,.row+.row{margin-top:.8rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.auth{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.side{background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border-right:2px solid var(--ink)}
+.side .who1{display:flex;align-items:center;gap:.8rem;font-family:'Prompt',sans-serif;font-weight:700;line-height:1.25}
+.side .who1 span{font-size:1.5rem;width:48px;height:48px;display:grid;place-items:center;background:#fff;border-radius:14px}
+.side .who1 small{display:block;font-weight:500;opacity:.8;font-size:.78rem}
+.side h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800}
+.side .when{margin-top:.6rem;display:inline-block;font-size:.85rem;font-weight:600;padding:.3rem .9rem;border:1.5px solid rgba(255,255,255,.55);border-radius:99px}
+.side h3{font-size:.95rem;font-weight:700;margin-bottom:.8rem}
+.side ol{list-style:none;padding:0;display:grid;gap:.7rem}
+.side li{display:flex;gap:.8rem;align-items:flex-start;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:.75rem .9rem}
+.side li i{font:800 .95rem 'Prompt',sans-serif;font-style:normal;flex:none;width:30px;height:30px;border-radius:10px;background:#fff;color:#1b2a8a;display:grid;place-items:center}
+.side li b{display:block;font-size:.92rem}.side li small{opacity:.85;font-size:.8rem}
+.crew{display:flex;flex-wrap:wrap;gap:.5rem}
+.crew span{display:flex;align-items:center;gap:.45rem;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);border-radius:99px;padding:.25rem .8rem .25rem .3rem}
+.crew em{font:800 .75rem 'Prompt',sans-serif;font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#1b1f3b}
+.side .adv{margin-top:.7rem;font-size:.8rem;opacity:.85}
+.pane{display:grid;place-items:center;padding:1.5rem}
+.pane .card{width:100%;max-width:440px}
+.pane h1{text-align:left}
+@media(max-width:900px){.auth{grid-template-columns:1fr}.side{padding:1.5rem;gap:0;border-right:0;border-bottom:2px solid var(--ink)}.side .more{display:none}.side .when{margin-bottom:0}.side .pitch{margin-top:1rem}}
+.logo{font-size:2.4rem;width:68px;height:68px;display:grid;place-items:center;margin:0 auto .6rem;border:2px solid var(--ink);border-radius:18px;background:var(--soft);box-shadow:4px 4px 0 var(--shadow)}
+.auth h1{font-size:1.55rem;font-weight:800}
+.auth form{margin-top:1.2rem}
+.auth .links{display:flex;justify-content:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap}
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--card);border-bottom:2px solid var(--ink)}
+nav::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:-1}
+.bar{max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;gap:.6rem;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:.6rem;cursor:pointer;font-family:'Prompt',sans-serif;font-weight:800;line-height:1.2;font-size:.9rem;background:none;border:0;color:inherit;text-align:left}
+.brand small{display:block;color:var(--accent);font-weight:600;font-size:.72rem}
+.menu{display:flex;gap:.3rem;flex-wrap:wrap}
+.menu button{font-weight:600;font-size:.8rem;padding:.45rem .75rem;border-radius:12px;border:2px solid transparent;background:none;color:inherit;cursor:pointer}
+.menu button:hover{border-color:var(--ink);background:var(--soft)}
+.menu button.on{background:var(--accent);color:var(--on);border-color:var(--ink);box-shadow:3px 3px 0 var(--shadow)}
+.menu .adm{color:var(--ok)}
+.tools{display:flex;align-items:center;gap:.5rem}
+.tools select{width:auto;font-size:.75rem;padding:.35rem .5rem}
+.badge{font-size:.72rem;font-weight:700;padding:.3rem .7rem;border-radius:99px;background:var(--accent);color:var(--on);border:2px solid var(--ink);white-space:nowrap}
+#burger{display:none}
+@media(max-width:900px){
+ #burger{display:block;padding:.4rem .7rem}
+ .menu{display:none;width:100%;flex-direction:column;padding:.6rem 1rem 1rem;border-top:2px solid var(--ink)}
+ .menu.open{display:flex}.menu button{text-align:left}
+ nav .bar{flex-wrap:wrap}.menu{order:3}
+ .card{box-shadow:4px 4px 0 var(--shadow)}
+}
+/* home */
+.notice{display:flex;gap:.8rem;align-items:center;justify-content:space-between;text-align:left;background:#f59e0b;color:#3b1d00;border:2px solid #7c2d12;box-shadow:5px 5px 0 #7c2d12;border-radius:20px;padding:1rem 1.2rem}
+.notice p{font-size:.82rem}.notice h3{font-size:.95rem}
+.notice .btn{background:#fff;color:#7c2d12;border-color:#7c2d12;box-shadow:3px 3px 0 #7c2d12;white-space:nowrap;padding:.45rem .8rem;font-size:.8rem}
+.hero{padding:2.6rem 1.5rem}
+.hero .tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.25rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,5vw,2.9rem);font-weight:800}
+.hero p{margin:.9rem auto 0;max-width:560px}
+h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
+/* team */
+.advisor{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;background:var(--accent);color:var(--on)}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.3rem}
+.person{padding:0;overflow:hidden}
+.av{height:150px;display:grid;place-items:center;font:800 3.4rem 'Prompt',sans-serif;border-bottom:2px solid var(--ink)}
+.person div+div{padding:1rem 1.2rem}
+.person h3{font-size:1.05rem}.person small{display:block;color:var(--accent);font-weight:600;margin-bottom:.3rem}
+.av.big{width:92px;height:92px;border:2px solid var(--on);border-radius:20px;font-size:2rem}
+/* schedule */
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.day h3{font-size:.95rem;text-align:center;padding:.5rem;border:2px solid var(--ink);border-radius:14px;background:var(--accent);color:var(--on);margin-bottom:1rem}
+.slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem}
+.slot+.slot{margin-top:.7rem}.slot b{display:block;font-family:'Prompt',sans-serif;font-size:.8rem;color:var(--accent)}
+/* work */
+.bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
+.pill{display:inline-block;font-size:.78rem;font-weight:700;padding:.2rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:.7rem}
+/* admin */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.stat{text-align:center;padding:1rem}.stat b{display:block;font:800 1.9rem 'Prompt',sans-serif}
+.tablebox{overflow-x:auto}
+table{width:100%;min-width:680px;border-collapse:collapse;font-size:.86rem}
+th{text-align:left;padding:.7rem;border-bottom:2px solid var(--ink);background:var(--soft);font-family:'Prompt',sans-serif}
+td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
+.mono{font-family:ui-monospace,monospace}
+.ck{font-size:.78rem;padding:.35rem .7rem;border-radius:10px;border:2px solid var(--ink);cursor:pointer;font-weight:600;background:var(--card);color:var(--bad)}
+.ck.y{background:var(--ok);color:#fff}
+.dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem}.dayb .btn{padding:.25rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
+.head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.head h2{font-size:1.15rem;font-weight:800}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(15,15,35,.6);display:grid;place-items:center;padding:1rem;z-index:50}
+.modal .card{max-width:380px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
+.modal h3{font-size:1.2rem;margin-bottom:.6rem}
+.camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed #3b5bdb;border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:#3b5bdb;letter-spacing:.06em}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- เข้าสู่ระบบ / ลงทะเบียน -->
+<div id="auth" class="auth">
+ <aside class="side">
+  <div class="who1"><span>💻</span><div>โรงเรียนปทุมวิไล<small>จังหวัดปทุมธานี</small></div></div>
+  <div class="pitch"><h2>ค่ายคอมพิวเตอร์ 2/2569</h2><span class="when">📅 28 - 29 พฤศจิกายน 2569</span></div>
+  <div class="more"><h3>3 ฐานกิจกรรมตลอด 2 วัน</h3><ol>
+   <li><i>1</i><div><b>Vibe Coding & Game Theory</b><small>สร้างเกมด้วยการสั่งงาน AI</small></div></li>
+   <li><i>2</i><div><b>Prompt & API Game Development</b><small>เขียน Prompt และเชื่อมต่อ API เข้ากับเกม</small></div></li>
+   <li><i>3</i><div><b>AR & Active Learning Game</b><small>เกมความจริงเสริมด้วยการจับมือ (Hand Tracking)</small></div></li>
+  </ol></div>
+  <div class="more"><h3>วิทยากร</h3><div class="crew"><span><em style="background:#fcd34d">ส</em>สายไหม</span><span><em style="background:#a5f3fc">ต</em>ตุ้ยนุ้ย</span><span><em style="background:#fbcfe8">น</em>นุ่น</span><span><em style="background:#bbf7d0">น</em>น้ำฝน</span></div><p class="adv">ที่ปรึกษาโครงการ: ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์</p></div>
+ </aside>
+ <div class="pane"><div class="card">
+  <div id="regView">
+   <div><h1>ลงทะเบียนเข้าค่าย</h1><p class="muted">กรอกข้อมูลเพื่อรับรหัสประจำตัวค่าย</p></div>
+   <form id="regForm">
+    <div class="field"><label for="email">อีเมล</label><input type="email" id="email" required placeholder="example@email.com"></div>
+    <div class="row field"><div><label for="studentId">เลขประจำตัวนักเรียน</label><input id="studentId" required placeholder="12345"></div>
+     <div><label for="title">คำนำหน้า</label><select id="title" required><option value="">เลือก</option><option>เด็กชาย</option><option>เด็กหญิง</option><option>นาย</option><option>นางสาว</option></select></div></div>
+    <div class="field"><label for="fullName">ชื่อ-นามสกุล</label><input id="fullName" required placeholder="สมชาย ใจดี"></div>
+    <div class="row field"><div><label for="nickname">ชื่อเล่น</label><input id="nickname" required placeholder="บอย"></div>
+     <div><label for="grade">ระดับชั้น</label><select id="grade" required><option value="">เลือกห้อง</option></select></div></div>
+    <div class="field"><label for="password">รหัสผ่านสำหรับเข้าสู่ระบบ</label><input type="password" id="password" required placeholder="ตั้งรหัสผ่าน"></div>
+    <div class="field"><label for="reason">เหตุผลที่อยากเข้าค่าย</label><textarea id="reason" rows="2" required placeholder="เหตุผลสั้น ๆ"></textarea></div>
+    <div class="field"><button class="btn block" type="submit">ยืนยันการลงทะเบียน</button></div>
+    <div class="links"><button type="button" class="link" onclick="authView('login')">มีรหัสแล้ว? เข้าสู่ระบบ</button><button type="button" class="link" onclick="show('adminModal')">🔒 เมนูแอดมิน</button></div>
+   </form>
+  </div>
+  <div id="loginView" hidden>
+   <div><h1>ยินดีต้อนรับกลับ</h1><p class="muted">เข้าสู่ระบบด้วยเลขประจำตัวนักเรียน</p></div>
+   <form id="loginForm">
+    <div class="field"><label for="lid">เลขประจำตัวนักเรียน</label><input id="lid" required></div>
+    <div class="field"><label for="lpw">รหัสผ่าน</label><input type="password" id="lpw" required></div>
+    <div class="field"><button class="btn block" type="submit">เข้าสู่ระบบ</button></div>
+    <div class="links"><button type="button" class="link" onclick="authView('reg')">← ลงทะเบียนใหม่</button><button type="button" class="link" onclick="show('forgotModal')">🔑 ลืมรหัสผ่าน?</button></div>
+   </form>
+  </div>
+ </div></div>
+</div>
+
+<!-- แอปหลัก -->
+<div id="app" hidden>
+ <nav>
+  <div class="bar">
+   <button class="brand" onclick="tab('home')"><span style="font-size:1.7rem">💻</span><span>โรงเรียนปทุมวิไล<small>ค่ายคอมพิวเตอร์ 2/2569</small></span></button>
+   <div class="tools">
+    <span class="badge" id="userBadge">รหัส: -</span>
+    <button class="btn ghost" id="burger" aria-label="เมนู" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+   </div>
+   <div class="menu" id="menu"></div>
+  </div>
+ </nav>
+
+ <main class="wrap">
+  <section id="tab-home" class="narrow stack center">
+   <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
+   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1><p>ค่ายคอมพิวเตอร์ 2 วันเต็ม กับ Vibe Coding, AI Prompts, API และการพัฒนาเกม AR</p></div>
+  </section>
+
+  <section id="tab-instructors" class="stack" hidden>
+   <h2 class="title">ทำความรู้จักวิทยากร</h2>
+   <p class="muted center">ทีมผู้อยู่เบื้องหลังเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
+   <div class="card advisor"><div class="av big" style="background:var(--card);color:var(--text)">จ</div><div><small>👑 ที่ปรึกษาโครงการ</small><h3 style="font-size:1.4rem">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3></div></div>
+   <div class="team" id="team"></div>
+  </section>
+
+  <section id="tab-schedule" class="stack" hidden>
+   <h2 class="title">📅 กำหนดการค่ายคอมพิวเตอร์</h2>
+   <p class="muted center">ตารางเวลาตลอด 2 วัน (28 - 29 พฤศจิกายน 2569)</p>
+   <div class="days" id="days"></div>
+  </section>
+
+  <section id="tab-submitWork" class="stack" hidden>
+   <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">ส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p></div>
+   <div class="bases">
+    <div class="card"><span class="pill">ฐานที่ 1: Vibe Coding & Game</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 2: Prompt & API Game</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 3: AR & Active Learning</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+   </div>
+  </section>
+
+  <section id="tab-faq" class="narrow stack" hidden>
+   <h2 class="title">❓ คู่มือการใช้งานระบบ</h2>
+   <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้กด "🔑 ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วติดต่อสตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัส</p></div>
+  </section>
+
+  <section id="tab-adminDashboard" hidden>
+   <div class="card"><div class="head"><h2>📊 รายชื่อผู้สมัครทั้งหมด</h2><span class="badge" id="total">ทั้งหมด 0 คน</span></div>
+    <div class="tablebox"><table><thead><tr><th>เวลา</th><th>อีเมล</th><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>Camp ID</th></tr></thead><tbody id="adminBody"></tbody></table></div></div>
+  </section>
+
+  <section id="tab-adminCheckin" class="stack" hidden>
+   <div class="stats">
+    <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
+    <div class="card stat" style="color:var(--ok)">✅ เข้าร่วมแล้ว<b id="sPresent">0</b><small id="sPresentP"></small></div>
+    <div class="card stat" style="color:var(--bad)">❌ ยังไม่มา<b id="sAbsent">0</b><small id="sAbsentP"></small></div>
+    <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d28" onclick="setDay(28)">28 พ.ย.</button><button class="btn ghost" id="d29" onclick="setDay(29)">29 พ.ย.</button></div></div>
+   </div>
+   <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">กดเพื่อเปลี่ยนสถานะของนักเรียนแต่ละคน</p></div><input id="q" oninput="renderCheckin()" placeholder="🔍 ค้นหาชื่อ, เลข นร., Camp ID" style="max-width:320px" aria-label="ค้นหา"></div>
+    <div class="tablebox"><table><thead><tr><th>เลข นร. / Camp ID</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>28 พ.ย.</th><th>29 พ.ย.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
+  </section>
+ </main>
+</div>
+
+<!-- Modals -->
+<div class="modal" id="adminModal" hidden><div class="card"><div class="head"><h3>🔒 แอดมินล็อกอิน</h3><button class="link" onclick="hide('adminModal')" aria-label="ปิด">✕</button></div>
+ <form id="adminForm"><div class="field"><input id="au" placeholder="Username" required aria-label="Username"></div><div class="field"><input type="password" id="ap" placeholder="Password" required aria-label="Password"></div><div class="field"><button class="btn block" type="submit">เข้าสู่ระบบแอดมิน</button></div></form></div></div>
+<div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อครูผู้สอนเพื่อรีเซ็ตรหัสผ่านที่:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0xx-xxx-xxxx<br>💬 LINE: @pathumwilai-camp</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
+<div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสประจำตัวค่ายของคุณ</p><div class="camp" id="campId">CAMP-XXXX</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
+
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let newId="",admin=false,day=28,cur="home";
-const students=[
- {t:"2026-03-30 10:00",email:"somchai@email.com",sid:"12345",name:"นายสมชาย ใจดี",nick:"บอย",grade:"ม.1/1",camp:"CAMP-1001",c28:true,c29:false},
- {t:"2026-03-30 10:05",email:"suda@email.com",sid:"12346",name:"นางสาวสุดา",nick:"ฝน",grade:"ม.1/2",camp:"CAMP-1002",c28:false,c29:false}];
+let students=[];
+
 const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
 const sched=[["วันที่ 28 พ.ย. 2569 (Day 1)",[["08:30 - 09:00 น.","ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล"],["09:00 - 12:00 น.","ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 16:00 น.","ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)"]]],
  ["วันที่ 29 พ.ย. 2569 (Day 2)",[["08:30 - 09:00 น.","เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา"],["09:00 - 12:00 น.","ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 15:30 น.","ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆"]]]];
@@ -258,29 +496,159 @@ $("days").innerHTML=sched.map(d=>`<div class="card day"><h3>📅 ${d[0]}</h3>${d
 function show(id){$(id).hidden=false}function hide(id){$(id).hidden=true}
 function authView(v){$("regView").hidden=v==="login";$("loginView").hidden=v!=="login"}
 function buildMenu(){$("menu").innerHTML=tabs.concat(admin?adminTabs:[]).map(t=>`<button id="nav-${t[0]}" class="${adminTabs.includes(t)?'adm':''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("")+`<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`}
-function tab(n){cur=n;document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!=="tab-"+n);
- document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("on",b.id==="nav-"+n));
- $("menu").classList.remove("open");
- if(n==="adminDashboard")renderAdmin();if(n==="adminCheckin")renderCheckin();window.scrollTo(0,0)}
+
+async function tab(n){
+  cur=n;
+  document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!=="tab-"+n);
+  document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("on",b.id==="nav-"+n));
+  $("menu").classList.remove("open");
+  
+  if(n==="adminDashboard" || n==="adminCheckin") {
+    await fetchAdminData();
+  }
+  if(n==="adminDashboard")renderAdmin();
+  if(n==="adminCheckin")renderCheckin();
+  window.scrollTo(0,0);
+}
+
+async function fetchAdminData() {
+  try {
+    let res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "getAdminData" })
+    });
+    let json = await res.json();
+    if(json.status === "success") {
+      students = json.data.map(item => ({
+        t: item.timestamp,
+        email: item.email,
+        sid: item.studentId,
+        name: `${item.title}${item.fullName}`,
+        nick: item.nickname,
+        grade: item.grade,
+        camp: item.campId,
+        rowIdx: item.rowIdx,
+        c28: item.check28 === "มาแล้ว",
+        c29: item.check29 === "มาแล้ว"
+      }));
+    }
+  } catch(err) {
+    console.error("Error fetching data:", err);
+  }
+}
+
 function enter(id,isAdmin,name){newId=id;admin=isAdmin;hide("okModal");$("auth").hidden=true;$("app").hidden=false;
  $("userBadge").textContent=isAdmin?"แอดมิน: "+name:"รหัส: "+id;buildMenu();tab(isAdmin?"adminDashboard":"home")}
 function logout(){$("app").hidden=true;$("auth").hidden=false;admin=false;authView("reg")}
-function renderAdmin(){$("total").textContent=`ทั้งหมด ${students.length} คน`;
- $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`}
-function renderCheckin(){const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
- $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
- const q=$("q").value.trim().toLowerCase();
- const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
- const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
- $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,28)}${b(s,i,29)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`}
-function setDay(d){day=d;$("d28").className="btn"+(d===28?"":" ghost");$("d29").className="btn"+(d===29?"":" ghost");renderCheckin()}
-function toggle(i,d){students[i]["c"+d]=!students[i]["c"+d];renderCheckin()}
 
-$("regForm").addEventListener("submit",e=>{e.preventDefault();newId="CAMP-"+Math.floor(1000+Math.random()*9000);
- students.push({t:new Date().toISOString().slice(0,16).replace("T"," "),email:$("email").value,sid:$("studentId").value,name:$("title").value+$("fullName").value,nick:$("nickname").value,grade:$("grade").value,camp:newId,c28:false,c29:false});
- $("campId").textContent=newId;show("okModal")});
-$("loginForm").addEventListener("submit",e=>{e.preventDefault();enter("CAMP-8899",false)});
-$("adminForm").addEventListener("submit",e=>{e.preventDefault();hide("adminModal");enter("ADMIN",true,"ผู้ดูแลระบบ")});
+function renderAdmin(){
+  $("total").textContent=`ทั้งหมด ${students.length} คน`;
+  $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
+}
+
+function renderCheckin(){
+  const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
+  $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
+  const q=$("q").value.trim().toLowerCase();
+  const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
+  const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
+  $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,28)}${b(s,i,29)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
+}
+
+function setDay(d){day=d;$("d28").className="btn"+(d===28?"":" ghost");$("d29").className="btn"+(d===29?"":" ghost");renderCheckin()}
+
+async function toggle(i,d){
+  students[i]["c"+d]=!students[i]["c"+d];
+  renderCheckin();
+  try {
+    await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "updateCheckin",
+        rowIdx: students[i].rowIdx,
+        day: d,
+        status: students[i]["c"+d] ? "มาแล้ว" : "ยังไม่มา"
+      })
+    });
+  } catch(err) {
+    console.error("Update checkin error:", err);
+  }
+}
+
+$("regForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  newId="CAMP-"+Math.floor(1000+Math.random()*9000);
+  let payload={
+    action: "register",
+    email: $("email").value,
+    studentId: $("studentId").value,
+    title: $("title").value,
+    fullName: $("fullName").value,
+    nickname: $("nickname").value,
+    grade: $("grade").value,
+    password: $("password").value,
+    reason: $("reason").value,
+    campId: newId
+  };
+
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if(json.status === "success") {
+      $("campId").textContent=newId;
+      show("okModal");
+    } else {
+      alert(json.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
+    }
+  } catch(err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  }
+});
+
+$("loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  let payload={
+    action: "login",
+    studentId: $("lid").value,
+    password: $("lpw").value
+  };
+
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if(json.status === "success") {
+      enter(json.campId, false);
+    } else {
+      alert(json.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+    }
+  } catch(err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  }
+});
+
+$("adminForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  let payload={
+    action: "adminLogin",
+    username: $("au").value,
+    password: $("ap").value
+  };
+
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if(json.status === "success") {
+      hide("adminModal");
+      enter("ADMIN", true, json.adminName);
+    } else {
+      alert(json.message || "ชื่อผู้ใช้หรือรหัสผ่านแอดมินไม่ถูกต้อง");
+    }
+  } catch(err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  }
+});
 </script>
+</body>
+</html>
 </body>
 </html>
