@@ -235,7 +235,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  <main class="wrap">
   <section id="tab-home" class="narrow stack center">
    <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
-   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1><p>ค่ายคอมพิวเตอร์ 2 วันเต็ม กับ Vibe Coding, AI Prompts, API และการพัฒนาเกม AR</p></div>
+   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1><p>ค่ายคอมพิวเตอร์ 2 วันเต็ม กับ AI, Micro Bit, Canva AI</p></div>
   </section>
 
   <section id="tab-instructors" class="stack" hidden>
@@ -254,9 +254,9 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
   <section id="tab-submitWork" class="stack" hidden>
    <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">ส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p></div>
    <div class="bases">
-    <div class="card"><span class="pill">ฐานที่ 1: Vibe Coding & Game</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 2: Prompt & API Game</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 3: AR & Active Learning</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 1: AI</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 2: Micro Bit</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 3: Canva Ai</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
    </div>
   </section>
 
@@ -296,7 +296,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 let newId="",admin=false,day=28,cur="home";
 let students=[];
 
-const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
+const team=[["กฤตภาส","ทศพล","ทฤษฎี Canva AI และเครื่องมือ","#fcd34d"],["ต้นกล้า","โอเล่"," AI ","#a5f3fc"],["นัท","ยลรดี รุ่งแจ่ม","Micro Bit","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
 const sched=[["วันที่ 28 พ.ย. 2569 (Day 1)",[["08:30 - 09:00 น.","ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล"],["09:00 - 12:00 น.","ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 16:00 น.","ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)"]]],
  ["วันที่ 29 พ.ย. 2569 (Day 2)",[["08:30 - 09:00 น.","เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา"],["09:00 - 12:00 น.","ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 15:30 น.","ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆"]]]];
 const tabs=[["home","🏠 หน้าแรก"],["instructors","👥 วิทยากร"],["schedule","📅 กำหนดการ"],["submitWork","📂 ส่งงาน"],["faq","❓ คู่มือ"]];
