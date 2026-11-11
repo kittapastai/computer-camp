@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
   <style>
     .swiper-wrapper { transition-timing-function: linear !important; }
@@ -174,9 +173,6 @@
           <button id="nav-instructors" onclick="switchTab('instructors')" class="nav-btn px-3 py-2 rounded-xl transition-all">👥 วิทยากร</button>
           <button id="nav-schedule" onclick="switchTab('schedule')" class="nav-btn px-3 py-2 rounded-xl transition-all">📅 กำหนดการ</button>
           <button id="nav-submitWork" onclick="switchTab('submitWork')" class="nav-btn px-3 py-2 rounded-xl transition-all">📂 ส่งงาน</button>
-          <button id="nav-certificate" onclick="switchTab('certificate')" class="nav-btn px-3 py-2 rounded-xl transition-all">📜 เกียรติบัตร</button>
-          <button id="nav-gallery" onclick="switchTab('gallery')" class="nav-btn px-3 py-2 rounded-xl transition-all">🖼️ แกลเลอรี</button>
-          <button id="nav-minigame" onclick="switchTab('minigame')" class="nav-btn px-3 py-2 rounded-xl transition-all">🎮 มินิเกม</button>
           <button id="nav-faq" onclick="switchTab('faq')" class="nav-btn px-3 py-2 rounded-xl transition-all">❓ คู่มือการใช้</button>
           
           <button id="adminUserTab" onclick="switchTab('adminDashboard')" class="nav-btn hidden px-3 py-2 rounded-xl bg-amber-400/20 text-amber-500 border border-amber-300/50 transition-all">📊 รายชื่อผู้สมัคร</button>
@@ -203,9 +199,6 @@
         <button onclick="switchTab('instructors'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">👥 วิทยากร</button>
         <button onclick="switchTab('schedule'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📅 กำหนดการ</button>
         <button onclick="switchTab('submitWork'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📂 ส่งงาน</button>
-        <button onclick="switchTab('certificate'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">📜 พรีวิวเกียรติบัตร</button>
-        <button onclick="switchTab('gallery'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">🖼️ แกลเลอรีภาพค่าย</button>
-        <button onclick="switchTab('minigame'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">🎮 มินิเกมหลบหลีกบั๊ก</button>
         <button onclick="switchTab('faq'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-xl hover:bg-white/20">❓ คู่มือการใช้งาน</button>
         <button id="mobileAdminUserTab" onclick="switchTab('adminDashboard'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-amber-500/20 text-amber-500">📊 รายชื่อผู้สมัคร</button>
         <button id="mobileAdminCheckinTab" onclick="switchTab('adminCheckin'); toggleMobileMenu()" class="hidden w-full text-left py-2 px-3 rounded-xl bg-emerald-500/20 text-emerald-500">✅ เช็กชื่อหน้างาน</button>
@@ -215,7 +208,7 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in space-y-6">
       
-      <!-- TAB 1: หน้าแรก + นามบัตรดิจิทัล -->
+      <!-- TAB 1: หน้าแรก -->
       <div id="tab-home" class="space-y-6 max-w-3xl mx-auto text-center">
         <!-- Announcements Banner -->
         <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-3xl shadow-xl flex items-center justify-between gap-3 text-left animate-pulse">
@@ -227,38 +220,6 @@
             </div>
           </div>
           <button onclick="switchTab('schedule')" class="bg-white text-orange-600 px-3 py-1.5 rounded-xl text-xs font-bold shadow-md hover:bg-orange-50 whitespace-nowrap">ดูตาราง</button>
-        </div>
-
-        <!-- Digital Student ID Card -->
-        <div id="digitalCard" class="bg-gradient-to-br from-indigo-900 via-slate-900 to-blue-900 text-white p-6 rounded-3xl shadow-2xl border border-blue-400/30 text-left relative overflow-hidden transform hover:scale-[1.01] transition-all">
-          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex items-center gap-3">
-              <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-10 h-10 object-contain">
-              <div>
-                <h3 class="font-black text-sm tracking-wide">PATHUMWILAI COMPUTER CAMP</h3>
-                <p class="text-[10px] text-blue-300 font-bold">บัตรประจำตัวผู้เข้าร่วมค่าย 2/2569</p>
-              </div>
-            </div>
-            <span id="cardBadge" class="bg-blue-500/30 text-blue-300 border border-blue-400/40 font-mono text-xs px-3 py-1 rounded-full font-bold">CAMP-XXXX</span>
-          </div>
-          
-          <div class="grid grid-cols-2 gap-4 my-4">
-            <div>
-              <span class="text-[10px] text-slate-400 block font-semibold">ชื่อ-นามสกุล</span>
-              <span id="cardName" class="font-bold text-sm text-slate-100">กำลังโหลด...</span>
-            </div>
-            <div>
-              <span class="text-[10px] text-slate-400 block font-semibold">ชื่อเล่น / ระดับชั้น</span>
-              <span id="cardGrade" class="font-bold text-sm text-slate-100">กำลังโหลด...</span>
-            </div>
-          </div>
-
-          <!-- บาร์โค้ดจำลอง -->
-          <div class="pt-2 border-t border-white/10 flex justify-between items-center">
-            <div class="font-mono text-xs tracking-widest text-slate-400">||||| |||| ||||| ||| ||||||</div>
-            <button onclick="downloadIDCard()" class="text-[11px] bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-xl font-bold transition-all shadow-md">📷 ดาวน์โหลดการ์ด</button>
-          </div>
         </div>
 
         <div class="theme-card backdrop-blur-xl p-8 rounded-3xl shadow-2xl border">
@@ -374,79 +335,7 @@
         </div>
       </div>
 
-      <!-- TAB 5: พรีวิวเกียรติบัตรออนไลน์ -->
-      <div id="tab-certificate" class="hidden space-y-6 animate-fade-in max-w-4xl mx-auto text-center">
-        <div>
-          <h2 class="text-3xl font-black">📜 พรีวิวเกียรติบัตรออนไลน์</h2>
-          <p class="text-xs font-medium mt-1 opacity-75">ลองพิมพ์ชื่อเพื่อพรีวิวเกียรติบัตรทองคำเกียรติยศประจำค่ายคอมพิวเตอร์</p>
-        </div>
-
-        <div class="max-w-md mx-auto">
-          <input type="text" id="certInputName" onkeyup="updateCertPreview()" placeholder="พิมพ์ชื่อ-นามสกุล ของคุณ..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-800 text-center font-bold bg-white shadow-md">
-        </div>
-
-        <div id="certPreviewCard" class="bg-amber-50 text-slate-900 border-8 border-amber-600/40 p-8 rounded-3xl shadow-2xl max-w-2xl mx-auto relative overflow-hidden">
-          <div class="absolute -right-16 -top-16 w-36 h-36 bg-amber-400/20 rounded-full blur-xl"></div>
-          <div class="border-2 border-amber-600/30 p-6 rounded-2xl space-y-4">
-            <img src="https://lh3.googleusercontent.com/d/1SUTQTAK1qGdZH1SpUfDtjjDR1AzIDIcA" alt="โลโก้" class="w-16 h-16 object-contain mx-auto">
-            <h3 class="text-xs font-bold tracking-widest text-amber-900">PATHUMWILAI COMPUTER CAMP 2/2569</h3>
-            <h2 class="text-2xl font-black text-amber-800">เกียรติบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า</h2>
-            <div class="py-2 border-b-2 border-amber-600/50 max-w-md mx-auto">
-              <span id="certDisplayName" class="text-xl font-black text-blue-900">นายสมชาย ใจดี</span>
-            </div>
-            <p class="text-xs text-slate-700 leading-relaxed max-w-md mx-auto">ได้เข้าร่วมและผ่านการอบรมเชิงปฏิบัติการ การเขียนโปรแกรม Vibe Coding, AI Prompts & AR Game Development ให้ไว้ ณ วันที่ 29 พฤศจิกายน 2569</p>
-            <div class="pt-4 flex justify-around text-[10px] font-bold text-amber-950">
-              <div>________________________<br>ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์<br>(อาจารย์ที่ปรึกษาโครงการ)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 6: แกลเลอรีภาพบรรยากาศค่าย -->
-      <div id="tab-gallery" class="hidden space-y-6 animate-fade-in max-w-5xl mx-auto text-center">
-        <div>
-          <h2 class="text-3xl font-black">🖼️ แกลเลอรีภาพบรรยากาศค่าย</h2>
-          <p class="text-xs font-medium mt-1 opacity-75">รวมภาพความประทับใจ การเรียนรู้ และกิจกรรมเวิร์กชอปตลอด 2 วัน</p>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">บรรยากาศการทำ Workshop Vibe Coding</div>
-          </div>
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">ทีมสตาฟให้คำแนะนำอย่างใกล้ชิด</div>
-          </div>
-          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/30 h-48 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end text-white text-xs font-bold">นำเสนอผลงานเกม AR สุดล้ำ</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 7: มินิเกมหลบหลีกบั๊ก -->
-      <div id="tab-minigame" class="hidden space-y-6 animate-fade-in max-w-2xl mx-auto text-center">
-        <div>
-          <h2 class="text-3xl font-black">🎮 มินิเกม: Bug Dodger</h2>
-          <p class="text-xs font-medium mt-1 opacity-75">บังคับยานหลบหลีกบั๊กโค้ดที่ตกลงมา! (กดปุ่มซ้าย-ขวาบนจอ)</p>
-        </div>
-
-        <div class="theme-card backdrop-blur-xl p-6 rounded-3xl shadow-2xl border flex flex-col items-center">
-          <div class="flex justify-between w-full max-w-md text-xs font-bold mb-3 px-2">
-            <span>SCORE: <span id="gameScore" class="text-blue-500 font-mono text-sm">0</span></span>
-            <span class="text-rose-500">STATUS: <span id="gameStatus">READY</span></span>
-          </div>
-          <canvas id="gameCanvas" width="360" height="300" class="bg-slate-950 rounded-2xl border-2 border-blue-500/30 shadow-inner cursor-pointer"></canvas>
-          <div class="flex gap-4 mt-4 w-full max-w-md">
-            <button onclick="movePlayer(-20)" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700">◀ ซ้าย</button>
-            <button onclick="startGame()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md">▶ เริ่มเล่น</button>
-            <button onclick="movePlayer(20)" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700">ขวา ▶</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 8: คู่มือการใช้งาน (FAQ) -->
+      <!-- TAB 5: คู่มือการใช้งาน (FAQ) -->
       <div id="tab-faq" class="hidden space-y-6 animate-fade-in max-w-3xl mx-auto">
         <div class="text-center">
           <h2 class="text-3xl font-black">❓ คู่มือการใช้งานระบบ (FAQ)</h2>
@@ -486,7 +375,7 @@
     </main>
   </div>
 
-  <!-- Modal แอดมินล็อกอิน (เพิ่ม ID ครบถ้วน ป้องกัน Error null) -->
+  <!-- Modal แอดมินล็อกอิน -->
   <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50 animate-fade-in">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-slate-800">
       <div class="flex justify-between items-center mb-5">
@@ -564,20 +453,6 @@
       }
     }
 
-    function updateCertPreview() {
-      const val = document.getElementById("certInputName").value;
-      document.getElementById("certDisplayName").innerText = val || "ชื่อ-นามสกุล ของคุณ";
-    }
-
-    function downloadIDCard() {
-      html2canvas(document.getElementById("digitalCard")).then(canvas => {
-        let link = document.createElement("a");
-        link.download = `Student_ID_${generatedId}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
-
     function toggleAuthView(view) {
       document.getElementById("registerView").classList.toggle("hidden", view === 'login');
       document.getElementById("loginView").classList.toggle("hidden", view !== 'login');
@@ -591,14 +466,13 @@
       document.getElementById("successModal").classList.remove("flex");
       document.getElementById("mainAppContainer").classList.remove("hidden");
       
-      document.getElementById("cardBadge").innerText = campId;
       document.getElementById("userBadge").innerText = adminMode ? `แอดมิน: ${adminName}` : `รหัส: ${campId}`;
 
       switchTab(isAdmin ? 'adminDashboard' : 'home');
     }
 
     function switchTab(tabName) {
-      ['home', 'instructors', 'schedule', 'submitWork', 'certificate', 'gallery', 'minigame', 'faq', 'adminDashboard'].forEach(t => {
+      ['home', 'instructors', 'schedule', 'submitWork', 'faq', 'adminDashboard'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if(el) el.classList.add("hidden");
         const navBtn = document.getElementById(`nav-${t}`);
@@ -619,10 +493,6 @@
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       generatedId = `CAMP-${Math.floor(1000 + Math.random() * 9000)}`;
-      document.getElementById("cardName").innerText = document.getElementById("fullName").value;
-      document.getElementById("cardGrade").innerText = `${document.getElementById("nickname").value} (${document.getElementById("grade").value})`;
-      document.getElementById("certInputName").value = document.getElementById("fullName").value;
-      updateCertPreview();
       document.getElementById("displayId").innerText = generatedId;
       document.getElementById("successModal").classList.remove("hidden");
       document.getElementById("successModal").classList.add("flex");
