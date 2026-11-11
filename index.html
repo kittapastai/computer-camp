@@ -29,9 +29,10 @@ h1,h2{line-height:1.25;letter-spacing:-.01em}
 .narrow{max-width:760px;margin:0 auto}
 .stack>*+*{margin-top:1.25rem}
 .center{text-align:center}.muted{opacity:.75;font-size:.88rem}
-.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease;}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
-.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
+.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, opacity .15s ease;}
+.btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+.btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
+.btn:disabled{opacity:0.7;cursor:not-allowed;transform:none!important;box-shadow:2px 2px 0 var(--shadow)!important;}
 .btn.block{width:100%}.btn.ghost{background:var(--card);color:var(--text)}
 .link{background:none;border:0;color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:opacity 0.2s;}
 .link:hover{opacity:0.7;}
@@ -40,6 +41,23 @@ input,select,textarea{width:100%;font:inherit;font-size:.9rem;padding:.6rem .8re
 input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
 .field+.field,.row+.field,.field+.row,.row+.row{margin-top:.8rem}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
 
 /* แก้ไขหน้า Auth และกล่อง Side ให้กลับมาสมบูรณ์ พร้อมแอนิเมชันเปิดตัว FadeIn */
 @keyframes fadeIn {
@@ -175,7 +193,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
      <div><label for="grade">ระดับชั้น</label><select id="grade" required><option value="">เลือกห้อง</option></select></div></div>
     <div class="field"><label for="password">รหัสผ่านสำหรับเข้าสู่ระบบ</label><input type="password" id="password" required placeholder="ตั้งรหัสผ่าน"></div>
     <div class="field"><label for="reason">เหตุผลที่อยากเข้าค่าย</label><textarea id="reason" rows="2" required placeholder="เหตุผลสั้น ๆ"></textarea></div>
-    <div class="field"><button class="btn block" type="submit">ยืนยันการลงทะเบียน</button></div>
+    <div class="field"><button class="btn block" type="submit" id="regSubmitBtn">ยืนยันการลงทะเบียน</button></div>
     <div class="links"><button type="button" class="link" onclick="authView('login')">มีรหัสแล้ว? เข้าสู่ระบบ</button><button type="button" class="link" onclick="show('adminModal')">🔒 เมนูแอดมิน</button></div>
    </form>
   </div>
@@ -184,7 +202,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <form id="loginForm">
     <div class="field"><label for="lid">เลขประจำตัวนักเรียน</label><input id="lid" required></div>
     <div class="field"><label for="lpw">รหัสผ่าน</label><input type="password" id="lpw" required></div>
-    <div class="field"><button class="btn block" type="submit">เข้าสู่ระบบ</button></div>
+    <div class="field"><button class="btn block" type="submit" id="loginSubmitBtn">เข้าสู่ระบบ</button></div>
     <div class="links"><button type="button" class="link" onclick="authView('reg')">← ลงทะเบียนใหม่</button><button type="button" class="link" onclick="show('forgotModal')">🔑 ลืมรหัสผ่าน?</button></div>
    </form>
   </div>
@@ -257,7 +275,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 
 <!-- Modals -->
 <div class="modal" id="adminModal" hidden><div class="card"><div class="head"><h3>🔒 แอดมินล็อกอิน</h3><button class="link" onclick="hide('adminModal')" aria-label="ปิด">✕</button></div>
- <form id="adminForm"><div class="field"><input id="au" placeholder="Username" required aria-label="Username"></div><div class="field"><input type="password" id="ap" placeholder="Password" required aria-label="Password"></div><div class="field"><button class="btn block" type="submit">เข้าสู่ระบบแอดมิน</button></div></form></div></div>
+ <form id="adminForm"><div class="field"><input id="au" placeholder="Username" required aria-label="Username"></div><div class="field"><input type="password" id="ap" placeholder="Password" required aria-label="Password"></div><div class="field"><button class="btn block" type="submit" id="adminSubmitBtn">เข้าสู่ระบบแอดมิน</button></div></form></div></div>
 <div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อครูผู้สอนเพื่อรีเซ็ตรหัสผ่านที่:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0xx-xxx-xxxx<br>💬 LINE: @pathumwilai-camp</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
 <div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสประจำตัวค่ายของคุณ</p><div class="camp" id="campId">CAMP-XXXX</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
 
@@ -360,8 +378,14 @@ async function toggle(i,d){
  }
 }
 
+// ลงทะเบียนพร้อมอนิเมชันกำลังดำเนินการ
 $("regForm").addEventListener("submit",async e=>{
  e.preventDefault();
+ const btn = $("regSubmitBtn");
+ const originalText = btn.innerHTML;
+ btn.disabled = true;
+ btn.innerHTML = `<span class="spinner"></span>กำลังบันทึกข้อมูล...`;
+
  newId="CAMP-"+Math.floor(1000+Math.random()*9000);
  let payload={
    action: "register",
@@ -387,11 +411,20 @@ $("regForm").addEventListener("submit",async e=>{
    }
  } catch(err) {
    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ } finally {
+   btn.disabled = false;
+   btn.innerHTML = originalText;
  }
 });
 
+// ล็อกอินนักเรียนพร้อมอนิเมชันกำลังดำเนินการ
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
+ const btn = $("loginSubmitBtn");
+ const originalText = btn.innerHTML;
+ btn.disabled = true;
+ btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
+
  let payload={
    action: "login",
    studentId: $("lid").value,
@@ -408,11 +441,20 @@ $("loginForm").addEventListener("submit",async e=>{
    }
  } catch(err) {
    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ } finally {
+   btn.disabled = false;
+   btn.innerHTML = originalText;
  }
 });
 
+// ล็อกอินแอดมินพร้อมอนิเมชันกำลังดำเนินการ
 $("adminForm").addEventListener("submit",async e=>{
  e.preventDefault();
+ const btn = $("adminSubmitBtn");
+ const originalText = btn.innerHTML;
+ btn.disabled = true;
+ btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
+
  let payload={
    action: "adminLogin",
    username: $("au").value,
@@ -430,6 +472,9 @@ $("adminForm").addEventListener("submit",async e=>{
    }
  } catch(err) {
    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+ } finally {
+   btn.disabled = false;
+   btn.innerHTML = originalText;
  }
 });
 </script>
