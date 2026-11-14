@@ -251,38 +251,36 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="days" id="days"></div>
   </section>
 
-  <!-- ระบบส่งงานพร้อมเลือกหัวข้อและประเภทการส่ง (ไฟล์ / ลิงก์) -->
+  <!-- ระบบส่งงาน: เลือกฐานก่อน -> เลือกหัวข้อชิ้นงานต่อ -> เลือกประเภทการส่ง -->
   <section id="tab-submitWork" class="narrow stack" hidden>
    <div class="card">
      <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-     <p class="muted">เลือกฐาน หัวข้อชิ้นงาน และรูปแบบการส่งงานของคุณ</p>
+     <p class="muted">กรุณาเลือกฐานกิจกรรมก่อน จากนั้นจึงเลือกหัวข้อชิ้นงานและรูปแบบการส่งงาน</p>
    </div>
    <div class="card">
      <form onsubmit="handleAdvancedUpload(event)">
-       <div class="row field">
-         <div>
-           <label for="subBase">เลือกฐานกิจกรรม</label>
-           <select id="subBase" required>
-             <option value="">-- เลือกฐาน --</option>
-             <option value="Robot">ฐาน Robot</option>
-             <option value="AI">ฐาน AI</option>
-             <option value="Canva">ฐาน Canva</option>
-           </select>
-         </div>
-         <div>
-           <label for="subTask">เลือกหัวข้อ / ชิ้นงาน</label>
-           <select id="subTask" required>
-             <option value="">-- เลือกหัวข้อ --</option>
-             <option value="หัวข้อที่ 1 (วันที่ 1)">หัวข้อที่ 1 (วันที่ 1)</option>
-             <option value="หัวข้อที่ 2 (วันที่ 1)">หัวข้อที่ 2 (วันที่ 1)</option>
-             <option value="หัวข้อที่ 3 (วันที่ 1)">หัวข้อที่ 3 (วันที่ 1)</option>
-             <option value="หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)">หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)</option>
-           </select>
-         </div>
+       <!-- 1. เลือกฐานกิจกรรมก่อน -->
+       <div class="field">
+         <label for="subBase">1. เลือกฐานกิจกรรม</label>
+         <select id="subBase" onchange="updateTaskOptions()" required>
+           <option value="">-- กรุณาเลือกฐานกิจกรรม --</option>
+           <option value="Robot">ฐาน Robot</option>
+           <option value="AI">ฐาน AI</option>
+           <option value="Canva">ฐาน Canva</option>
+         </select>
        </div>
 
+       <!-- 2. เลือกหัวข้อชิ้นงานต่อ (จะเปิดใช้งานเมื่อเลือกฐานแล้ว) -->
        <div class="field">
-         <label for="subType">ประเภทการส่งงาน</label>
+         <label for="subTask">2. เลือกหัวข้อ / ชิ้นงาน</label>
+         <select id="subTask" required disabled>
+           <option value="">-- กรุณาเลือกฐานกิจกรรมก่อน --</option>
+         </select>
+       </div>
+
+       <!-- 3. เลือกประเภทการส่งงาน -->
+       <div class="field">
+         <label for="subType">3. ประเภทการส่งงาน</label>
          <select id="subType" onchange="toggleSubType(this.value)" required>
            <option value="file">อัปโหลดไฟล์ (File Upload)</option>
            <option value="link">ส่งลิงก์ หรือ แชร์ URL (Link/Share)</option>
@@ -292,7 +290,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
        <!-- ช่องสำหรับอัปโหลดไฟล์ -->
        <div class="field" id="fileFieldContainer">
          <label for="subFile">เลือกไฟล์งาน (PDF, รูปภาพ, โค้ด)</label>
-         <input type="file" id="subFile">
+         <input type="file" id="subFile" required>
        </div>
 
        <!-- ช่องสำหรับใส่ลิงก์ / แชร์ -->
@@ -502,6 +500,33 @@ async function toggle(i,d){
  }
 }
 
+// ฟังก์ชันอัปเดตหัวข้อชิ้นงานตามฐานที่เลือก
+function updateTaskOptions() {
+  const base = $("subBase").value;
+  const taskSelect = $("subTask");
+  taskSelect.innerHTML = '<option value="">-- เลือกหัวข้อชิ้นงาน --</option>';
+
+  if (!base) {
+    taskSelect.disabled = true;
+    return;
+  }
+
+  taskSelect.disabled = false;
+  const tasks = [
+    "หัวข้อที่ 1 (วันที่ 1)",
+    "หัวข้อที่ 2 (วันที่ 1)",
+    "หัวข้อที่ 3 (วันที่ 1)",
+    "หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)"
+  ];
+
+  tasks.forEach((t) => {
+    const opt = document.createElement("option");
+    opt.value = t;
+    opt.textContent = t;
+    taskSelect.appendChild(opt);
+  });
+}
+
 // สลับช่องกรอกข้อมูลระหว่าง อัปโหลดไฟล์ กับ ส่งลิงก์
 function toggleSubType(type) {
   if (type === 'file') {
@@ -519,14 +544,14 @@ function toggleSubType(type) {
   }
 }
 
-// ฟังก์ชันส่งงานแบบเลือกหัวข้อและประเภทการส่ง
+// ฟังก์ชันส่งงานแบบเลือกฐาน -> เลือกหัวข้อ -> เลือกประเภทการส่ง
 async function handleAdvancedUpload(e) {
   e.preventDefault();
   const base = $("subBase").value;
   const task = $("subTask").value;
   const type = $("subType").value;
 
-  if (!base || !task) return alert("กรุณาเลือกฐานกิจกรรมและหัวข้อให้ครบถ้วน");
+  if (!base || !task) return alert("กรุณาเลือกฐานกิจกรรมและหัวข้อชิ้นงานให้ครบถ้วน");
 
   const btn = e.submitter;
   const originalText = btn.innerHTML;
