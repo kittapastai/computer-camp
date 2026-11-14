@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-/* 🎨 โทนสีเดิม: น้ำเงินคลาสสิก (Classic Blue & Pastel) */
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -20,7 +19,6 @@ h1,h2{line-height:1.25;letter-spacing:-.01em}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
-/* Smooth Animation Base */
 .card, .btn, input, select, textarea, .side {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -43,7 +41,6 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-
 .field+.field,.row+.field,.field+.row,.row+.row{margin-top:.8rem}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 
-/* Loading Spinner Animation สำหรับปุ่มล็อกอิน / ลงทะเบียน */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -169,6 +166,9 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem}.dayb .btn{padding:.25rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
 .head h2{font-size:1.15rem;font-weight:800}
+.search-group{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;width:100%;max-width:400px}
+.search-group input{flex:1}
+.search-group .btn{padding:.55rem .9rem;font-size:.82rem;box-shadow:3px 3px 0 var(--shadow)}
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(15,15,35,.6);backdrop-filter:blur(4px);display:grid;place-items:center;padding:1rem;z-index:50;animation:fadeIn 0.2s ease-out;}
 .modal .card{max-width:380px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
@@ -277,7 +277,12 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
     <div class="card stat" style="color:var(--bad)">❌ ยังไม่มา<b id="sAbsent">0</b><small id="sAbsentP"></small></div>
     <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d16" onclick="setDay(16)">16 ม.ค.</button><button class="btn ghost" id="d17" onclick="setDay(17)">17 ม.ค.</button></div></div>
    </div>
-   <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">กดเพื่อเปลี่ยนสถานะของนักเรียนแต่ละคน</p></div><input id="q" oninput="renderCheckin()" placeholder="🔍 ค้นหาชื่อ, เลข นร., Camp ID" style="max-width:320px" aria-label="ค้นหา"></div>
+   <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">พิมพ์เลข นร. แล้วกด Enter เพื่อค้นหาเฉพาะคน (หรือกดล้างเพื่อดูทั้งหมด)</p></div>
+    <div class="search-group">
+      <input id="q" onkeydown="handleSearchKey(event)" oninput="if(!this.value.trim()) resetSearch()" placeholder="🔍 พิมพ์เลข นร. แล้วกด Enter" aria-label="ค้นหา">
+      <button type="button" class="btn ghost" id="clearSearchBtn" onclick="resetSearch()" hidden>ล้าง</button>
+    </div>
+   </div>
     <div class="tablebox"><table><thead><tr><th>เลข นร. / Camp ID</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>16 ม.ค.</th><th>17 ม.ค.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
  </main>
@@ -295,30 +300,31 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let newId="",admin=false,day=16,cur="home";
 let students=[];
+let exactSearchMode = false; // โหมดค้นหาเฉพาะคนเมื่อกด Enter
 
 const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
 
 const sched=[
   ["วันที่ 16 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
-    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
-    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
-    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
-    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)[cite: 5]"],
-    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)[cite: 5]"],
-    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)[cite: 5]"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
-    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3[cite: 5]"]
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
+    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
+    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)"],
+    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
   ]],
   ["วันที่ 17 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม[cite: 5]"],
-    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)[cite: 5]"],
-    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)[cite: 5]"],
-    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)[cite: 5]"],
-    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน[cite: 5]"],
-    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3[cite: 5]"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
-    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"]
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
+    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
+    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)"],
+    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
+    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
   ]]
 ];
 
@@ -343,7 +349,9 @@ async function tab(n){
    await fetchAdminData();
  }
  if(n==="adminDashboard")renderAdmin();
- if(n==="adminCheckin")renderCheckin();
+ if(n==="adminCheckin") {
+   resetSearch();
+ }
  window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -358,7 +366,7 @@ async function fetchAdminData() {
      students = json.data.map(item => ({
        t: item.timestamp,
        email: item.email,
-       sid: item.studentId,
+       sid: String(item.studentId),
        name: `${item.title}${item.fullName}`,
        nick: item.nickname,
        grade: item.grade,
@@ -382,13 +390,51 @@ function renderAdmin(){
  $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
 }
 
+// ฟังก์ชันจัดการการกดปุ่ม Enter ในช่องค้นหา
+function handleSearchKey(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const q = $("q").value.trim();
+    if (q) {
+      exactSearchMode = true;
+      $("clearSearchBtn").hidden = false;
+      renderCheckin();
+    } else {
+      resetSearch();
+    }
+  } else if (e.key === "Escape") {
+    resetSearch();
+  }
+}
+
+function resetSearch() {
+  $("q").value = "";
+  exactSearchMode = false;
+  $("clearSearchBtn").hidden = true;
+  renderCheckin();
+}
+
 function renderCheckin(){
  const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
  $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
+ 
  const q=$("q").value.trim().toLowerCase();
- const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
+ let rows = students.map((s,i)=>[s,i]);
+
+ // ถ้ากด Enter ให้หาคนที่เลข นร. ตรงเป๊ะก่อน (หรือขึ้นแค่คนเดียว)
+ if (exactSearchMode && q) {
+   const exactMatch = rows.find(([s]) => s.sid.toLowerCase() === q || s.camp.toLowerCase() === q);
+   if (exactMatch) {
+     rows = [exactMatch]; // แสดงเฉพาะคนนั้นคนเดียว
+   } else {
+     // ถ้าพิมพ์ไม่ตรงเป๊ะ ให้หาคนที่ใกล้เคียงที่สุดคนแรกขึ้นมาคนเดียว
+     const partialMatch = rows.find(([s]) => [s.sid, s.name, s.nick, s.camp].some(v => v.toLowerCase().includes(q)));
+     rows = partialMatch ? [partialMatch] : [];
+   }
+ }
+
  const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
- $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,16)}${b(s,i,17)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
+ $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,16)}${b(s,i,17)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียนรหัสนี้</td></tr>`;
 }
 
 function setDay(d){day=d;$("d16").className="btn"+(d===16?"":" ghost");$("d17").className="btn"+(d===17?"":" ghost");renderCheckin()}
