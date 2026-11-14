@@ -8,18 +8,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
+/* 🎨 ธีมสีใหม่: Modern Violet & Cyber Neon */
+:root,[data-theme=pastel]{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --text:#1e1b4b;
+  --accent:#7c3aed; /* ม่วงไวโอเล็ตพรีเมียม */
+  --accent-glow: rgba(124, 58, 237, 0.35);
+  --ink:#1e1b4b;
+  --shadow:#312e81;
+  --dot:#ede9fe;
+  --soft:rgba(124,58,237,.08);
+  --on:#fff;
+  --ok:#059669;
+  --bad:#e11d48;
+}
 *{box-sizing:border-box;margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
-background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
+background:radial-gradient(var(--dot) 1.5px,transparent 1.5px) 0 0/28px 28px,var(--bg);overflow-x:hidden;}
 h1,h2,h3,button,.badge{font-family:'Prompt','IBM Plex Sans Thai',sans-serif}
 h1,h2{line-height:1.25;letter-spacing:-.01em}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
-/* Smooth Animation Base */
+/* ✨ แอนิเมชันเคลื่อนไหว สมูทๆ */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 6px 6px 0 var(--shadow), 0 0 0 0 var(--accent-glow); }
+  70% { box-shadow: 6px 6px 0 var(--shadow), 0 0 0 12px rgba(124,58,237,0); }
+  100% { box-shadow: 6px 6px 0 var(--shadow), 0 0 0 0 rgba(124,58,237,0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .card, .btn, input, select, textarea, .side {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -29,71 +58,59 @@ h1,h2{line-height:1.25;letter-spacing:-.01em}
 .narrow{max-width:760px;margin:0 auto}
 .stack>*+*{margin-top:1.25rem}
 .center{text-align:center}.muted{opacity:.75;font-size:.88rem}
-.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, opacity .15s ease;}
-.btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+
+.btn{font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:14px;border:2px solid var(--ink);background:var(--accent);color:var(--on);cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease;}
+.btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow);background:#6d28d9}
 .btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
 .btn:disabled{opacity:0.7;cursor:not-allowed;transform:none!important;box-shadow:2px 2px 0 var(--shadow)!important;}
 .btn.block{width:100%}.btn.ghost{background:var(--card);color:var(--text)}
 .link{background:none;border:0;color:var(--accent);font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:opacity 0.2s;}
 .link:hover{opacity:0.7;}
+
 label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.25rem}
 input,select,textarea{width:100%;font:inherit;font-size:.9rem;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:12px;background:#fff;color:#1b1f3b}
 input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
 .field+.field,.row+.field,.field+.row,.row+.row{margin-top:.8rem}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 
-/* Loading Spinner Animation */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+/* Loading Spinner */
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .spinner {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 0.8s linear infinite;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff;
+  animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle;
 }
 
 .auth{min-height:100vh;display:flex;flex-direction:row;width:100%;animation:fadeIn 0.5s ease-out;}
-.side{flex:1;background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:6px 6px 0 var(--shadow);overflow-y:auto;}
+.side{
+  flex:1;
+  background: radial-gradient(rgba(255,255,255,.15) 1.5px, transparent 1.5px) 0 0/20px 20px, linear-gradient(135deg,#4c1d95 0%,#7c3aed 100%);
+  color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;
+  border:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:8px 8px 0 var(--shadow);overflow-y:auto;
+}
 
 .pane{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:1.5rem;
-  overflow-y:auto;
-  background-image: radial-gradient(rgba(59, 91, 219, 0.12) 1.5px, transparent 1.5px);
+  flex:1; display:flex; align-items:center; justify-content:center; padding:1.5rem; overflow-y:auto;
+  background-image: radial-gradient(rgba(124, 58, 237, 0.1) 1.5px, transparent 1.5px);
   background-size: 16px 16px;
 }
 .pane .card{width:100%;max-width:440px;animation:fadeIn 0.4s ease-out;}
 .pane h1{text-align:left}
 
 .side .who1{display:flex;align-items:center;gap:.8rem;font-family:'Prompt',sans-serif;font-weight:700;line-height:1.25}
-.side .who1 span{font-size:1.5rem;width:48px;height:48px;display:grid;place-items:center;background:#fff;border-radius:14px;color:#1b1f3b;box-shadow:3px 3px 0 rgba(0,0,0,0.2)}
+.side .who1 span{font-size:1.5rem;width:48px;height:48px;display:grid;place-items:center;background:#fff;border-radius:14px;color:#7c3aed;box-shadow:3px 3px 0 rgba(0,0,0,0.2)}
 .side .who1 small{display:block;font-weight:500;opacity:.8;font-size:.78rem}
 .side h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800}
 .side .when{margin-top:.6rem;display:inline-block;font-size:.85rem;font-weight:600;padding:.3rem .9rem;border:1.5px solid rgba(255,255,255,.55);border-radius:99px}
 .side h3{font-size:.95rem;font-weight:700;margin-bottom:.8rem}
 .side ol{list-style:none;padding:0;display:grid;gap:.7rem}
-.side li{display:flex;gap:.8rem;align-items:flex-start;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:.75rem .9rem;transition:background 0.2s;}
-.side li:hover{background:rgba(255,255,255,.2);}
-.side li i{font:800 .95rem 'Prompt',sans-serif;font-style:normal;flex:none;width:30px;height:30px;border-radius:10px;background:#fff;color:#1b2a8a;display:grid;place-items:center}
+.side li{display:flex;gap:.8rem;align-items:flex-start;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:16px;padding:.75rem .9rem;transition:transform 0.2s, background 0.2s;}
+.side li:hover{transform:translateX(4px);background:rgba(255,255,255,.22);}
+.side li i{font:800 .95rem 'Prompt',sans-serif;font-style:normal;flex:none;width:30px;height:30px;border-radius:10px;background:#fff;color:#4c1d95;display:grid;place-items:center}
 .side li b{display:block;font-size:.92rem}.side li small{opacity:.85;font-size:.8rem}
 .crew{display:flex;flex-wrap:wrap;gap:.5rem}
 .crew span{display:flex;align-items:center;gap:.45rem;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);border-radius:99px;padding:.25rem .8rem .25rem .3rem}
-.crew em{font:800 .75rem 'Prompt',sans-serif;font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#1b1f3b}
+.crew em{font:800 .75rem 'Prompt',sans-serif;font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#1e1b4b}
 .side .adv{margin-top:.7rem;font-size:.8rem;opacity:.85}
 
 @media(max-width:900px){
@@ -126,34 +143,61 @@ nav::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-
  nav .bar{flex-wrap:wrap}.menu{order:3}
  .card{box-shadow:4px 4px 0 var(--shadow)}
 }
+
 /* home & sections */
 main>section {animation: fadeIn 0.35s ease-in-out;}
-.notice{display:flex;gap:.8rem;align-items:center;justify-content:space-between;text-align:left;background:#f59e0b;color:#3b1d00;border:2px solid #7c2d12;box-shadow:5px 5px 0 #7c2d12;border-radius:20px;padding:1rem 1.2rem}
+.notice{display:flex;gap:.8rem;align-items:center;justify-content:space-between;text-align:left;background:linear-gradient(135deg, #f59e0b, #fbbf24);color:#3b1d00;border:2px solid #7c2d12;box-shadow:5px 5px 0 #7c2d12;border-radius:20px;padding:1rem 1.2rem;animation: float 4s ease-in-out infinite;}
 .notice p{font-size:.82rem}.notice h3{font-size:.95rem}
 .notice .btn{background:#fff;color:#7c2d12;border-color:#7c2d12;box-shadow:3px 3px 0 #7c2d12;white-space:nowrap;padding:.45rem .8rem;font-size:.8rem}
-.hero{padding:2.6rem 1.5rem}
+
+/* 🌟 เพิ่มสกรีนโทน (Screen Tone Halftone Pattern) ที่ปกหลัก (Hero Cover) และใส่แอนิเมชัน */
+.hero{
+  padding: 3rem 1.5rem;
+  background-image: 
+    radial-gradient(rgba(124, 58, 237, 0.15) 2px, transparent 2px),
+    linear-gradient(135deg, #faf5ff 0%, #ffffff 100%);
+  background-size: 24px 24px, 100% 100%;
+  animation: pulseGlow 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 150px; height: 150px;
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 50%;
+  z-index: 0;
+}
+.hero > * { position: relative; z-index: 1; }
+
 .hero .tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.25rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:1rem}
-.hero h1{font-size:clamp(1.8rem,5vw,2.9rem);font-weight:800}
+.hero h1{font-size:clamp(1.8rem,5vw,2.9rem);font-weight:800;color:var(--accent)}
 .hero p{margin:.9rem auto 0;max-width:560px}
 h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
+
 /* team */
 .advisor{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;background:var(--accent);color:var(--on)}
 .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.3rem}
-.person{padding:0;overflow:hidden;transition:transform 0.2s, box-shadow 0.2s;}
-.person:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--shadow);}
+.person{padding:0;overflow:hidden;transition:transform 0.25s, box-shadow 0.25s;}
+.person:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--shadow);}
 .av{height:150px;display:grid;place-items:center;font:800 3.4rem 'Prompt',sans-serif;border-bottom:2px solid var(--ink)}
 .person div+div{padding:1rem 1.2rem}
 .person h3{font-size:1.05rem}.person small{display:block;color:var(--accent);font-weight:600;margin-bottom:.3rem}
 .av.big{width:92px;height:92px;border:2px solid var(--on);border-radius:20px;font-size:2rem}
+
 /* schedule */
 .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
 .day h3{font-size:.95rem;text-align:center;padding:.5rem;border:2px solid var(--ink);border-radius:14px;background:var(--accent);color:var(--on);margin-bottom:1rem}
-.slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem;transition:transform 0.15s;}
-.slot:hover{transform:translateX(4px);}
+.slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem;transition:transform 0.2s;}
+.slot:hover{transform:translateX(6px);background:rgba(124,58,237,.12);}
 .slot+.slot{margin-top:.7rem}.slot b{display:block;font-family:'Prompt',sans-serif;font-size:.8rem;color:var(--accent)}
+
 /* work */
 .bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
 .pill{display:inline-block;font-size:.78rem;font-weight:700;padding:.2rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:.7rem}
+
 /* admin */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
 .stat{text-align:center;padding:1rem}.stat b{display:block;font:800 1.9rem 'Prompt',sans-serif}
@@ -163,16 +207,18 @@ th{text-align:left;padding:.7rem;border-bottom:2px solid var(--ink);background:v
 td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .mono{font-family:ui-monospace,monospace}
 .ck{font-size:.78rem;padding:.35rem .7rem;border-radius:10px;border:2px solid var(--ink);cursor:pointer;font-weight:600;background:var(--card);color:var(--bad);transition:all 0.2s;}
-.ck:hover{opacity:0.85;}
+.ck:hover{opacity:0.85;transform:scale(1.05);}
 .ck.y{background:var(--ok);color:#fff}
 .dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem}.dayb .btn{padding:.25rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
 .head h2{font-size:1.15rem;font-weight:800}
+
 /* modal */
-.modal{position:fixed;inset:0;background:rgba(15,15,35,.6);backdrop-filter:blur(4px);display:grid;place-items:center;padding:1rem;z-index:50;animation:fadeIn 0.2s ease-out;}
+.modal{position:fixed;inset:0;background:rgba(15,15,35,.6);backdrop-filter:blur(6px);display:grid;place-items:center;padding:1rem;z-index:50;animation:fadeIn 0.2s ease-out;}
 .modal .card{max-width:380px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
 .modal h3{font-size:1.2rem;margin-bottom:.6rem}
-.camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed #3b5bdb;border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:#3b5bdb;letter-spacing:.06em}
+.camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed var(--accent);border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:var(--accent);letter-spacing:.06em}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -234,7 +280,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  <main class="wrap">
   <section id="tab-home" class="narrow stack center">
    <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
-   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1><p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน Robot, AI และ Canva ณ โรงเรียนปทุมวิไล</p></div>
+   
+   <!-- 🌟 ปกหลัก (Hero Section) พร้อมสกรีนโทนและแอนิเมชัน -->
+   <div class="card hero">
+     <span class="tag">⚡ Workshop เชิงปฏิบัติการ</span>
+     <h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1>
+     <p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน Robot, AI และ Canva ณ โรงเรียนปทุมวิไล</p>
+   </div>
   </section>
 
   <section id="tab-instructors" class="stack" hidden>
@@ -297,28 +349,27 @@ let students=[];
 
 const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
 
-// ข้อมูลกำหนดการตามเอกสารทางการ
 const sched=[
   ["วันที่ 16 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
-    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
-    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)"],
-    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
+    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
+    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"],
+    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
+    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)[cite: 5]"],
+    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)[cite: 5]"],
+    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)[cite: 5]"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
+    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3[cite: 5]"]
   ]],
   ["วันที่ 17 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
-    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
-    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)"],
-    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
-    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
-    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม[cite: 5]"],
+    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)[cite: 5]"],
+    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)[cite: 5]"],
+    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)[cite: 5]"],
+    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน[cite: 5]"],
+    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3[cite: 5]"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง[cite: 5]"],
+    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)[cite: 5]"]
   ]]
 ];
 
