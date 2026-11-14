@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ค่ายคอมพิวเตอร์ 2/2569 - โรงเรียนปทุมวิไล</title>
+<title>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล - โรงเรียนปทุมวิไล</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;700;800&display=swap" rel="stylesheet">
@@ -67,7 +67,6 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px color-
 .auth{min-height:100vh;display:flex;flex-direction:row;width:100%;animation:fadeIn 0.5s ease-out;}
 .side{flex:1;background:radial-gradient(rgba(255,255,255,.13) 1.4px,transparent 1.6px) 0 0/24px 24px,linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;padding:2.5rem clamp(1.5rem,4.5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:2.2rem;border:2px solid var(--ink);border-radius:22px;margin:1rem;box-shadow:6px 6px 0 var(--shadow);overflow-y:auto;}
 
-/* ใส่สกรีนโทนลายจุด (Halftone / Dot Screen Tone) ที่พื้นหลังฝั่งขวา */
 .pane{
   flex:1;
   display:flex;
@@ -183,11 +182,11 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 <div id="auth" class="auth">
  <aside class="side">
   <div class="who1"><span>💻</span><div>โรงเรียนปทุมวิไล<small>จังหวัดปทุมธานี</small></div></div>
-  <div class="pitch"><h2>ค่ายคอมพิวเตอร์ 2/2569</h2><span class="when">📅 28 - 29 พฤศจิกายน 2569</span></div>
+  <div class="pitch"><h2>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h2><span class="when">📅 16 - 17 มกราคม 2569</span></div>
   <div class="more"><h3>3 ฐานกิจกรรมตลอด 2 วัน</h3><ol>
-   <li><i>1</i><div><b>Vibe Coding & Game Theory</b><small>สร้างเกมด้วยการสั่งงาน AI</small></div></li>
-   <li><i>2</i><div><b>Prompt & API Game Development</b><small>เขียน Prompt และเชื่อมต่อ API เข้ากับเกม</small></div></li>
-   <li><i>3</i><div><b>AR & Active Learning Game</b><small>เกมความจริงเสริมด้วยการจับมือ (Hand Tracking)</small></div></li>
+   <li><i>1</i><div><b>ฐาน Robot</b><small>เรียนรู้หุ่นยนต์และโครงสร้างกลไก</small></div></li>
+   <li><i>2</i><div><b>ฐาน AI</b><small>ประยุกต์ใช้งานปัญญาประดิษฐ์</small></div></li>
+   <li><i>3</i><div><b>ฐาน Canva</b><small>สร้างสรรค์สื่อดิจิทัลและกราฟิก</small></div></li>
   </ol></div>
   <div class="more"><h3>วิทยากร</h3><div class="crew"><span><em style="background:#fcd34d">ส</em>สายไหม</span><span><em style="background:#a5f3fc">ต</em>ตุ้ยนุ้ย</span><span><em style="background:#fbcfe8">น</em>นุ่น</span><span><em style="background:#bbf7d0">น</em>น้ำฝน</span></div><p class="adv">ที่ปรึกษาโครงการ: ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์</p></div>
  </aside>
@@ -223,7 +222,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 <div id="app" hidden>
  <nav>
   <div class="bar">
-   <button class="brand" onclick="tab('home')"><span style="font-size:1.7rem">💻</span><span>โรงเรียนปทุมวิไล<small>ค่ายคอมพิวเตอร์ 2/2569</small></span></button>
+   <button class="brand" onclick="tab('home')"><span style="font-size:1.7rem">💻</span><span>โรงเรียนปทุมวิไล<small>ค่ายเทคโนโลยีดิจิทัล 1/2569</small></span></button>
    <div class="tools">
     <span class="badge" id="userBadge">รหัส: -</span>
     <button class="btn ghost" id="burger" aria-label="เมนู" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
@@ -235,7 +234,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  <main class="wrap">
   <section id="tab-home" class="narrow stack center">
    <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
-   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายคอมพิวเตอร์ 2/2569 โรงเรียนปทุมวิไล</h1><p>ค่ายคอมพิวเตอร์ 2 วันเต็ม กับ AI, Micro Bit, Canva AI</p></div>
+   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1><p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน Robot, AI และ Canva ณ โรงเรียนปทุมวิไล</p></div>
   </section>
 
   <section id="tab-instructors" class="stack" hidden>
@@ -246,17 +245,17 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
   </section>
 
   <section id="tab-schedule" class="stack" hidden>
-   <h2 class="title">📅 กำหนดการค่ายคอมพิวเตอร์</h2>
-   <p class="muted center">ตารางเวลาตลอด 2 วัน (28 - 29 พฤศจิกายน 2569)</p>
+   <h2 class="title">📅 กำหนดการจัดกิจกรรม</h2>
+   <p class="muted center">ระหว่างวันที่ 16 - 17 มกราคม 2569 ณ โรงเรียนปทุมวิไล</p>
    <div class="days" id="days"></div>
   </section>
 
   <section id="tab-submitWork" class="stack" hidden>
    <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">ส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p></div>
    <div class="bases">
-    <div class="card"><span class="pill">ฐานที่ 1: AI</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 2: Micro Bit</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 3: Canva Ai</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 1: Robot</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 2: AI</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card"><span class="pill">ฐานที่ 3: Canva</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
    </div>
   </section>
 
@@ -275,10 +274,10 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
     <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
     <div class="card stat" style="color:var(--ok)">✅ เข้าร่วมแล้ว<b id="sPresent">0</b><small id="sPresentP"></small></div>
     <div class="card stat" style="color:var(--bad)">❌ ยังไม่มา<b id="sAbsent">0</b><small id="sAbsentP"></small></div>
-    <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d28" onclick="setDay(28)">28 พ.ย.</button><button class="btn ghost" id="d29" onclick="setDay(29)">29 พ.ย.</button></div></div>
+    <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d16" onclick="setDay(16)">16 ม.ค.</button><button class="btn ghost" id="d17" onclick="setDay(17)">17 ม.ค.</button></div></div>
    </div>
    <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">กดเพื่อเปลี่ยนสถานะของนักเรียนแต่ละคน</p></div><input id="q" oninput="renderCheckin()" placeholder="🔍 ค้นหาชื่อ, เลข นร., Camp ID" style="max-width:320px" aria-label="ค้นหา"></div>
-    <div class="tablebox"><table><thead><tr><th>เลข นร. / Camp ID</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>28 พ.ย.</th><th>29 พ.ย.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
+    <div class="tablebox"><table><thead><tr><th>เลข นร. / Camp ID</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>16 ม.ค.</th><th>17 ม.ค.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
  </main>
 </div>
@@ -293,12 +292,36 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let newId="",admin=false,day=28,cur="home";
+let newId="",admin=false,day=16,cur="home";
 let students=[];
 
-const team=[["กฤตภาส","ทศพล","ทฤษฎี Canva AI และเครื่องมือ","#fcd34d"],["ต้นกล้า","โอเล่"," AI ","#a5f3fc"],["นัท","ยลรดี รุ่งแจ่ม","Micro Bit","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
-const sched=[["วันที่ 28 พ.ย. 2569 (Day 1)",[["08:30 - 09:00 น.","ลงทะเบียน & ปฐมนิเทศ ณ หอประชุมโรงเรียนปทุมวิไล"],["09:00 - 12:00 น.","ฐานที่ 1: Vibe Coding & Game Theory (วิทยากร: สายไหม & ตุ้ยนุ้ย)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 16:00 น.","ฐานที่ 2: Prompt & API Game Development (วิทยากร: นุ่น)"]]],
- ["วันที่ 29 พ.ย. 2569 (Day 2)",[["08:30 - 09:00 น.","เช็กชื่อหน้างาน & สรุปกิจกรรมวันที่ผ่านมา"],["09:00 - 12:00 น.","ฐานที่ 3: AR & Active Learning Game (วิทยากร: น้ำฝน)"],["12:00 - 13:00 น.","พักรับประทานอาหารกลางวัน 🍽️"],["13:00 - 15:30 น.","ส่งผลงานโปรเจกต์ & พิธีปิดมอบเกียรติบัตร 🏆"]]]];
+const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
+
+// ข้อมูลกำหนดการตามเอกสารทางการ
+const sched=[
+  ["วันที่ 16 มกราคม 2569", [
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
+    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
+    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)"],
+    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
+  ]],
+  ["วันที่ 17 มกราคม 2569", [
+    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
+    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
+    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)"],
+    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
+    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
+    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
+  ]]
+];
+
 const tabs=[["home","🏠 หน้าแรก"],["instructors","👥 วิทยากร"],["schedule","📅 กำหนดการ"],["submitWork","📂 ส่งงาน"],["faq","❓ คู่มือ"]];
 const adminTabs=[["adminDashboard","📊 รายชื่อผู้สมัคร"],["adminCheckin","✅ เช็กชื่อหน้างาน"]];
 
@@ -341,8 +364,8 @@ async function fetchAdminData() {
        grade: item.grade,
        camp: item.campId,
        rowIdx: item.rowIdx,
-       c28: item.check28 === "มาแล้ว",
-       c29: item.check29 === "มาแล้ว"
+       c16: item.check28 === "มาแล้ว",
+       c17: item.check29 === "มาแล้ว"
      }));
    }
  } catch(err) {
@@ -365,10 +388,10 @@ function renderCheckin(){
  const q=$("q").value.trim().toLowerCase();
  const rows=students.map((s,i)=>[s,i]).filter(([s])=>!q||[s.name,s.nick,s.sid,s.camp].some(v=>v.toLowerCase().includes(q)));
  const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
- $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,28)}${b(s,i,29)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
+ $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b><br>${esc(s.camp)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,16)}${b(s,i,17)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียน</td></tr>`;
 }
 
-function setDay(d){day=d;$("d28").className="btn"+(d===28?"":" ghost");$("d29").className="btn"+(d===29?"":" ghost");renderCheckin()}
+function setDay(d){day=d;$("d16").className="btn"+(d===16?"":" ghost");$("d17").className="btn"+(d===17?"":" ghost");renderCheckin()}
 
 async function toggle(i,d){
  students[i]["c"+d]=!students[i]["c"+d];
