@@ -251,31 +251,60 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="days" id="days"></div>
   </section>
 
-  <!-- ระบบส่งงานพร้อมอัปโหลดเข้า Google Drive ค่าย -->
-  <section id="tab-submitWork" class="stack" hidden>
-   <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">เลือกไฟล์งานของฐานกิจกรรมแล้วกดส่งเพื่อบันทึกเข้า Google Drive ค่ายทันที</p></div>
-   <div class="bases">
-    <div class="card">
-      <span class="pill">ฐานที่ 1: Robot</span>
-      <form onsubmit="handleUpload(event, 'Robot', 'fileRobot')">
-        <div class="field"><label>อัปโหลดไฟล์งานฐาน Robot</label><input type="file" id="fileRobot" required></div>
-        <button class="btn block" type="submit">ส่งงานฐาน Robot</button>
-      </form>
-    </div>
-    <div class="card">
-      <span class="pill">ฐานที่ 2: AI</span>
-      <form onsubmit="handleUpload(event, 'AI', 'fileAI')">
-        <div class="field"><label>อัปโหลดไฟล์งานฐาน AI</label><input type="file" id="fileAI" required></div>
-        <button class="btn block" type="submit">ส่งงานฐาน AI</button>
-      </form>
-    </div>
-    <div class="card">
-      <span class="pill">ฐานที่ 3: Canva</span>
-      <form onsubmit="handleUpload(event, 'Canva', 'fileCanva')">
-        <div class="field"><label>อัปโหลดไฟล์งานฐาน Canva</label><input type="file" id="fileCanva" required></div>
-        <button class="btn block" type="submit">ส่งงานฐาน Canva</button>
-      </form>
-    </div>
+  <!-- ระบบส่งงานพร้อมเลือกหัวข้อและประเภทการส่ง (ไฟล์ / ลิงก์) -->
+  <section id="tab-submitWork" class="narrow stack" hidden>
+   <div class="card">
+     <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
+     <p class="muted">เลือกฐาน หัวข้อชิ้นงาน และรูปแบบการส่งงานของคุณ</p>
+   </div>
+   <div class="card">
+     <form onsubmit="handleAdvancedUpload(event)">
+       <div class="row field">
+         <div>
+           <label for="subBase">เลือกฐานกิจกรรม</label>
+           <select id="subBase" required>
+             <option value="">-- เลือกฐาน --</option>
+             <option value="Robot">ฐาน Robot</option>
+             <option value="AI">ฐาน AI</option>
+             <option value="Canva">ฐาน Canva</option>
+           </select>
+         </div>
+         <div>
+           <label for="subTask">เลือกหัวข้อ / ชิ้นงาน</label>
+           <select id="subTask" required>
+             <option value="">-- เลือกหัวข้อ --</option>
+             <option value="หัวข้อที่ 1 (วันที่ 1)">หัวข้อที่ 1 (วันที่ 1)</option>
+             <option value="หัวข้อที่ 2 (วันที่ 1)">หัวข้อที่ 2 (วันที่ 1)</option>
+             <option value="หัวข้อที่ 3 (วันที่ 1)">หัวข้อที่ 3 (วันที่ 1)</option>
+             <option value="หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)">หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)</option>
+           </select>
+         </div>
+       </div>
+
+       <div class="field">
+         <label for="subType">ประเภทการส่งงาน</label>
+         <select id="subType" onchange="toggleSubType(this.value)" required>
+           <option value="file">อัปโหลดไฟล์ (File Upload)</option>
+           <option value="link">ส่งลิงก์ หรือ แชร์ URL (Link/Share)</option>
+         </select>
+       </div>
+
+       <!-- ช่องสำหรับอัปโหลดไฟล์ -->
+       <div class="field" id="fileFieldContainer">
+         <label for="subFile">เลือกไฟล์งาน (PDF, รูปภาพ, โค้ด)</label>
+         <input type="file" id="subFile">
+       </div>
+
+       <!-- ช่องสำหรับใส่ลิงก์ / แชร์ -->
+       <div class="field" id="linkFieldContainer" hidden>
+         <label for="subLink">วางลิงก์งานของคุณ (เช่น Google Drive, Canva Link, GitHub)</label>
+         <input type="url" id="subLink" placeholder="https://...">
+       </div>
+
+       <div class="field" style="margin-top: 1.5rem;">
+         <button class="btn block" type="submit" id="btnSubmitWork">ยืนยันการส่งงาน</button>
+       </div>
+     </form>
    </div>
   </section>
 
@@ -473,50 +502,105 @@ async function toggle(i,d){
  }
 }
 
-// ฟังก์ชันอัปโหลดไฟล์งานส่งเข้า Google Drive ค่าย
-async function handleUpload(e, category, inputId) {
+// สลับช่องกรอกข้อมูลระหว่าง อัปโหลดไฟล์ กับ ส่งลิงก์
+function toggleSubType(type) {
+  if (type === 'file') {
+    $("fileFieldContainer").hidden = false;
+    $("linkFieldContainer").hidden = true;
+    $("subFile").required = true;
+    $("subLink").required = false;
+    $("subLink").value = "";
+  } else {
+    $("fileFieldContainer").hidden = true;
+    $("linkFieldContainer").hidden = false;
+    $("subFile").required = false;
+    $("subFile").value = "";
+    $("subLink").required = true;
+  }
+}
+
+// ฟังก์ชันส่งงานแบบเลือกหัวข้อและประเภทการส่ง
+async function handleAdvancedUpload(e) {
   e.preventDefault();
-  const fileInput = $(inputId);
-  const file = fileInput.files[0];
-  if (!file) return alert("กรุณาเลือกไฟล์ก่อนส่ง");
+  const base = $("subBase").value;
+  const task = $("subTask").value;
+  const type = $("subType").value;
+
+  if (!base || !task) return alert("กรุณาเลือกฐานกิจกรรมและหัวข้อให้ครบถ้วน");
 
   const btn = e.submitter;
   const originalText = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = `<span class="spinner"></span>กำลังอัปโหลดขึ้น Drive...`;
+  btn.innerHTML = `<span class="spinner"></span>กำลังส่งข้อมูลงาน...`;
 
-  const reader = new FileReader();
-  reader.onload = async function() {
-    const base64Data = reader.result.split(',')[1];
+  if (type === 'file') {
+    const fileInput = $("subFile");
+    const file = fileInput.files[0];
+    if (!file) {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      return alert("กรุณาเลือกไฟล์ที่ต้องการอัปโหลด");
+    }
+
+    const reader = new FileReader();
+    reader.onload = async function() {
+      const base64Data = reader.result.split(',')[1];
+      const payload = {
+        action: "uploadAssignment",
+        studentId: newId,
+        category: base,
+        taskName: task,
+        submissionType: "File",
+        fileName: file.name,
+        mimeType: file.type,
+        fileData: base64Data
+      };
+      await sendPayloadToBackend(payload, btn, originalText, fileInput);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    const linkInput = $("subLink");
+    const linkValue = linkInput.value.trim();
+    if (!linkValue) {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      return alert("กรุณากรอกลิงก์งานของคุณ");
+    }
+
     const payload = {
       action: "uploadAssignment",
       studentId: newId,
-      category: category,
-      fileName: file.name,
-      mimeType: file.type,
-      fileData: base64Data
+      category: base,
+      taskName: task,
+      submissionType: "Link",
+      fileName: linkValue,
+      mimeType: "text/uri-list",
+      fileData: ""
     };
+    await sendPayloadToBackend(payload, btn, originalText, null, linkInput);
+  }
+}
 
-    try {
-      let res = await fetch(WEB_APP_URL, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
-      let json = await res.json();
-      if (json.status === "success") {
-        alert("ส่งงานสำเร็จ! ไฟล์ถูกบันทึกเรียบร้อยแล้ว 🎉");
-        fileInput.value = "";
-      } else {
-        alert(json.message || "เกิดข้อผิดพลาดในการอัปโหลด");
-      }
-    } catch(err) {
-      alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = originalText;
+async function sendPayloadToBackend(payload, btn, originalText, fileInput, linkInput) {
+  try {
+    let res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+    let json = await res.json();
+    if (json.status === "success") {
+      alert("ส่งงานสำเร็จเรียบร้อยแล้วครับ! 🎉");
+      if(fileInput) fileInput.value = "";
+      if(linkInput) linkInput.value = "";
+    } else {
+      alert(json.message || "เกิดข้อผิดพลาดในการส่งงาน");
     }
-  };
-  reader.readAsDataURL(file);
+  } catch(err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
 }
 
 $("regForm").addEventListener("submit",async e=>{
