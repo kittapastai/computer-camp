@@ -251,12 +251,31 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="days" id="days"></div>
   </section>
 
+  <!-- ระบบส่งงานพร้อมอัปโหลดเข้า Google Drive ค่าย -->
   <section id="tab-submitWork" class="stack" hidden>
-   <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">ส่งงานเพื่อบันทึกสถานะการส่งผลงานของคุณ</p></div>
+   <div class="card"><h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2><p class="muted">เลือกไฟล์งานของฐานกิจกรรมแล้วกดส่งเพื่อบันทึกเข้า Google Drive ค่ายทันที</p></div>
    <div class="bases">
-    <div class="card"><span class="pill">ฐานที่ 1: Robot</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 2: AI</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
-    <div class="card"><span class="pill">ฐานที่ 3: Canva</span><p class="muted">ยังไม่มีคำสั่งงานในฐานนี้</p></div>
+    <div class="card">
+      <span class="pill">ฐานที่ 1: Robot</span>
+      <form onsubmit="handleUpload(event, 'Robot', 'fileRobot')">
+        <div class="field"><label>อัปโหลดไฟล์งานฐาน Robot</label><input type="file" id="fileRobot" required></div>
+        <button class="btn block" type="submit">ส่งงานฐาน Robot</button>
+      </form>
+    </div>
+    <div class="card">
+      <span class="pill">ฐานที่ 2: AI</span>
+      <form onsubmit="handleUpload(event, 'AI', 'fileAI')">
+        <div class="field"><label>อัปโหลดไฟล์งานฐาน AI</label><input type="file" id="fileAI" required></div>
+        <button class="btn block" type="submit">ส่งงานฐาน AI</button>
+      </form>
+    </div>
+    <div class="card">
+      <span class="pill">ฐานที่ 3: Canva</span>
+      <form onsubmit="handleUpload(event, 'Canva', 'fileCanva')">
+        <div class="field"><label>อัปโหลดไฟล์งานฐาน Canva</label><input type="file" id="fileCanva" required></div>
+        <button class="btn block" type="submit">ส่งงานฐาน Canva</button>
+      </form>
+    </div>
    </div>
   </section>
 
@@ -300,7 +319,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let newId="",admin=false,day=16,cur="home";
 let students=[];
-let exactSearchMode = false; // โหมดค้นหาเฉพาะคนเมื่อกด Enter
+let exactSearchMode = false;
 
 const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
 
@@ -390,7 +409,6 @@ function renderAdmin(){
  $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
 }
 
-// ฟังก์ชันจัดการการกดปุ่ม Enter ในช่องค้นหา
 function handleSearchKey(e) {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -421,13 +439,11 @@ function renderCheckin(){
  const q=$("q").value.trim().toLowerCase();
  let rows = students.map((s,i)=>[s,i]);
 
- // ถ้ากด Enter ให้หาคนที่เลข นร. ตรงเป๊ะก่อน (หรือขึ้นแค่คนเดียว)
  if (exactSearchMode && q) {
    const exactMatch = rows.find(([s]) => s.sid.toLowerCase() === q || s.camp.toLowerCase() === q);
    if (exactMatch) {
-     rows = [exactMatch]; // แสดงเฉพาะคนนั้นคนเดียว
+     rows = [exactMatch];
    } else {
-     // ถ้าพิมพ์ไม่ตรงเป๊ะ ให้หาคนที่ใกล้เคียงที่สุดคนแรกขึ้นมาคนเดียว
      const partialMatch = rows.find(([s]) => [s.sid, s.name, s.nick, s.camp].some(v => v.toLowerCase().includes(q)));
      rows = partialMatch ? [partialMatch] : [];
    }
@@ -455,6 +471,52 @@ async function toggle(i,d){
  } catch(err) {
    console.error("Update checkin error:", err);
  }
+}
+
+// ฟังก์ชันอัปโหลดไฟล์งานส่งเข้า Google Drive ค่าย
+async function handleUpload(e, category, inputId) {
+  e.preventDefault();
+  const fileInput = $(inputId);
+  const file = fileInput.files[0];
+  if (!file) return alert("กรุณาเลือกไฟล์ก่อนส่ง");
+
+  const btn = e.submitter;
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span>กำลังอัปโหลดขึ้น Drive...`;
+
+  const reader = new FileReader();
+  reader.onload = async function() {
+    const base64Data = reader.result.split(',')[1];
+    const payload = {
+      action: "uploadAssignment",
+      studentId: newId,
+      category: category,
+      fileName: file.name,
+      mimeType: file.type,
+      fileData: base64Data
+    };
+
+    try {
+      let res = await fetch(WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      let json = await res.json();
+      if (json.status === "success") {
+        alert("ส่งงานสำเร็จ! ไฟล์ถูกบันทึกเรียบร้อยแล้ว 🎉");
+        fileInput.value = "";
+      } else {
+        alert(json.message || "เกิดข้อผิดพลาดในการอัปโหลด");
+      }
+    } catch(err) {
+      alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 $("regForm").addEventListener("submit",async e=>{
