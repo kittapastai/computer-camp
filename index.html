@@ -149,9 +149,6 @@ h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
 .slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem;transition:transform 0.15s;}
 .slot:hover{transform:translateX(4px);}
 .slot+.slot{margin-top:.7rem}.slot b{display:block;font-family:'Prompt',sans-serif;font-size:.8rem;color:var(--accent)}
-/* work */
-.bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem}
-.pill{display:inline-block;font-size:.78rem;font-weight:700;padding:.2rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:.7rem}
 /* admin */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
 .stat{text-align:center;padding:1rem}.stat b{display:block;font:800 1.9rem 'Prompt',sans-serif}
@@ -163,7 +160,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .ck{font-size:.78rem;padding:.35rem .7rem;border-radius:10px;border:2px solid var(--ink);cursor:pointer;font-weight:600;background:var(--card);color:var(--bad);transition:all 0.2s;}
 .ck:hover{opacity:0.85;}
 .ck.y{background:var(--ok);color:#fff}
-.dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem}.dayb .btn{padding:.25rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
+.dayb{display:flex;gap:.4rem;justify-content:center;margin-top:.4rem;flex-wrap:wrap}.dayb .btn{padding:.35rem .7rem;font-size:.78rem;box-shadow:2px 2px 0 var(--shadow)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
 .head h2{font-size:1.15rem;font-weight:800}
 .search-group{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;width:100%;max-width:400px}
@@ -259,7 +256,6 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    </div>
    <div class="card">
      <form onsubmit="handleAdvancedUpload(event)">
-       <!-- 1. เลือกฐานกิจกรรมก่อน -->
        <div class="field">
          <label for="subBase">1. เลือกฐานกิจกรรม</label>
          <select id="subBase" onchange="updateTaskOptions()" required>
@@ -270,7 +266,6 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
          </select>
        </div>
 
-       <!-- 2. เลือกหัวข้อชิ้นงานต่อ (เปิดใช้งานเมื่อเลือกฐานแล้ว) -->
        <div class="field">
          <label for="subTask">2. เลือกหัวข้อ / ชิ้นงาน</label>
          <select id="subTask" required disabled>
@@ -278,7 +273,6 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
          </select>
        </div>
 
-       <!-- 3. เลือกประเภทการส่งงาน -->
        <div class="field">
          <label for="subType">3. ประเภทการส่งงาน</label>
          <select id="subType" onchange="toggleSubType(this.value)" required>
@@ -287,13 +281,11 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
          </select>
        </div>
 
-       <!-- ช่องสำหรับอัปโหลดไฟล์ -->
        <div class="field" id="fileFieldContainer">
          <label for="subFile">เลือกไฟล์งาน (PDF, รูปภาพ, โค้ด)</label>
          <input type="file" id="subFile" required>
        </div>
 
-       <!-- ช่องสำหรับใส่ลิงก์ / แชร์ -->
        <div class="field" id="linkFieldContainer" hidden>
          <label for="subLink">วางลิงก์งานของคุณ (เช่น Google Drive, Canva Link, GitHub)</label>
          <input type="url" id="subLink" placeholder="https://...">
@@ -311,11 +303,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้กด "🔑 ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วติดต่อสตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัส</p></div>
   </section>
 
+  <!-- เมนูแอดมิน 1: รายชื่อผู้สมัครทั้งหมด (เฉพาะ Super Admin = All) -->
   <section id="tab-adminDashboard" hidden>
    <div class="card"><div class="head"><h2>📊 รายชื่อผู้สมัครทั้งหมด</h2><span class="badge" id="total">ทั้งหมด 0 คน</span></div>
-    <div class="tablebox"><table><thead><tr><th>เวลา</th><th>อีเมล</th><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>รหัสนักเรียน</th></tr></thead><tbody id="adminBody"></tbody></table></div></div>
+    <div class="tablebox"><table><thead><tr><th>เวลา</th><th>อีเมล</th><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th></tr></thead><tbody id="adminBody"></tbody></table></div></div>
   </section>
 
+  <!-- เมนูแอดมิน 2: เช็กชื่อหน้างาน (เฉพาะ Super Admin = All) -->
   <section id="tab-adminCheckin" class="stack" hidden>
    <div class="stats">
     <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
@@ -331,6 +325,43 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    </div>
     <div class="tablebox"><table><thead><tr><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>16 ม.ค.</th><th>17 ม.ค.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
+
+  <!-- เมนูแอดมิน 3: ตรวจงานตามฐาน (แสดงเฉพาะฐานที่แอดมินคนนั้นคุม) -->
+  <section id="tab-adminSubmissions" class="stack" hidden>
+   <div class="card">
+     <div class="head">
+       <div>
+         <h2 id="subAdminTitle">📥 รายการส่งงานนักเรียน</h2>
+         <p class="muted" id="subAdminDesc">ตรวจสอบงานที่นักเรียนส่งเข้ามาในแต่ละหัวข้อ</p>
+       </div>
+       <div class="dayb" id="taskFilterBtns">
+         <button class="btn" onclick="loadSubmissions('งานที่ 1', this)">งานที่ 1</button>
+         <button class="btn ghost" onclick="loadSubmissions('งานที่ 2', this)">งานที่ 2</button>
+         <button class="btn ghost" onclick="loadSubmissions('งานที่ 3', this)">งานที่ 3</button>
+         <button class="btn ghost" onclick="loadSubmissions('งานที่ 4', this)">งานที่ 4</button>
+       </div>
+     </div>
+     <div class="tablebox">
+       <table>
+         <thead>
+           <tr>
+             <th>เวลาส่ง</th>
+             <th>ฐาน</th>
+             <th>รหัส นร.</th>
+             <th>ชื่อ-นามสกุล</th>
+             <th>ชื่อเล่น</th>
+             <th>ห้อง</th>
+             <th>รูปแบบ</th>
+             <th>เปิดดูงาน</th>
+           </tr>
+         </thead>
+         <tbody id="subBody">
+           <tr><td colspan="8" class="center muted">กำลังโหลดข้อมูล...</td></tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </section>
  </main>
 </div>
 
@@ -344,8 +375,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let newId="",admin=false,day=16,cur="home";
-let students=[];
+
+let newId = "";
+let admin = false;
+let adminBase = "All"; // สิทธิ์การคุมฐานของแอดมิน (All, Robot, Ai, Canva)
+let day = 16;
+let cur = "home";
+let students = [];
 let exactSearchMode = false;
 
 const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
@@ -374,66 +410,116 @@ const sched=[
   ]]
 ];
 
-const tabs=[["home","🏠 หน้าแรก"],["instructors","👥 วิทยากร"],["schedule","📅 กำหนดการ"],["submitWork","📂 ส่งงาน"],["faq","❓ คู่มือ"]];
-const adminTabs=[["adminDashboard","📊 รายชื่อผู้สมัคร"],["adminCheckin","✅ เช็กชื่อหน้างาน"]];
+const studentTabs = [["home","🏠 หน้าแรก"],["instructors","👥 วิทยากร"],["schedule","📅 กำหนดการ"],["submitWork","📂 ส่งงาน"],["faq","❓ คู่มือ"]];
 
 for(let i=1;i<=10;i++)$("grade").add(new Option("ม.1/"+i,"ม.1/"+i));
 $("team").innerHTML=team.map(p=>`<article class="card person"><div class="av" style="background:${p[3]};color:#1b1f3b">${p[0][0]}</div><div><small>วิทยากร</small><h3>${p[1]}</h3><p class="muted">${p[2]}</p></div></article>`).join("");
 $("days").innerHTML=sched.map(d=>`<div class="card day"><h3>📅 ${d[0]}</h3>${d[1].map(s=>`<div class="slot"><b>${s[0]}</b>${s[1]}</div>`).join("")}</div>`).join("");
 
-function show(id){$(id).hidden=false}function hide(id){$(id).hidden=true}
+function show(id){$(id).hidden=false}
+function hide(id){$(id).hidden=true}
 function authView(v){$("regView").hidden=v==="login";$("loginView").hidden=v!=="login"}
-function buildMenu(){$("menu").innerHTML=tabs.concat(admin?adminTabs:[]).map(t=>`<button id="nav-${t[0]}" class="${adminTabs.includes(t)?'adm':''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("")+`<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`}
 
-async function tab(n){
- cur=n;
- document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!=="tab-"+n);
- document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("on",b.id==="nav-"+n));
- $("menu").classList.remove("open");
- 
- if(n==="adminDashboard" || n==="adminCheckin") {
-   await fetchAdminData();
- }
- if(n==="adminDashboard")renderAdmin();
- if(n==="adminCheckin") {
-   resetSearch();
- }
- window.scrollTo({top:0, behavior:'smooth'});
+function buildMenu() {
+  let activeTabs = [];
+  if (!admin) {
+    activeTabs = [...studentTabs];
+  } else {
+    // กรองเมนูตามสิทธิ์แอดมิน
+    if (adminBase.toLowerCase() === "all") {
+      activeTabs = [
+        ["adminDashboard", "📊 รายชื่อผู้สมัคร"],
+        ["adminCheckin", "✅ เช็กชื่อหน้างาน"],
+        ["adminSubmissions", "📥 ตรวจงาน (ทุกฐาน)"]
+      ];
+    } else {
+      // แอดมินประจำฐาน (เช่น Ai, Robot, Canva) เห็นเฉพาะตรวจงานฐานตัวเอง
+      activeTabs = [
+        ["adminSubmissions", `📥 ตรวจงานฐาน ${adminBase}`]
+      ];
+    }
+  }
+  $("menu").innerHTML = activeTabs.map(t => `<button id="nav-${t[0]}" class="${admin ? 'adm' : ''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("") + `<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`;
+}
+
+async function tab(n) {
+  cur = n;
+  document.querySelectorAll("main>section").forEach(s => s.hidden = s.id !== "tab-" + n);
+  document.querySelectorAll(".menu button").forEach(b => b.classList.toggle("on", b.id === "nav-" + n));
+  $("menu").classList.remove("open");
+  
+  if (n === "adminDashboard" || n === "adminCheckin") {
+    await fetchAdminData();
+  }
+  if (n === "adminDashboard") renderAdmin();
+  if (n === "adminCheckin") resetSearch();
+  if (n === "adminSubmissions") {
+    $("subAdminTitle").textContent = adminBase.toLowerCase() === "all" 
+      ? "📥 รายการส่งงานนักเรียน (ทุกฐาน)" 
+      : `📥 รายการส่งงานเฉพาะฐาน ${adminBase}`;
+    const firstBtn = $("taskFilterBtns").querySelector("button");
+    loadSubmissions("งานที่ 1", firstBtn);
+  }
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 async function fetchAdminData() {
- try {
-   let res = await fetch(WEB_APP_URL, {
-     method: "POST",
-     body: JSON.stringify({ action: "getAdminData" })
-   });
-   let json = await res.json();
-   if(json.status === "success") {
-     students = json.data.map(item => ({
-       t: item.timestamp,
-       email: item.email,
-       sid: String(item.studentId),
-       name: `${item.title}${item.fullName}`,
-       nick: item.nickname,
-       grade: item.grade,
-       camp: item.campId,
-       rowIdx: item.rowIdx,
-       c16: item.check28 === "มาแล้ว",
-       c17: item.check29 === "มาแล้ว"
-     }));
-   }
- } catch(err) {
-   console.error("Error fetching data:", err);
- }
+  try {
+    let res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "getAdminData" })
+    });
+    let json = await res.json();
+    if (json.status === "success") {
+      students = json.data.map(item => ({
+        t: item.timestamp,
+        email: item.email,
+        sid: String(item.studentId),
+        name: `${item.title}${item.fullName}`,
+        nick: item.nickname,
+        grade: item.grade,
+        rowIdx: item.rowIdx,
+        c16: item.check16 === "มาแล้ว",
+        c17: item.check17 === "มาแล้ว"
+      }));
+    }
+  } catch (err) {
+    console.error("Error fetching data:", err);
+  }
 }
 
-function enter(id,isAdmin,name){newId=id;admin=isAdmin;hide("okModal");$("auth").hidden=true;$("app").hidden=false;
- $("userBadge").textContent=isAdmin?"แอดมิน: "+name:"รหัส นร.: "+id;buildMenu();tab(isAdmin?"adminDashboard":"home")}
-function logout(){$("app").hidden=true;$("auth").hidden=false;admin=false;authView("reg")}
+function enter(id, isAdmin, name, base) {
+  newId = id;
+  admin = isAdmin;
+  adminBase = base || "All";
+  hide("okModal");
+  $("auth").hidden = true;
+  $("app").hidden = false;
+  $("userBadge").textContent = isAdmin ? `แอดมิน: ${name} (${adminBase})` : `รหัส นร.: ${id}`;
+  
+  buildMenu();
+  if (isAdmin) {
+    if (adminBase.toLowerCase() === "all") {
+      tab("adminDashboard");
+    } else {
+      tab("adminSubmissions");
+    }
+  } else {
+    tab("home");
+  }
+}
 
-function renderAdmin(){
- $("total").textContent=`ทั้งหมด ${students.length} คน`;
- $("adminBody").innerHTML=students.length?students.map(s=>`<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono">${esc(s.sid)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td><td class="mono"><b>${esc(s.camp)}</b></td></tr>`).join(""):`<tr><td colspan="7" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
+function logout() {
+  $("app").hidden = true;
+  $("auth").hidden = false;
+  admin = false;
+  adminBase = "All";
+  authView("reg");
+}
+
+function renderAdmin() {
+  $("total").textContent = `ทั้งหมด ${students.length} คน`;
+  $("adminBody").innerHTML = students.length ? students.map(s => `<tr><td>${esc(s.t)}</td><td>${esc(s.email)}</td><td class="mono"><b>${esc(s.sid)}</b></td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td></tr>`).join("") : `<tr><td colspan="6" class="center muted">ยังไม่มีข้อมูลผู้สมัคร</td></tr>`;
 }
 
 function handleSearchKey(e) {
@@ -459,45 +545,97 @@ function resetSearch() {
   renderCheckin();
 }
 
-function renderCheckin(){
- const k="c"+day,n=students.length,p=students.filter(s=>s[k]).length,pc=v=>`(${n?Math.round(v/n*100):0}%)`;
- $("sTotal").textContent=n;$("sPresent").textContent=p;$("sAbsent").textContent=n-p;$("sPresentP").textContent=pc(p);$("sAbsentP").textContent=pc(n-p);
- 
- const q=$("q").value.trim().toLowerCase();
- let rows = students.map((s,i)=>[s,i]);
+function renderCheckin() {
+  const k = "c" + day, n = students.length, p = students.filter(s => s[k]).length, pc = v => `(${n ? Math.round(v / n * 100) : 0}%)`;
+  $("sTotal").textContent = n;
+  $("sPresent").textContent = p;
+  $("sAbsent").textContent = n - p;
+  $("sPresentP").textContent = pc(p);
+  $("sAbsentP").textContent = pc(n - p);
+  
+  const q = $("q").value.trim().toLowerCase();
+  let rows = students.map((s, i) => [s, i]);
 
- if (exactSearchMode && q) {
-   const exactMatch = rows.find(([s]) => s.sid.toLowerCase() === q || s.camp.toLowerCase() === q);
-   if (exactMatch) {
-     rows = [exactMatch];
-   } else {
-     const partialMatch = rows.find(([s]) => [s.sid, s.name, s.nick, s.camp].some(v => v.toLowerCase().includes(q)));
-     rows = partialMatch ? [partialMatch] : [];
-   }
- }
+  if (exactSearchMode && q) {
+    const exactMatch = rows.find(([s]) => s.sid.toLowerCase() === q);
+    if (exactMatch) {
+      rows = [exactMatch];
+    } else {
+      const partialMatch = rows.find(([s]) => [s.sid, s.name, s.nick].some(v => v.toLowerCase().includes(q)));
+      rows = partialMatch ? [partialMatch] : [];
+    }
+  }
 
- const b=(s,i,d)=>`<td><button class="ck ${s["c"+d]?'y':''}" onclick="toggle(${i},${d})">${s["c"+d]?"✅ มาแล้ว":"❌ ยังไม่มา"}</button></td>`;
- $("ckBody").innerHTML=rows.length?rows.map(([s,i])=>`<tr><td class="mono"><b>${esc(s.sid)}</b></td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s,i,16)}${b(s,i,17)}</tr>`).join(""):`<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียนรหัสนี้</td></tr>`;
+  const b = (s, i, d) => `<td><button class="ck ${s["c" + d] ? 'y' : ''}" onclick="toggle(${i},${d})">${s["c" + d] ? "✅ มาแล้ว" : "❌ ยังไม่มา"}</button></td>`;
+  $("ckBody").innerHTML = rows.length ? rows.map(([s, i]) => `<tr><td class="mono"><b>${esc(s.sid)}</b></td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s, i, 16)}${b(s, i, 17)}</tr>`).join("") : `<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียนรหัสนี้</td></tr>`;
 }
 
-function setDay(d){day=d;$("d16").className="btn"+(d===16?"":" ghost");$("d17").className="btn"+(d===17?"":" ghost");renderCheckin()}
+function setDay(d) {
+  day = d;
+  $("d16").className = "btn" + (d === 16 ? "" : " ghost");
+  $("d17").className = "btn" + (d === 17 ? "" : " ghost");
+  renderCheckin();
+}
 
-async function toggle(i,d){
- students[i]["c"+d]=!students[i]["c"+d];
- renderCheckin();
- try {
-   await fetch(WEB_APP_URL, {
-     method: "POST",
-     body: JSON.stringify({
-       action: "updateCheckin",
-       rowIdx: students[i].rowIdx,
-       day: d,
-       status: students[i]["c"+d] ? "มาแล้ว" : "ยังไม่มา"
-     })
-   });
- } catch(err) {
-   console.error("Update checkin error:", err);
- }
+async function toggle(i, d) {
+  students[i]["c" + d] = !students[i]["c" + d];
+  renderCheckin();
+  try {
+    await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "updateCheckin",
+        rowIdx: students[i].rowIdx,
+        day: d,
+        status: students[i]["c" + d] ? "มาแล้ว" : "ยังไม่มา"
+      })
+    });
+  } catch (err) {
+    console.error("Update checkin error:", err);
+  }
+}
+
+// โหลดรายการส่งงานของนักเรียนสำหรับหน้าแอดมิน (กรองตามสิทธิ์ฐาน)
+async function loadSubmissions(taskName, clickedBtn) {
+  if (clickedBtn) {
+    $("taskFilterBtns").querySelectorAll("button").forEach(btn => btn.className = "btn ghost");
+    clickedBtn.className = "btn";
+  }
+
+  $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">กำลังโหลดข้อมูล ${taskName}...</td></tr>`;
+
+  try {
+    let res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "getSubmissions",
+        base: adminBase,
+        task: taskName
+      })
+    });
+    let json = await res.json();
+    if (json.status === "success") {
+      const list = json.data;
+      if (list.length === 0) {
+        $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">ยังไม่มีนักเรียนส่งงานใน ${taskName}</td></tr>`;
+        return;
+      }
+      $("subBody").innerHTML = list.map(item => `
+        <tr>
+          <td>${esc(item.timestamp)}</td>
+          <td><span class="badge">${esc(item.base)}</span></td>
+          <td class="mono"><b>${esc(item.studentId)}</b></td>
+          <td><b>${esc(item.fullName)}</b></td>
+          <td>${esc(item.nickname)}</td>
+          <td>${esc(item.grade)}</td>
+          <td>${esc(item.type)}</td>
+          <td><a href="${esc(item.url)}" target="_blank" class="btn" style="padding: 0.3rem 0.7rem; font-size: 0.75rem; text-decoration: none; display: inline-block;">เปิดดูงาน ↗</a></td>
+        </tr>
+      `).join("");
+    }
+  } catch (err) {
+    $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
+  }
 }
 
 // อัปเดตรายการหัวข้อชิ้นงานเมื่อเลือกฐานกิจกรรมแล้ว
@@ -628,103 +766,102 @@ async function sendPayloadToBackend(payload, btn, originalText, fileInput, linkI
   }
 }
 
-$("regForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const btn = $("regSubmitBtn");
- const originalText = btn.innerHTML;
- btn.disabled = true;
- btn.innerHTML = `<span class="spinner"></span>กำลังบันทึกข้อมูล...`;
+$("regForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("regSubmitBtn");
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span>กำลังบันทึกข้อมูล...`;
 
- const inputStudentId = $("studentId").value.trim();
- newId = inputStudentId; // ใช้รหัสนักเรียนโดยตรง
+  const inputStudentId = $("studentId").value.trim();
+  newId = inputStudentId;
 
- let payload={
-   action: "register",
-   email: $("email").value,
-   studentId: inputStudentId,
-   title: $("title").value,
-   fullName: $("fullName").value,
-   nickname: $("nickname").value,
-   grade: $("grade").value,
-   password: $("password").value,
-   reason: $("reason").value,
-   campId: newId
- };
+  let payload = {
+    action: "register",
+    email: $("email").value,
+    studentId: inputStudentId,
+    title: $("title").value,
+    fullName: $("fullName").value,
+    nickname: $("nickname").value,
+    grade: $("grade").value,
+    password: $("password").value,
+    reason: $("reason").value
+  };
 
- try {
-   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-   let json = await res.json();
-   if(json.status === "success") {
-     $("campId").textContent = newId;
-     show("okModal");
-   } else {
-     alert(json.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
-   }
- } catch(err) {
-   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
- } finally {
-   btn.disabled = false;
-   btn.innerHTML = originalText;
- }
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if (json.status === "success") {
+      $("campId").textContent = newId;
+      show("okModal");
+    } else {
+      alert(json.message || "เกิดข้อผิดพลาดในการลงทะเบียน");
+    }
+  } catch (err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
 });
 
-$("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const btn = $("loginSubmitBtn");
- const originalText = btn.innerHTML;
- btn.disabled = true;
- btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("loginSubmitBtn");
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
 
- let payload={
-   action: "login",
-   studentId: $("lid").value,
-   password: $("lpw").value
- };
+  let payload = {
+    action: "login",
+    studentId: $("lid").value,
+    password: $("lpw").value
+  };
 
- try {
-   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-   let json = await res.json();
-   if(json.status === "success") {
-     enter(json.studentId, false);
-   } else {
-     alert(json.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
-   }
- } catch(err) {
-   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
- } finally {
-   btn.disabled = false;
-   btn.innerHTML = originalText;
- }
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if (json.status === "success") {
+      enter(json.studentId, false);
+    } else {
+      alert(json.message || "เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+    }
+  } catch (err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
 });
 
-$("adminForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const btn = $("adminSubmitBtn");
- const originalText = btn.innerHTML;
- btn.disabled = true;
- btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
+$("adminForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("adminSubmitBtn");
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span>กำลังตรวจสอบ...`;
 
- let payload={
-   action: "adminLogin",
-   username: $("au").value,
-   password: $("ap").value
- };
+  let payload = {
+    action: "adminLogin",
+    username: $("au").value,
+    password: $("ap").value
+  };
 
- try {
-   let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
-   let json = await res.json();
-   if(json.status === "success") {
-     hide("adminModal");
-     enter("ADMIN", true, json.adminName);
-   } else {
-     alert(json.message || "ชื่อผู้ใช้หรือรหัสผ่านแอดมินไม่ถูกต้อง");
-   }
- } catch(err) {
-   alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
- } finally {
-   btn.disabled = false;
-   btn.innerHTML = originalText;
- }
+  try {
+    let res = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+    let json = await res.json();
+    if (json.status === "success") {
+      hide("adminModal");
+      enter("ADMIN", true, json.adminName, json.base);
+    } else {
+      alert(json.message || "ชื่อผู้ใช้หรือรหัสผ่านแอดมินไม่ถูกต้อง");
+    }
+  } catch (err) {
+    alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
 });
 </script>
 </body>
