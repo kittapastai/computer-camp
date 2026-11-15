@@ -10,7 +10,7 @@
 <style>
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-top,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
 background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
@@ -303,13 +303,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้กด "🔑 ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วติดต่อสตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัส</p></div>
   </section>
 
-  <!-- เมนูแอดมิน 1: รายชื่อผู้สมัครทั้งหมด (เฉพาะ Super Admin = All) -->
+  <!-- เมนูแอดมิน 1: รายชื่อผู้สมัครทั้งหมด -->
   <section id="tab-adminDashboard" hidden>
    <div class="card"><div class="head"><h2>📊 รายชื่อผู้สมัครทั้งหมด</h2><span class="badge" id="total">ทั้งหมด 0 คน</span></div>
     <div class="tablebox"><table><thead><tr><th>เวลา</th><th>อีเมล</th><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th></tr></thead><tbody id="adminBody"></tbody></table></div></div>
   </section>
 
-  <!-- เมนูแอดมิน 2: เช็กชื่อหน้างาน (เฉพาะ Super Admin = All) -->
+  <!-- เมนูแอดมิน 2: เช็กชื่อหน้างาน -->
   <section id="tab-adminCheckin" class="stack" hidden>
    <div class="stats">
     <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
@@ -326,7 +326,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
     <div class="tablebox"><table><thead><tr><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>16 ม.ค.</th><th>17 ม.ค.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
 
-  <!-- เมนูแอดมิน 3: ตรวจงานตามฐาน (แสดงเฉพาะฐานที่แอดมินคนนั้นคุม) -->
+  <!-- เมนูแอดมิน 3: แถบตรวจงานของแต่ละฐาน -->
   <section id="tab-adminSubmissions" class="stack" hidden>
    <div class="card">
      <div class="head">
@@ -425,7 +425,6 @@ function buildMenu() {
   if (!admin) {
     activeTabs = [...studentTabs];
   } else {
-    // กรองเมนูตามสิทธิ์แอดมิน
     if (adminBase.toLowerCase() === "all") {
       activeTabs = [
         ["adminDashboard", "📊 รายชื่อผู้สมัคร"],
@@ -433,7 +432,6 @@ function buildMenu() {
         ["adminSubmissions", "📥 ตรวจงาน (ทุกฐาน)"]
       ];
     } else {
-      // แอดมินประจำฐาน (เช่น Ai, Robot, Canva) เห็นเฉพาะตรวจงานฐานตัวเอง
       activeTabs = [
         ["adminSubmissions", `📥 ตรวจงานฐาน ${adminBase}`]
       ];
