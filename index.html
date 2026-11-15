@@ -10,7 +10,7 @@
 <style>
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
 background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
@@ -113,7 +113,7 @@ nav::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-
 .menu button{font-weight:600;font-size:.8rem;padding:.45rem .75rem;border-radius:12px;border:2px solid transparent;background:none;color:inherit;cursor:pointer;transition:all 0.2s;}
 .menu button:hover{border-color:var(--ink);background:var(--soft)}
 .menu button.on{background:var(--accent);color:var(--on);border-color:var(--ink);box-shadow:3px 3px 0 var(--shadow)}
-.menu .adm{color:var(--ok)}
+.menu .adm{color:var(--ok);border:1.5px dashed var(--ok)}
 .tools{display:flex;align-items:center;gap:.5rem}
 .badge{font-size:.72rem;font-weight:700;padding:.3rem .7rem;border-radius:99px;background:var(--accent);color:var(--on);border:2px solid var(--ink);white-space:nowrap}
 #burger{display:none}
@@ -248,7 +248,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="days" id="days"></div>
   </section>
 
-  <!-- ระบบส่งงาน: เลือกฐานก่อน -> เลือกหัวข้อชิ้นงานต่อ -> เลือกประเภทการส่ง -->
+  <!-- ระบบส่งงาน -->
   <section id="tab-submitWork" class="narrow stack" hidden>
    <div class="card">
      <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
@@ -303,13 +303,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้กด "🔑 ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วติดต่อสตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัส</p></div>
   </section>
 
-  <!-- เมนูแอดมิน 1: รายชื่อผู้สมัครทั้งหมด -->
+  <!-- หน้าแอดมิน 1: รายชื่อผู้สมัครทั้งหมด -->
   <section id="tab-adminDashboard" hidden>
    <div class="card"><div class="head"><h2>📊 รายชื่อผู้สมัครทั้งหมด</h2><span class="badge" id="total">ทั้งหมด 0 คน</span></div>
     <div class="tablebox"><table><thead><tr><th>เวลา</th><th>อีเมล</th><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th></tr></thead><tbody id="adminBody"></tbody></table></div></div>
   </section>
 
-  <!-- เมนูแอดมิน 2: เช็กชื่อหน้างาน -->
+  <!-- หน้าแอดมิน 2: เช็กชื่อหน้างาน -->
   <section id="tab-adminCheckin" class="stack" hidden>
    <div class="stats">
     <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
@@ -326,7 +326,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
     <div class="tablebox"><table><thead><tr><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>16 ม.ค.</th><th>17 ม.ค.</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
 
-  <!-- เมนูแอดมิน 3: แถบตรวจงานของแต่ละฐาน -->
+  <!-- หน้าแอดมิน 3: ตรวจงานของแต่ละฐาน -->
   <section id="tab-adminSubmissions" class="stack" hidden>
    <div class="card">
      <div class="head">
@@ -378,7 +378,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 let newId = "";
 let admin = false;
-let adminBase = "All"; // สิทธิ์การคุมฐานของแอดมิน (All, Robot, Ai, Canva)
+let adminBase = "All"; 
 let day = 16;
 let cur = "home";
 let students = [];
@@ -410,7 +410,13 @@ const sched=[
   ]]
 ];
 
-const studentTabs = [["home","🏠 หน้าแรก"],["instructors","👥 วิทยากร"],["schedule","📅 กำหนดการ"],["submitWork","📂 ส่งงาน"],["faq","❓ คู่มือ"]];
+const studentTabs = [
+  ["home","🏠 หน้าแรก"],
+  ["instructors","👥 วิทยากร"],
+  ["schedule","📅 กำหนดการ"],
+  ["submitWork","📂 ส่งงาน"],
+  ["faq","❓ คู่มือ"]
+];
 
 for(let i=1;i<=10;i++)$("grade").add(new Option("ม.1/"+i,"ม.1/"+i));
 $("team").innerHTML=team.map(p=>`<article class="card person"><div class="av" style="background:${p[3]};color:#1b1f3b">${p[0][0]}</div><div><small>วิทยากร</small><h3>${p[1]}</h3><p class="muted">${p[2]}</p></div></article>`).join("");
@@ -421,23 +427,25 @@ function hide(id){$(id).hidden=true}
 function authView(v){$("regView").hidden=v==="login";$("loginView").hidden=v!=="login"}
 
 function buildMenu() {
-  let activeTabs = [];
-  if (!admin) {
-    activeTabs = [...studentTabs];
-  } else {
+  // นำเมนูของคนทั่วไป (studentTabs) มาใส่ก่อนเสมอ
+  let activeTabs = [...studentTabs];
+
+  // ถ้าเป็นแอดมิน ให้ผนวก (push) เมนูแอดมินต่อท้ายเข้าไปด้วย
+  if (admin) {
     if (adminBase.toLowerCase() === "all") {
-      activeTabs = [
+      activeTabs.push(
         ["adminDashboard", "📊 รายชื่อผู้สมัคร"],
         ["adminCheckin", "✅ เช็กชื่อหน้างาน"],
         ["adminSubmissions", "📥 ตรวจงาน (ทุกฐาน)"]
-      ];
+      );
     } else {
-      activeTabs = [
+      activeTabs.push(
         ["adminSubmissions", `📥 ตรวจงานฐาน ${adminBase}`]
-      ];
+      );
     }
   }
-  $("menu").innerHTML = activeTabs.map(t => `<button id="nav-${t[0]}" class="${admin ? 'adm' : ''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("") + `<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`;
+
+  $("menu").innerHTML = activeTabs.map(t => `<button id="nav-${t[0]}" class="${admin && (t[0].startsWith('admin') || t[0]==='adminDashboard'||t[0]==='adminCheckin'||t[0]==='adminSubmissions') ? 'adm' : ''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("") + `<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`;
 }
 
 async function tab(n) {
@@ -496,15 +504,8 @@ function enter(id, isAdmin, name, base) {
   $("userBadge").textContent = isAdmin ? `แอดมิน: ${name} (${adminBase})` : `รหัส นร.: ${id}`;
   
   buildMenu();
-  if (isAdmin) {
-    if (adminBase.toLowerCase() === "all") {
-      tab("adminDashboard");
-    } else {
-      tab("adminSubmissions");
-    }
-  } else {
-    tab("home");
-  }
+  // เมื่อแอดมินล็อกอินเข้ามา ให้เริ่มต้นที่หน้าแรกเหมือนคนทั่วไป แต่มีแถบแอดมินให้กดเลือกได้
+  tab("home");
 }
 
 function logout() {
@@ -593,7 +594,6 @@ async function toggle(i, d) {
   }
 }
 
-// โหลดรายการส่งงานของนักเรียนสำหรับหน้าแอดมิน (กรองตามสิทธิ์ฐาน)
 async function loadSubmissions(taskName, clickedBtn) {
   if (clickedBtn) {
     $("taskFilterBtns").querySelectorAll("button").forEach(btn => btn.className = "btn ghost");
@@ -636,7 +636,6 @@ async function loadSubmissions(taskName, clickedBtn) {
   }
 }
 
-// อัปเดตรายการหัวข้อชิ้นงานเมื่อเลือกฐานกิจกรรมแล้ว
 function updateTaskOptions() {
   const base = $("subBase").value;
   const taskSelect = $("subTask");
@@ -663,7 +662,6 @@ function updateTaskOptions() {
   });
 }
 
-// สลับช่องกรอกข้อมูลระหว่าง อัปโหลดไฟล์ กับ ส่งลิงก์
 function toggleSubType(type) {
   if (type === 'file') {
     $("fileFieldContainer").hidden = false;
@@ -680,7 +678,6 @@ function toggleSubType(type) {
   }
 }
 
-// ฟังก์ชันส่งงานแบบเลือกฐาน -> เลือกหัวข้อ -> เลือกประเภทการส่ง
 async function handleAdvancedUpload(e) {
   e.preventDefault();
   const base = $("subBase").value;
