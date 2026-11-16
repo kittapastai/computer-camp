@@ -182,9 +182,9 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
   <div class="who1"><span>💻</span><div>โรงเรียนปทุมวิไล<small>จังหวัดปทุมธานี</small></div></div>
   <div class="pitch"><h2>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h2><span class="when">📅 16 - 17 มกราคม 2569</span></div>
   <div class="more"><h3>3 ฐานกิจกรรมตลอด 2 วัน</h3><ol>
-   <li><i>1</i><div><b>ฐาน Robot</b><small>เรียนรู้หุ่นยนต์และโครงสร้างกลไก</small></div></li>
-   <li><i>2</i><div><b>ฐาน AI</b><small>ประยุกต์ใช้งานปัญญาประดิษฐ์</small></div></li>
-   <li><i>3</i><div><b>ฐาน Canva</b><small>สร้างสรรค์สื่อดิจิทัลและกราฟิก</small></div></li>
+   <li><i>1</i><div><b>ฐาน AI</b><small>ประยุกต์ใช้งานปัญญาประดิษฐ์</small></div></li>
+   <li><i>2</i><div><b>ฐานไมโครบิต</b><small>เขียนโค้ดและควบคุมบอร์ดสมองกล</small></div></li>
+   <li><i>3</i><div><b>ฐานแคนวา</b><small>สร้างสรรค์สื่อดิจิทัลและกราฟิก</small></div></li>
   </ol></div>
   <div class="more"><h3>วิทยากร</h3><div class="crew"><span><em style="background:#fcd34d">ส</em>สายไหม</span><span><em style="background:#a5f3fc">ต</em>ตุ้ยนุ้ย</span><span><em style="background:#fbcfe8">น</em>นุ่น</span><span><em style="background:#bbf7d0">น</em>น้ำฝน</span></div><p class="adv">ที่ปรึกษาโครงการ: ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์</p></div>
  </aside>
@@ -232,7 +232,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  <main class="wrap">
   <section id="tab-home" class="narrow stack center">
    <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
-   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1><p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน Robot, AI และ Canva ณ โรงเรียนปทุมวิไล</p></div>
+   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1><p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน AI, ไมโครบิต และแคนวา ณ โรงเรียนปทุมวิไล</p></div>
   </section>
 
   <section id="tab-instructors" class="stack" hidden>
@@ -248,31 +248,37 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="days" id="days"></div>
   </section>
 
-  <!-- ระบบส่งงาน -->
+  <!-- ระบบส่งงาน (แบ่งตามชุดและฐานกิจกรรม) -->
   <section id="tab-submitWork" class="narrow stack" hidden>
    <div class="card">
      <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-     <p class="muted">กรุณาเลือกฐานกิจกรรมก่อน จากนั้นจึงเลือกหัวข้อชิ้นงานและรูปแบบการส่งงาน</p>
+     <p class="muted">กรุณาเลือกชุดกิจกรรมและฐานกิจกรรมของท่านให้ถูกต้องก่อนส่งงาน</p>
    </div>
    <div class="card">
      <form onsubmit="handleAdvancedUpload(event)">
+       <!-- 1. เลือกชุดกิจกรรม -->
        <div class="field">
-         <label for="subBase">1. เลือกฐานกิจกรรม</label>
-         <select id="subBase" onchange="updateTaskOptions()" required>
+         <label for="subCampSet">1. เลือกชุดกิจกรรมของท่าน</label>
+         <select id="subCampSet" required>
+           <option value="">-- กรุณาเลือกชุดกิจกรรม --</option>
+           <option value="ชุดที่ 1">ชุดที่ 1</option>
+           <option value="ชุดที่ 2">ชุดที่ 2</option>
+           <option value="ชุดที่ 3">ชุดที่ 3</option>
+         </select>
+       </div>
+
+       <!-- 2. เลือกฐานกิจกรรม -->
+       <div class="field">
+         <label for="subBase">2. เลือกฐานกิจกรรม</label>
+         <select id="subBase" required>
            <option value="">-- กรุณาเลือกฐานกิจกรรม --</option>
-           <option value="Robot">ฐาน Robot</option>
            <option value="AI">ฐาน AI</option>
-           <option value="Canva">ฐาน Canva</option>
+           <option value="ไมโครบิต">ฐานไมโครบิต</option>
+           <option value="แคนวา">ฐานแคนวา</option>
          </select>
        </div>
 
-       <div class="field">
-         <label for="subTask">2. เลือกหัวข้อ / ชิ้นงาน</label>
-         <select id="subTask" required disabled>
-           <option value="">-- กรุณาเลือกฐานกิจกรรมก่อน --</option>
-         </select>
-       </div>
-
+       <!-- 3. ประเภทการส่งงาน -->
        <div class="field">
          <label for="subType">3. ประเภทการส่งงาน</label>
          <select id="subType" onchange="toggleSubType(this.value)" required>
@@ -332,13 +338,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
      <div class="head">
        <div>
          <h2 id="subAdminTitle">📥 รายการส่งงานนักเรียน</h2>
-         <p class="muted" id="subAdminDesc">ตรวจสอบงานที่นักเรียนส่งเข้ามาในแต่ละหัวข้อ</p>
-       </div>
-       <div class="dayb" id="taskFilterBtns">
-         <button class="btn" onclick="loadSubmissions('งานที่ 1', this)">งานที่ 1</button>
-         <button class="btn ghost" onclick="loadSubmissions('งานที่ 2', this)">งานที่ 2</button>
-         <button class="btn ghost" onclick="loadSubmissions('งานที่ 3', this)">งานที่ 3</button>
-         <button class="btn ghost" onclick="loadSubmissions('งานที่ 4', this)">งานที่ 4</button>
+         <p class="muted" id="subAdminDesc">ตรวจสอบงานที่นักเรียนส่งเข้ามาตามฐานกิจกรรม</p>
        </div>
      </div>
      <div class="tablebox">
@@ -346,6 +346,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
          <thead>
            <tr>
              <th>เวลาส่ง</th>
+             <th>ชุด</th>
              <th>ฐาน</th>
              <th>รหัส นร.</th>
              <th>ชื่อ-นามสกุล</th>
@@ -356,7 +357,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
            </tr>
          </thead>
          <tbody id="subBody">
-           <tr><td colspan="8" class="center muted">กำลังโหลดข้อมูล...</td></tr>
+           <tr><td colspan="9" class="center muted">กำลังโหลดข้อมูล...</td></tr>
          </tbody>
        </table>
      </div>
@@ -392,17 +393,17 @@ const sched=[
     ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
     ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
     ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
-    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
-    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน AI)"],
-    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน AI)"],
+    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐานไมโครบิต)"],
+    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐานแคนวา)"],
     ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
     ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
   ]],
   ["วันที่ 17 มกราคม 2569", [
     ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
-    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน Robot)"],
-    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน AI)"],
-    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐาน Canva)"],
+    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน AI)"],
+    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐานไมโครบิต)"],
+    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 532 - ฐานแคนวา)"],
     ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
     ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
     ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
@@ -427,10 +428,8 @@ function hide(id){$(id).hidden=true}
 function authView(v){$("regView").hidden=v==="login";$("loginView").hidden=v!=="login"}
 
 function buildMenu() {
-  // นำเมนูของคนทั่วไป (studentTabs) มาใส่ก่อนเสมอ
   let activeTabs = [...studentTabs];
 
-  // ถ้าเป็นแอดมิน ให้ผนวก (push) เมนูแอดมินต่อท้ายเข้าไปด้วย
   if (admin) {
     if (adminBase.toLowerCase() === "all") {
       activeTabs.push(
@@ -445,7 +444,7 @@ function buildMenu() {
     }
   }
 
-  $("menu").innerHTML = activeTabs.map(t => `<button id="nav-${t[0]}" class="${admin && (t[0].startsWith('admin') || t[0]==='adminDashboard'||t[0]==='adminCheckin'||t[0]==='adminSubmissions') ? 'adm' : ''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("") + `<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`;
+  $("menu").innerHTML = activeTabs.map(t => `<button id="nav-${t[0]}" class="${admin && t[0].startsWith('admin') ? 'adm' : ''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join("") + `<button style="color:var(--bad)" onclick="logout()">ออกจากระบบ</button>`;
 }
 
 async function tab(n) {
@@ -463,8 +462,7 @@ async function tab(n) {
     $("subAdminTitle").textContent = adminBase.toLowerCase() === "all" 
       ? "📥 รายการส่งงานนักเรียน (ทุกฐาน)" 
       : `📥 รายการส่งงานเฉพาะฐาน ${adminBase}`;
-    const firstBtn = $("taskFilterBtns").querySelector("button");
-    loadSubmissions("งานที่ 1", firstBtn);
+    loadSubmissions();
   }
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -504,7 +502,6 @@ function enter(id, isAdmin, name, base) {
   $("userBadge").textContent = isAdmin ? `แอดมิน: ${name} (${adminBase})` : `รหัส นร.: ${id}`;
   
   buildMenu();
-  // เมื่อแอดมินล็อกอินเข้ามา ให้เริ่มต้นที่หน้าแรกเหมือนคนทั่วไป แต่มีแถบแอดมินให้กดเลือกได้
   tab("home");
 }
 
@@ -594,33 +591,28 @@ async function toggle(i, d) {
   }
 }
 
-async function loadSubmissions(taskName, clickedBtn) {
-  if (clickedBtn) {
-    $("taskFilterBtns").querySelectorAll("button").forEach(btn => btn.className = "btn ghost");
-    clickedBtn.className = "btn";
-  }
-
-  $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">กำลังโหลดข้อมูล ${taskName}...</td></tr>`;
+async function loadSubmissions() {
+  $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">กำลังโหลดข้อมูลงาน...</td></tr>`;
 
   try {
     let res = await fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify({
         action: "getSubmissions",
-        base: adminBase,
-        task: taskName
+        base: adminBase
       })
     });
     let json = await res.json();
     if (json.status === "success") {
       const list = json.data;
       if (list.length === 0) {
-        $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">ยังไม่มีนักเรียนส่งงานใน ${taskName}</td></tr>`;
+        $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">ยังไม่มีนักเรียนส่งงานในฐานนี้</td></tr>`;
         return;
       }
       $("subBody").innerHTML = list.map(item => `
         <tr>
           <td>${esc(item.timestamp)}</td>
+          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(item.campSet)}</span></td>
           <td><span class="badge">${esc(item.base)}</span></td>
           <td class="mono"><b>${esc(item.studentId)}</b></td>
           <td><b>${esc(item.fullName)}</b></td>
@@ -632,34 +624,8 @@ async function loadSubmissions(taskName, clickedBtn) {
       `).join("");
     }
   } catch (err) {
-    $("subBody").innerHTML = `<tr><td colspan="8" class="center muted">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
+    $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
   }
-}
-
-function updateTaskOptions() {
-  const base = $("subBase").value;
-  const taskSelect = $("subTask");
-  taskSelect.innerHTML = '<option value="">-- เลือกหัวข้อชิ้นงาน --</option>';
-
-  if (!base) {
-    taskSelect.disabled = true;
-    return;
-  }
-
-  taskSelect.disabled = false;
-  const tasks = [
-    "หัวข้อที่ 1 (วันที่ 1)",
-    "หัวข้อที่ 2 (วันที่ 1)",
-    "หัวข้อที่ 3 (วันที่ 1)",
-    "หัวข้อที่ 4 (วันที่ 2 - โปรเจกต์)"
-  ];
-
-  tasks.forEach((t) => {
-    const opt = document.createElement("option");
-    opt.value = t;
-    opt.textContent = t;
-    taskSelect.appendChild(opt);
-  });
 }
 
 function toggleSubType(type) {
@@ -680,11 +646,11 @@ function toggleSubType(type) {
 
 async function handleAdvancedUpload(e) {
   e.preventDefault();
+  const campSet = $("subCampSet").value;
   const base = $("subBase").value;
-  const task = $("subTask").value;
   const type = $("subType").value;
 
-  if (!base || !task) return alert("กรุณาเลือกฐานกิจกรรมและหัวข้อชิ้นงานให้ครบถ้วน");
+  if (!campSet || !base) return alert("กรุณาเลือกชุดกิจกรรมและฐานกิจกรรมให้ครบถ้วน");
 
   const btn = e.submitter;
   const originalText = btn.innerHTML;
@@ -706,8 +672,8 @@ async function handleAdvancedUpload(e) {
       const payload = {
         action: "uploadAssignment",
         studentId: newId,
+        campSet: campSet,
         category: base,
-        taskName: task,
         submissionType: "File",
         fileName: file.name,
         mimeType: file.type,
@@ -728,8 +694,8 @@ async function handleAdvancedUpload(e) {
     const payload = {
       action: "uploadAssignment",
       studentId: newId,
+      campSet: campSet,
       category: base,
-      taskName: task,
       submissionType: "Link",
       fileName: linkValue,
       mimeType: "text/uri-list",
