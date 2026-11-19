@@ -10,7 +10,7 @@
 <style>
 :root,[data-theme=pastel]{--bg:#f5f8ff;--card:#fff;--text:#1b1f3b;--accent:#3b5bdb;--ink:#1b1f3b;--shadow:#1b1f3b;--dot:#dce5fb;--soft:rgba(59,91,219,.09);--on:#fff;--ok:#0f9d6b;--bad:#e11d48}
 *{box-sizing:border-box;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-top,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;}
 body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;color:var(--text);min-height:100vh;
 background:radial-gradient(var(--dot) 1.4px,transparent 1.6px) 0 0/24px 24px,var(--bg);overflow-x:hidden;}
@@ -124,31 +124,43 @@ nav::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-
  nav .bar{flex-wrap:wrap}.menu{order:3}
  .card{box-shadow:4px 4px 0 var(--shadow)}
 }
+
 /* home & sections */
 main>section {animation: fadeIn 0.35s ease-in-out;}
 .notice{display:flex;gap:.8rem;align-items:center;justify-content:space-between;text-align:left;background:#f59e0b;color:#3b1d00;border:2px solid #7c2d12;box-shadow:5px 5px 0 #7c2d12;border-radius:20px;padding:1rem 1.2rem}
 .notice p{font-size:.82rem}.notice h3{font-size:.95rem}
 .notice .btn{background:#fff;color:#7c2d12;border-color:#7c2d12;box-shadow:3px 3px 0 #7c2d12;white-space:nowrap;padding:.45rem .8rem;font-size:.8rem}
-.hero{padding:2.6rem 1.5rem}
+.hero{padding:2rem 1.5rem;text-align:center}
 .hero .tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.25rem .8rem;border:2px solid var(--ink);border-radius:99px;background:var(--soft);margin-bottom:1rem}
-.hero h1{font-size:clamp(1.8rem,5vw,2.9rem);font-weight:800}
-.hero p{margin:.9rem auto 0;max-width:560px}
+.hero h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800}
+.poster-box{margin-top:1.5rem;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:4px 4px 0 var(--shadow);background:#000;}
+.poster-box img{width:100%;max-height:400px;object-fit:cover;display:block;}
+
 h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
-/* team */
+
+/* team cards */
 .advisor{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;background:var(--accent);color:var(--on)}
-.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.3rem}
-.person{padding:0;overflow:hidden;transition:transform 0.2s, box-shadow 0.2s;}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem}
+.person{padding:0;overflow:hidden;cursor:pointer;transition:transform 0.2s, box-shadow 0.2s;}
 .person:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--shadow);}
-.av{height:150px;display:grid;place-items:center;font:800 3.4rem 'Prompt',sans-serif;border-bottom:2px solid var(--ink)}
+.person-img-box{height:180px;background:#ddd;border-bottom:2px solid var(--ink);overflow:hidden;}
+.person-img-box img{width:100%;height:100%;object-fit:cover;}
 .person div+div{padding:1rem 1.2rem}
-.person h3{font-size:1.05rem}.person small{display:block;color:var(--accent);font-weight:600;margin-bottom:.3rem}
-.av.big{width:92px;height:92px;border:2px solid var(--on);border-radius:20px;font-size:2rem}
+.person h3{font-size:1.05rem}
+.av.big{width:92px;height:92px;border:2px solid var(--on);border-radius:20px;font-size:2rem;display:grid;place-items:center;}
+
 /* schedule */
+.sched-selector{background:var(--card);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);border-radius:18px;padding:1.2rem;margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;}
 .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
 .day h3{font-size:.95rem;text-align:center;padding:.5rem;border:2px solid var(--ink);border-radius:14px;background:var(--accent);color:var(--on);margin-bottom:1rem}
 .slot{background:var(--soft);border-left:5px solid var(--accent);border-radius:4px 14px 14px 4px;padding:.7rem 1rem;font-size:.86rem;transition:transform 0.15s;}
-.slot:hover{transform:translateX(4px);}
 .slot+.slot{margin-top:.7rem}.slot b{display:block;font-family:'Prompt',sans-serif;font-size:.8rem;color:var(--accent)}
+
+/* learning hubs */
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.hub-card{display:flex;flex-direction:column;justify-content:space-between;}
+.hub-card h3{font-size:1.2rem;margin-bottom:.5rem;color:var(--accent);}
+
 /* admin */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
 .stat{text-align:center;padding:1rem}.stat b{display:block;font:800 1.9rem 'Prompt',sans-serif}
@@ -166,11 +178,13 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .search-group{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;width:100%;max-width:400px}
 .search-group input{flex:1}
 .search-group .btn{padding:.55rem .9rem;font-size:.82rem;box-shadow:3px 3px 0 var(--shadow)}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(15,15,35,.6);backdrop-filter:blur(4px);display:grid;place-items:center;padding:1rem;z-index:50;animation:fadeIn 0.2s ease-out;}
-.modal .card{max-width:380px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
+.modal .card{max-width:420px;width:100%;background:#fff;color:#1b1f3b;border-color:#1b1f3b;box-shadow:7px 7px 0 #1b1f3b}
 .modal h3{font-size:1.2rem;margin-bottom:.6rem}
 .camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed #3b5bdb;border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:#3b5bdb;letter-spacing:.06em}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -230,44 +244,129 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  </nav>
 
  <main class="wrap">
+  <!-- หน้าหลัก: พร้อมโปสเตอร์ -->
   <section id="tab-home" class="narrow stack center">
-   <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเตรียมอุปกรณ์ให้พร้อมก่อนเข้าอบรม</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
-   <div class="card hero"><span class="tag">⚡ Workshop เชิงปฏิบัติการ</span><h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1><p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน AI, ไมโครบิต และแคนวา ณ โรงเรียนปทุมวิไล</p></div>
+   <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเลือกฐานแรกของตัวเองในเมนูกำหนดการ</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
+   <div class="card hero">
+     <span class="tag">⚡ Workshop เชิงปฏิบัติการ</span>
+     <h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1>
+     <p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน AI, ไมโครบิต และแคนวา ณ โรงเรียนปทุมวิไล</p>
+     <div class="poster-box">
+       <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80" alt="โปสเตอร์ค่าย">
+     </div>
+   </div>
   </section>
 
+  <!-- หน้าวิทยากร -->
   <section id="tab-instructors" class="stack" hidden>
    <h2 class="title">ทำความรู้จักวิทยากร</h2>
-   <p class="muted center">ทีมผู้อยู่เบื้องหลังเนื้อหา สไลด์ และสื่อการสอนทั้งหมด</p>
+   <p class="muted center">คลิกที่การ์ดเพื่อดูประวัติและรายละเอียดข้อมูลเชิงลึกของวิทยากรแต่ละท่าน</p>
    <div class="card advisor"><div class="av big" style="background:var(--card);color:var(--text)">จ</div><div><small>👑 ที่ปรึกษาโครงการ</small><h3 style="font-size:1.4rem">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3></div></div>
    <div class="team" id="team"></div>
   </section>
 
+  <!-- หน้ากำหนดการ: เลือกฐานแรกได้ -->
   <section id="tab-schedule" class="stack" hidden>
    <h2 class="title">📅 กำหนดการจัดกิจกรรม</h2>
    <p class="muted center">ระหว่างวันที่ 28 - 29 พฤศจิกายน 2569 ณ โรงเรียนปทุมวิไล</p>
-   <div class="days" id="days"></div>
+   
+   <div class="sched-selector">
+     <div>
+       <b>🎯 เลือกฐานแรกที่น้องได้รับมอบหมาย:</b>
+       <p class="muted" style="font-size:0.8rem">ระบบจะจัดลำดับห้องเรียนและเวลาของฐานที่ 2 และ 3 ให้โดยอัตโนมัติ</p>
+     </div>
+     <div style="min-width: 200px;">
+       <select id="startBaseSelect" onchange="updateSchedule()">
+         <option value="Microbit">ชุดที่ 1: เริ่มที่ฐาน MicroBit</option>
+         <option value="AI">ชุดที่ 2: เริ่มที่ฐาน AI</option>
+         <option value="Canva">ชุดที่ 3: เริ่มที่ฐาน Canva</option>
+       </select>
+     </div>
+   </div>
+
+   <div class="days" id="daysContainer"></div>
   </section>
 
-  <!-- ระบบส่งงาน (แบ่งตามชุดและฐานกิจกรรม) -->
+  <!-- หน้าเนื้อหา & เครื่องมือ (Learning Hub) -->
+  <section id="tab-learningHub" class="stack" hidden>
+   <h2 class="title">📚 เนื้อหาเรียน & เครื่องมือออนไลน์</h2>
+   <p class="muted center">คลิกปุ่มเพื่อเปิดใช้งานเว็บแอปพลิเคชันหรือเครื่องมือที่ต้องใช้ในแต่ละฐานได้ทันที</p>
+   <div class="hub-grid">
+     <div class="card hub-card">
+       <div>
+         <span class="badge" style="background:#3b5bdb">ฐาน AI</span>
+         <h3 style="margin-top:0.6rem">ปัญญาประดิษฐ์ (AI)</h3>
+         <p class="muted">เรียนรู้การใช้งาน Generative AI, Prompt Engineering และเครื่องมือผู้ช่วยอัจฉริยะ</p>
+       </div>
+       <div style="margin-top:1.2rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+         <a href="https://chatgpt.com" target="_blank" class="btn" style="padding:0.4rem 0.8rem; font-size:0.8rem; text-decoration:none;">ChatGPT ↗</a>
+         <a href="https://gemini.google.com" target="_blank" class="btn ghost" style="padding:0.4rem 0.8rem; font-size:0.8rem; text-decoration:none;">Gemini ↗</a>
+       </div>
+     </div>
+
+     <div class="card hub-card">
+       <div>
+         <span class="badge" style="background:#0f9d6b">ฐานไมโครบิต</span>
+         <h3 style="margin-top:0.6rem">ไมโครบิต (Micro:bit)</h3>
+         <p class="muted">เขียนโค้ดบล็อกควบคุมบอร์ดสมองกลฝังตัวเพื่อสร้างสรรค์โครงงานกลไกอัตโนมัติ</p>
+       </div>
+       <div style="margin-top:1.2rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+         <a href="https://makecode.microbit.org" target="_blank" class="btn" style="background:#0f9d6b; padding:0.4rem 0.8rem; font-size:0.8rem; text-decoration:none;">MakeCode ↗</a>
+       </div>
+     </div>
+
+     <div class="card hub-card">
+       <div>
+         <span class="badge" style="background:#ec4899">ฐานแคนวา</span>
+         <h3 style="margin-top:0.6rem">แคนวา (Canva)</h3>
+         <p class="muted">ออกแบบกราฟิก สร้างสื่อการนำเสนอ และผลิตชิ้นงานดิจิทัลสุดสร้างสรรค์ระดับมืออาชีพ</p>
+       </div>
+       <div style="margin-top:1.2rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+         <a href="https://www.canva.com" target="_blank" class="btn" style="background:#ec4899; padding:0.4rem 0.8rem; font-size:0.8rem; text-decoration:none;">Canva ↗</a>
+       </div>
+     </div>
+   </div>
+  </section>
+
+  <!-- ระบบส่งงาน (แบ่งตามชุดและฐานกิจกรรม) + สรุปผลงานของฉัน -->
   <section id="tab-submitWork" class="narrow stack" hidden>
+   <div class="card">
+     <h2 style="font-size:1.25rem;font-weight:800">📊 สถิติและประวัติการส่งงานของคุณ</h2>
+     <p class="muted">ตรวจสอบรายการงานที่คุณส่งเข้ามาทั้งหมดในระบบ</p>
+     <div style="margin-top:1rem;" class="tablebox">
+       <table>
+         <thead>
+           <tr>
+             <th>เวลาส่ง</th>
+             <th>ชุดกิจกรรม</th>
+             <th>ฐาน</th>
+             <th>รูปแบบ</th>
+             <th>ลิงก์งาน</th>
+           </tr>
+         </thead>
+         <tbody id="mySubmissionsBody">
+           <tr><td colspan="5" class="center muted">กำลังโหลดประวัติการส่งงาน...</td></tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+
    <div class="card">
      <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
      <p class="muted">กรุณาเลือกชุดกิจกรรมและฐานกิจกรรมของท่านให้ถูกต้องก่อนส่งงาน</p>
    </div>
    <div class="card">
      <form onsubmit="handleAdvancedUpload(event)">
-       <!-- 1. เลือกชุดกิจกรรม -->
        <div class="field">
          <label for="subCampSet">1. เลือกชุดกิจกรรมของท่าน</label>
          <select id="subCampSet" required>
            <option value="">-- กรุณาเลือกชุดกิจกรรม --</option>
-           <option value="ชุดที่ 1">ชุดที่ 1 เรื่มที่ฐาน MicroBit</option>
-           <option value="ชุดที่ 2">ชุดที่ 2 เรื่มที่ฐาน Ai</option>
-           <option value="ชุดที่ 3">ชุดที่ 3 เรื่มที่ฐาน Canva</option>
+           <option value="ชุดที่ 1">ชุดที่ 1 เริ่มที่ฐาน MicroBit</option>
+           <option value="ชุดที่ 2">ชุดที่ 2 เริ่มที่ฐาน AI</option>
+           <option value="ชุดที่ 3">ชุดที่ 3 เริ่มที่ฐาน Canva</option>
          </select>
        </div>
 
-       <!-- 2. เลือกฐานกิจกรรม -->
        <div class="field">
          <label for="subBase">2. เลือกฐานกิจกรรม</label>
          <select id="subBase" required>
@@ -278,7 +377,6 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
          </select>
        </div>
 
-       <!-- 3. ประเภทการส่งงาน -->
        <div class="field">
          <label for="subType">3. ประเภทการส่งงาน</label>
          <select id="subType" onchange="toggleSubType(this.value)" required>
@@ -306,7 +404,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 
   <section id="tab-faq" class="narrow stack" hidden>
    <h2 class="title">❓ คู่มือการใช้งานระบบ</h2>
-   <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้กด "🔑 ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วติดต่อสตาฟหรือครูผู้ดูแลเพื่อรีเซ็ตรหัส</p></div>
+   <div class="card"><h3 style="font-size:1rem">เข้าสู่ระบบไม่ได้ ต้องทำอย่างไร?</h3><p class="muted" style="margin-top:.4rem">ตรวจสอบว่ากรอกเลขประจำตัวนักเรียนและรหัสผ่านถูกต้อง หากลืมรหัสผ่าน ให้ติดต่อแอดมินเบอร์ 0811025149</p></div>
   </section>
 
   <!-- หน้าแอดมิน 1: รายชื่อผู้สมัครทั้งหมด -->
@@ -321,15 +419,15 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
     <div class="card stat">👥 ผู้ลงทะเบียน<b id="sTotal">0</b></div>
     <div class="card stat" style="color:var(--ok)">✅ เข้าร่วมแล้ว<b id="sPresent">0</b><small id="sPresentP"></small></div>
     <div class="card stat" style="color:var(--bad)">❌ ยังไม่มา<b id="sAbsent">0</b><small id="sAbsentP"></small></div>
-    <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d16" onclick="setDay(16)">16 ม.ค.</button><button class="btn ghost" id="d17" onclick="setDay(17)">17 ม.ค.</button></div></div>
+    <div class="card stat">📅 เลือกดูวัน<div class="dayb"><button class="btn" id="d28" onclick="setDay(28)">28 พ.ย.</button><button class="btn ghost" id="d29" onclick="setDay(29)">29 พ.ย.</button></div></div>
    </div>
-   <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">พิมพ์เลข นร. แล้วกด Enter เพื่อค้นหาเฉพาะคน (หรือกดล้างเพื่อดูทั้งหมด)</p></div>
+   <div class="card"><div class="head"><div><h2>✅ เช็กชื่อหน้างาน</h2><p class="muted">พิมพ์เลข นร. แล้วกด Enter เพื่อค้นหาเฉพาะคน</p></div>
     <div class="search-group">
       <input id="q" onkeydown="handleSearchKey(event)" oninput="if(!this.value.trim()) resetSearch()" placeholder="🔍 พิมพ์เลข นร. แล้วกด Enter" aria-label="ค้นหา">
       <button type="button" class="btn ghost" id="clearSearchBtn" onclick="resetSearch()" hidden>ล้าง</button>
     </div>
    </div>
-    <div class="tablebox"><table><thead><tr><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>28 พฤศจิกายน </th><th>29 พฤศจิกายน</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
+    <div class="tablebox"><table><thead><tr><th>เลข นร.</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>ห้อง</th><th>28 พฤศจิกายน</th><th>29 พฤศจิกายน</th></tr></thead><tbody id="ckBody"></tbody></table></div></div>
   </section>
 
   <!-- หน้าแอดมิน 3: ตรวจงานของแต่ละฐาน -->
@@ -366,10 +464,24 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
  </main>
 </div>
 
-<!-- Modals -->
+<!-- Modal: ข้อมูลวิทยากรแบบเจาะลึก -->
+<div class="modal" id="instructorModal" hidden>
+ <div class="card center">
+   <div class="head"><h3 id="mInstTitle">ข้อมูลวิทยากร</h3><button class="link" onclick="hide('instructorModal')">✕</button></div>
+   <div class="person-img-box" style="height:140px; width:140px; margin: 0 auto; border-radius:50%; border:2px solid var(--ink); overflow:hidden;">
+     <img id="mInstImg" src="" alt="วิทยากร" style="width:100%; height:100%; object-fit:cover;">
+   </div>
+   <h3 id="mInstName" style="margin-top:1rem"></h3>
+   <p id="mInstBase" style="font-weight:700; color:var(--accent); margin-bottom:0.5rem"></p>
+   <p id="mInstDesc" class="muted" style="font-size:0.9rem; text-align:left; background:var(--soft); padding:0.8rem; border-radius:12px; margin-top:0.5rem"></p>
+   <button class="btn block" style="margin-top:1.2rem" onclick="hide('instructorModal')">ปิดหน้าต่าง</button>
+ </div>
+</div>
+
+<!-- Modals ทั่วไป -->
 <div class="modal" id="adminModal" hidden><div class="card"><div class="head"><h3>🔒 แอดมินล็อกอิน</h3><button class="link" onclick="hide('adminModal')" aria-label="ปิด">✕</button></div>
  <form id="adminForm"><div class="field"><input id="au" placeholder="Username" required aria-label="Username"></div><div class="field"><input type="password" id="ap" placeholder="Password" required aria-label="Password"></div><div class="field"><button class="btn block" type="submit" id="adminSubmitBtn">เข้าสู่ระบบแอดมิน</button></div></form></div></div>
-<div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อแอดมิน:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0811025149 <br>💬 LINE: 0811025149</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
+<div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อแอดมิน:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0811025149<br>💬 LINE: 0811025149</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
 <div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสนักเรียนของคุณคือ</p><div class="camp" id="campId">12345</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
 
 <script>
@@ -380,48 +492,102 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 let newId = "";
 let admin = false;
 let adminBase = "All"; 
-let day = 16;
+let day = 28;
 let cur = "home";
 let students = [];
 let exactSearchMode = false;
 
-const team=[["สายไหม","สายไหม สุขดี","ทฤษฎีเกม การ Vibe Coding และเครื่องมือ","#fcd34d"],["ตุ้ยนุ้ย","พันธรา สุขดิบ","เกมเสริมการเรียนรู้ Prompt & Coding","#a5f3fc"],["นุ่น","ยลรดี รุ่งแจ่ม","การเพิ่มเสียงพูดในเกม และรู้จัก API","#fbcfe8"],["น้ำฝน","สุชาดา ชิดโคกสูง","ทำความรู้จัก AR (Hand Tracking)","#bbf7d0"]];
-
-const sched=[
-  ["วันที่ 28 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
-    ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
-    ["09.30 น. - 11.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน AI)"],
-    ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน (สถานที่: ห้อง 626 - ฐาน MicroBit)"],
-    ["12.00 น. - 13.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 536 - ฐานแคนวา)"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-    ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
-  ]],
-  ["วันที่ 29 มกราคม 2569", [
-    ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
-    ["08.30 น. - 10.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ห้อง 625 - ฐาน AI)"],
-    ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง (สถานที่: ห้อง 626 - ฐาน MicroBit)"],
-    ["10.30 น. - 12.00 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ห้อง 536 - ฐานแคนวา)"],
-    ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
-    ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
-    ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-    ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
-  ]]
+const team = [
+  ["สายไหม", "สายไหม สุขดี", "ฐาน AI", "ทฤษฎีเกม การ Vibe Coding และเครื่องมืออัจฉริยะ", "#fcd34d", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"],
+  ["ตุ้ยนุ้ย", "พันธรา สุขดิบ", "ฐาน MicroBit", "เกมเสริมการเรียนรู้ Prompt & Coding ด้วยบอร์ดไมโครบิต", "#a5f3fc", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"],
+  ["นุ่น", "ยลรดี รุ่งแจ่ม", "ฐาน แคนวา", "การเพิ่มเสียงพูดในเกม และรู้จักการใช้งาน API เชิงสร้างสรรค์", "#fbcfe8", "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80"],
+  ["น้ำฝน", "สุชาดา ชิดโคกสูง", "ฐานกิจกรรมพิเศษ", "ทำความรู้จักเทคโนโลยี AR (Hand Tracking) สู่โลกอนาคต", "#bbf7d0", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"]
 ];
 
 const studentTabs = [
   ["home","🏠 หน้าแรก"],
   ["instructors","👥 วิทยากร"],
   ["schedule","📅 กำหนดการ"],
+  ["learningHub","📚 เนื้อหาเรียน"],
   ["submitWork","📂 ส่งงาน"],
   ["faq","❓ คู่มือ"]
 ];
 
 for(let i=1;i<=10;i++)$("grade").add(new Option("ม.1/"+i,"ม.1/"+i));
-$("team").innerHTML=team.map(p=>`<article class="card person"><div class="av" style="background:${p[3]};color:#1b1f3b">${p[0][0]}</div><div><small>วิทยากร</small><h3>${p[1]}</h3><p class="muted">${p[2]}</p></div></article>`).join("");
-$("days").innerHTML=sched.map(d=>`<div class="card day"><h3>📅 ${d[0]}</h3>${d[1].map(s=>`<div class="slot"><b>${s[0]}</b>${s[1]}</div>`).join("")}</div>`).join("");
+
+// เรนเดอร์การ์ดวิทยากร
+$("team").innerHTML = team.map((p, idx) => `
+  <article class="card person" onclick="openInstructorModal(${idx})">
+    <div class="person-img-box"><img src="${p[5]}" alt="${p[1]}"></div>
+    <div>
+      <span class="badge" style="background:${p[4]}; color:#1b1f3b; margin-bottom:0.4rem; display:inline-block">${p[2]}</span>
+      <h3 style="font-size:1.05rem">${p[1]} (${p[0]})</h3>
+      <p class="muted" style="font-size:0.82rem; margin-top:0.3rem">${p[3]}</p>
+    </div>
+  </article>
+`).join("");
+
+function openInstructorModal(idx) {
+  const p = team[idx];
+  $("mInstImg").src = p[5];
+  $("mInstTitle").textContent = `ข้อมูลวิทยากร: ${p[1]}`;
+  $("mInstName").textContent = `${p[1]} (ชื่อเล่น: ${p[0]})`;
+  $("mInstBase").textContent = `รับผิดชอบ: ${p[2]}`;
+  $("mInstDesc").textContent = p[3];
+  show('instructorModal');
+}
+
+// 📅 ระบบสร้างกำหนดการตามฐานแรกที่เลือก
+function updateSchedule() {
+  const start = $("startBaseSelect").value;
+  
+  let r1, r2, r3;
+  if(start === "AI") {
+    r1 = { name: "ฐาน AI", room: "ห้อง 625" };
+    r2 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
+    r3 = { name: "ฐานแคนวา", room: "ห้อง 536" };
+  } else if(start === "Microbit") {
+    r1 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
+    r2 = { name: "ฐานแคนวา", room: "ห้อง 536" };
+    r3 = { name: "ฐาน AI", room: "ห้อง 625" };
+  } else {
+    r1 = { name: "ฐานแคนวา", room: "ห้อง 536" };
+    r2 = { name: "ฐาน AI", room: "ห้อง 625" };
+    r3 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
+  }
+
+  const schedData = [
+    ["วันที่ 28 พฤศจิกายน 2569", [
+      ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+      ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+      ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
+      ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
+      ["09.30 น. - 11.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ${r1.room} - ${r1.name})`],
+      ["11.00 น. - 12.00 น.", `พักรับประทานอาหารกลางวัน (สถานที่: ${r2.room} - ${r2.name})`],
+      ["12.00 น. - 13.30 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ${r3.room} - ${r3.name})`],
+      ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+      ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
+    ]],
+    ["วันที่ 29 พฤศจิกายน 2569", [
+      ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
+      ["08.30 น. - 10.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ${r1.room} - ${r1.name})`],
+      ["10.00 น. - 10.30 น.", `พักรับประทานอาหารว่าง (สถานที่: ${r2.room} - ${r2.name})`],
+      ["10.30 น. - 12.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ${r3.room} - ${r3.name})`],
+      ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
+      ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
+      ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
+      ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
+    ]]
+  ];
+
+  $("daysContainer").innerHTML = schedData.map(d => `
+    <div class="card day">
+      <h3>📅 ${d[0]}</h3>
+      ${d[1].map(s => `<div class="slot"><b>${s[0]}</b>${s[1]}</div>`).join("")}
+    </div>
+  `).join("");
+}
+updateSchedule();
 
 function show(id){$(id).hidden=false}
 function hide(id){$(id).hidden=true}
@@ -459,12 +625,42 @@ async function tab(n) {
   if (n === "adminDashboard") renderAdmin();
   if (n === "adminCheckin") resetSearch();
   if (n === "adminSubmissions") {
-    $("subAdminTitle").textContent = adminBase.toLowerCase() === "all" 
-      ? "📥 รายการส่งงานนักเรียน (ทุกฐาน)" 
-      : `📥 รายการส่งงานเฉพาะฐาน ${adminBase}`;
+    $("subAdminTitle").textContent = adminBase.toLowerCase() === "all" ? "📥 รายการส่งงานนักเรียน (ทุกฐาน)" : `📥 รายการส่งงานเฉพาะฐาน ${adminBase}`;
     loadSubmissions();
   }
+  if (n === "submitWork") {
+    loadMySubmissions();
+  }
   window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+async function loadMySubmissions() {
+  $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">กำลังโหลดประวัติ...</td></tr>`;
+  try {
+    let res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "getMySubmissions", studentId: newId })
+    });
+    let json = await res.json();
+    if(json.status === "success") {
+      const list = json.data;
+      if(list.length === 0) {
+        $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">คุณยังไม่ได้ส่งงานใด ๆ ในระบบ</td></tr>`;
+        return;
+      }
+      $("mySubmissionsBody").innerHTML = list.map(item => `
+        <tr>
+          <td>${esc(item.timestamp)}</td>
+          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(item.campSet)}</span></td>
+          <td><span class="badge">${esc(item.base)}</span></td>
+          <td>${esc(item.type)}</td>
+          <td><a href="${esc(item.url)}" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem; text-decoration:none;">เปิดดูงาน ↗</a></td>
+        </tr>
+      `).join("");
+    }
+  } catch(err) {
+    $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+  }
 }
 
 async function fetchAdminData() {
@@ -483,8 +679,8 @@ async function fetchAdminData() {
         nick: item.nickname,
         grade: item.grade,
         rowIdx: item.rowIdx,
-        c16: item.check16 === "มาแล้ว",
-        c17: item.check17 === "มาแล้ว"
+        c28: item.check16 === "มาแล้ว",
+        c29: item.check17 === "มาแล้ว"
       }));
     }
   } catch (err) {
@@ -563,13 +759,13 @@ function renderCheckin() {
   }
 
   const b = (s, i, d) => `<td><button class="ck ${s["c" + d] ? 'y' : ''}" onclick="toggle(${i},${d})">${s["c" + d] ? "✅ มาแล้ว" : "❌ ยังไม่มา"}</button></td>`;
-  $("ckBody").innerHTML = rows.length ? rows.map(([s, i]) => `<tr><td class="mono"><b>${esc(s.sid)}</b></td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s, i, 16)}${b(s, i, 17)}</tr>`).join("") : `<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียนรหัสนี้</td></tr>`;
+  $("ckBody").innerHTML = rows.length ? rows.map(([s, i]) => `<tr><td class="mono"><b>${esc(s.sid)}</b></td><td><b>${esc(s.name)}</b></td><td>${esc(s.nick)}</td><td>${esc(s.grade)}</td>${b(s, i, 28)}${b(s, i, 29)}</tr>`).join("") : `<tr><td colspan="6" class="center muted">ไม่พบข้อมูลนักเรียนรหัสนี้</td></tr>`;
 }
 
 function setDay(d) {
   day = d;
-  $("d16").className = "btn" + (d === 16 ? "" : " ghost");
-  $("d17").className = "btn" + (d === 17 ? "" : " ghost");
+  $("d28").className = "btn" + (d === 28 ? "" : " ghost");
+  $("d29").className = "btn" + (d === 29 ? "" : " ghost");
   renderCheckin();
 }
 
@@ -577,12 +773,13 @@ async function toggle(i, d) {
   students[i]["c" + d] = !students[i]["c" + d];
   renderCheckin();
   try {
+    let targetDay = (d === 28) ? 16 : 17; // แมปกลับไปที่คอลัมน์เดิมใน Sheet ถ้าจำเป็น
     await fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify({
         action: "updateCheckin",
         rowIdx: students[i].rowIdx,
-        day: d,
+        day: targetDay,
         status: students[i]["c" + d] ? "มาแล้ว" : "ยังไม่มา"
       })
     });
@@ -593,14 +790,10 @@ async function toggle(i, d) {
 
 async function loadSubmissions() {
   $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">กำลังโหลดข้อมูลงาน...</td></tr>`;
-
   try {
     let res = await fetch(WEB_APP_URL, {
       method: "POST",
-      body: JSON.stringify({
-        action: "getSubmissions",
-        base: adminBase
-      })
+      body: JSON.stringify({ action: "getSubmissions", base: adminBase })
     });
     let json = await res.json();
     if (json.status === "success") {
@@ -716,6 +909,7 @@ async function sendPayloadToBackend(payload, btn, originalText, fileInput, linkI
       alert("ส่งงานสำเร็จเรียบร้อยแล้วครับ! 🎉");
       if(fileInput) fileInput.value = "";
       if(linkInput) linkInput.value = "";
+      loadMySubmissions();
     } else {
       alert(json.message || "เกิดข้อผิดพลาดในการส่งงาน");
     }
