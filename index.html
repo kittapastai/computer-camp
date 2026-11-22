@@ -138,16 +138,29 @@ main>section {animation: fadeIn 0.35s ease-in-out;}
 
 h2.title{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-align:center}
 
-/* team cards */
+/* team cards & infinite marquee */
 .advisor{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;background:var(--accent);color:var(--on)}
-.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem}
-.person{padding:0;overflow:hidden;cursor:pointer;transition:transform 0.2s, box-shadow 0.2s;}
+.cat-tabs-wrap{display:flex;justify-content:center;margin:0.5rem 0 1rem}
+.cat-tabs{display:inline-flex;gap:0.5rem;background:var(--soft);padding:0.4rem;border-radius:18px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);flex-wrap:wrap;justify-content:center}
+.cat-btn{font-family:'Prompt',sans-serif;font-weight:700;font-size:0.88rem;padding:0.55rem 1.15rem;border-radius:12px;border:2px solid transparent;background:none;color:var(--text);cursor:pointer;transition:all 0.2s}
+.cat-btn:hover{background:rgba(255,255,255,0.7)}
+.cat-btn.on{background:var(--accent);color:var(--on);border-color:var(--ink);box-shadow:2px 2px 0 var(--shadow)}
+.team-marquee{overflow:hidden;width:100%;padding:10px 0 25px;position:relative;mask-image:linear-gradient(to right,transparent,black 2%,black 98%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 2%,black 98%,transparent)}
+.team-track{display:flex;width:max-content;animation:slideTeam 45s linear infinite}
+.team-marquee:hover .team-track{animation-play-state:paused}
+.team-group{display:flex;gap:1.3rem;margin-right:1.3rem;flex-shrink:0}
+.person{flex:0 0 250px;width:250px;padding:0;overflow:hidden;cursor:pointer;transition:transform 0.2s, box-shadow 0.2s;}
 .person:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--shadow);}
 .person-img-box{height:180px;background:#ddd;border-bottom:2px solid var(--ink);overflow:hidden;}
 .person-img-box img{width:100%;height:100%;object-fit:cover;}
 .person div+div{padding:1rem 1.2rem}
 .person h3{font-size:1.05rem}
 .av.big{width:92px;height:92px;border:2px solid var(--on);border-radius:20px;font-size:2rem;display:grid;place-items:center;}
+
+@keyframes slideTeam{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
 
 /* schedule */
 .sched-selector{background:var(--card);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);border-radius:18px;padding:1.2rem;margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;}
@@ -185,6 +198,77 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 .modal h3{font-size:1.2rem;margin-bottom:.6rem}
 .camp{font:800 1.7rem 'Prompt',sans-serif;border:2px dashed #3b5bdb;border-radius:14px;padding:.7rem;margin:.8rem 0 1.2rem;color:#3b5bdb;letter-spacing:.06em}
 
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(.22,1,.36,1),transform 0.7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ===== GRADIENT TEXT ===== */
+.grad-text{background:linear-gradient(135deg,#3b5bdb 0%,#845ef7 30%,#e64980 60%,#f59e0b 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradShift 4s ease-in-out infinite}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* ===== PULSE BADGE ===== */
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,91,219,.4)}50%{box-shadow:0 0 0 10px rgba(59,91,219,0)}}
+.hero .tag{animation:pulse 2.5s ease-in-out infinite}
+
+/* ===== COUNTDOWN ===== */
+.countdown-wrap{display:flex;justify-content:center;gap:1rem;margin:1.5rem 0 .5rem;flex-wrap:wrap}
+.cd-unit{display:flex;flex-direction:column;align-items:center;min-width:70px}
+.cd-num{font:800 2.2rem 'Prompt',sans-serif;background:var(--accent);color:var(--on);border:2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--shadow);padding:.4rem .8rem;min-width:64px;text-align:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.cd-num.tick{transform:scale(1.12)}
+.cd-label{font-size:.72rem;font-weight:700;margin-top:.35rem;opacity:.7}
+
+/* ===== FLOATING PARTICLES ===== */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.particle{position:absolute;border-radius:50%;opacity:.45;animation:floatUp linear infinite}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(1);opacity:.45}
+  50%{opacity:.7}
+  100%{transform:translateY(-120vh) scale(.3);opacity:0}
+}
+.hero{position:relative;overflow:hidden}
+.hero>*{position:relative;z-index:1}
+
+/* ===== INTERACTIVE SCHEDULE SLOTS ===== */
+.slot:hover{transform:translateX(6px) scale(1.015);background:color-mix(in srgb,var(--accent) 15%,white);box-shadow:0 2px 16px rgba(59,91,219,.12)}
+
+/* ===== SMOOTH TAB TRANSITION ===== */
+main>section:not([hidden]){animation:tabEnter .4s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes tabEnter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== TOAST ===== */
+.toast-box{position:fixed;top:1rem;right:1rem;z-index:100;display:flex;flex-direction:column;gap:.6rem;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:.7rem;padding:.85rem 1.2rem;border-radius:16px;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--shadow);font-size:.88rem;font-weight:600;color:var(--text);background:var(--card);animation:toastIn .4s cubic-bezier(.22,1,.36,1) forwards;max-width:380px}
+.toast.out{animation:toastOut .3s ease-in forwards}
+.toast .t-icon{font-size:1.3rem;flex:none}
+.toast.success{border-color:var(--ok)}.toast.success .t-icon{color:var(--ok)}
+.toast.error{border-color:var(--bad)}.toast.error .t-icon{color:var(--bad)}
+@keyframes toastIn{from{opacity:0;transform:translateX(60px) scale(.9)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(60px) scale(.9)}}
+
+/* ===== BACK TO TOP ===== */
+.btt{position:fixed;bottom:1.5rem;right:1.5rem;z-index:40;width:48px;height:48px;border-radius:50%;border:2px solid var(--ink);background:var(--accent);color:var(--on);font-size:1.3rem;display:grid;place-items:center;cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .25s,opacity .25s,box-shadow .25s;opacity:0;pointer-events:none}
+.btt.show{opacity:1;pointer-events:auto}
+.btt:hover{transform:translate(-2px,-2px) scale(1.1);box-shadow:6px 6px 0 var(--shadow)}
+
+/* ===== FOOTER ===== */
+footer{background:linear-gradient(160deg,#1b2a8a 0%,#3b5bdb 100%);color:#fff;border-top:2px solid var(--ink);padding:2rem 1rem 1.5rem;margin-top:3rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;align-items:start}
+footer h4{font-family:'Prompt',sans-serif;font-size:.95rem;margin-bottom:.6rem}
+footer p,footer a{font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.7}
+footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
+.footer-bottom{text-align:center;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.2);font-size:.75rem;opacity:.7}
+
+/* ===== CARD TILT 3D ===== */
+.person{transition:transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s cubic-bezier(.22,1,.36,1);perspective:600px}
+.person:hover{transform:translate(-3px,-3px) rotateY(-3deg) rotateX(2deg);box-shadow:10px 10px 0 var(--shadow)}
+
+/* ===== HUB CARD STAGGER ===== */
+.hub-card.reveal{opacity:0;transform:translateY(50px)}
+.hub-card.reveal.visible{opacity:1;transform:translateY(0)}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -197,10 +281,10 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
   <div class="pitch"><h2>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h2><span class="when">📅 28 - 29 พฤศจิกายน 2569</span></div>
   <div class="more"><h3>3 ฐานกิจกรรมตลอด 2 วัน</h3><ol>
    <li><i>1</i><div><b>ฐาน AI</b><small>ประยุกต์ใช้งานปัญญาประดิษฐ์</small></div></li>
-   <li><i>2</i><div><b>ฐานไมโครบิต</b><small>เขียนโค้ดและควบคุมบอร์ดสมองกล</small></div></li>
-   <li><i>3</i><div><b>ฐานแคนวา</b><small>สร้างสรรค์สื่อดิจิทัลและกราฟิก</small></div></li>
+   <li><i>2</i><div><b>ฐาน MircoBit </b><small>เขียนโค้ดและควบคุมบอร์ดสมองกล</small></div></li>
+   <li><i>3</i><div><b>ฐาน Canva Ai</b><small>สร้างสรรค์สื่อดิจิทัลและกราฟิก</small></div></li>
   </ol></div>
-  <div class="more"><h3>วิทยากร</h3><div class="crew"><span><em style="background:#fcd34d">ส</em>สายไหม</span><span><em style="background:#a5f3fc">ต</em>ตุ้ยนุ้ย</span><span><em style="background:#fbcfe8">น</em>นุ่น</span><span><em style="background:#bbf7d0">น</em>น้ำฝน</span></div><p class="adv">ที่ปรึกษาโครงการ: ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์</p></div>
+  <div class="more"><h3>วิทยากร</h3><div class="crew"><span><em style="background:#fcd34d">ส</em>สายไหม</span><span><em style="background:#a5f3fc">ต</em>ตุ้ยนุ้ย</span><span><em style="background:#fbcfe8">น</em>นุ่น</span><span><em style="background:#bbf7d0">น</em>น้ำฝน</span><span><em style="background:#fed7aa">บ</em>เบสท์</span><span><em style="background:#c7d2fe">ก</em>กาย</span><span><em style="background:#fef08a">ฟ</em>ฟ้า</span><span><em style="background:#bae6fd">บ</em>บอส</span><span><em style="background:#ddd6fe">จ</em>เจมส์</span><span><em style="background:#fbcfe8">พ</em>แพรวา</span><span><em style="background:#d9f99d">ม</em>มิว</span></div><p class="adv">ที่ปรึกษาโครงการ: ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์</p></div>
  </aside>
  <div class="pane"><div class="card">
   <div id="regView">
@@ -250,19 +334,30 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
    <div class="card hero">
      <span class="tag">⚡ Workshop เชิงปฏิบัติการ</span>
      <h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1>
-     <p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน AI, ไมโครบิต และแคนวา ณ โรงเรียนปทุมวิไล</p>
+     <p>ค่ายพัฒนาทักษะดิจิทัล 2 วันเต็ม กับฐาน AI, MircoBit และ Canva Ai  ณ โรงเรียนปทุมวิไล</p>
      <div class="poster-box">
        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80" alt="โปสเตอร์ค่าย">
      </div>
    </div>
   </section>
 
-  <!-- หน้าวิทยากร -->
+  <!-- หน้าบุคลากร วิทยากร สตาฟ และที่ปรึกษา -->
   <section id="tab-instructors" class="stack" hidden>
-   <h2 class="title">ทำความรู้จักวิทยากร</h2>
-   <p class="muted center">คลิกที่การ์ดเพื่อดูประวัติและรายละเอียดข้อมูลเชิงลึกของวิทยากรแต่ละท่าน</p>
-   <div class="card advisor"><div class="av big" style="background:var(--card);color:var(--text)">จ</div><div><small>👑 ที่ปรึกษาโครงการ</small><h3 style="font-size:1.4rem">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3></div></div>
-   <div class="team" id="team"></div>
+   <h2 class="title">👥 ทำความรู้จักคณะทำงานและวิทยากร</h2>
+   <p class="muted center">เลือกแท็บด้านล่างเพื่อดูข้อมูลวิทยากร สตาฟ หรือที่ปรึกษาร่วมกิจกรรม (คลิกที่การ์ดเพื่อดูประวัติเจาะลึก)</p>
+   
+   <div class="card advisor"><div class="av big" style="background:var(--card);color:var(--text)">จ</div><div><small>👑 ประธานที่ปรึกษาโครงการ</small><h3 style="font-size:1.4rem">ผู้ช่วยศาสตราจารย์ ดร. จิรพันธ์ ศรีสมพันธุ์</h3></div></div>
+
+   <!-- แท็บเลือกหมวดหมู่ -->
+   <div class="cat-tabs-wrap">
+     <div class="cat-tabs">
+       <button type="button" class="cat-btn on" id="catBtn-instructors" onclick="renderCategory('instructors')">👥 วิทยากร (11 คน)</button>
+       <button type="button" class="cat-btn" id="catBtn-staff" onclick="renderCategory('staff')">🦺 สตาฟ (4 คน)</button>
+       <button type="button" class="cat-btn" id="catBtn-advisors" onclick="renderCategory('advisors')">🎓 ที่ปรึกษาร่วมกิจกรรม (15 คน)</button>
+     </div>
+   </div>
+
+   <div class="team-marquee"><div class="team-track" id="team"></div></div>
   </section>
 
   <!-- หน้ากำหนดการ: เลือกฐานแรกได้ -->
@@ -306,7 +401,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
 
      <div class="card hub-card">
        <div>
-         <span class="badge" style="background:#0f9d6b">ฐานไมโครบิต</span>
+         <span class="badge" style="background:#0f9d6b">ฐานMircobit</span>
          <h3 style="margin-top:0.6rem">ไมโครบิต (Micro:bit)</h3>
          <p class="muted">เขียนโค้ดบล็อกควบคุมบอร์ดสมองกลฝังตัวเพื่อสร้างสรรค์โครงงานกลไกอัตโนมัติ</p>
        </div>
@@ -373,7 +468,7 @@ td{padding:.65rem .7rem}tbody tr:nth-child(even){background:var(--soft)}
            <option value="">-- กรุณาเลือกฐานกิจกรรม --</option>
            <option value="AI">ฐาน AI</option>
            <option value="ไมโครบิต">ฐาน MicroBit</option>
-           <option value="แคนวา">ฐาน แคนวา</option>
+           <option value="แคนวา">ฐาน Canva Ai </option>
          </select>
        </div>
 
@@ -497,16 +592,51 @@ let cur = "home";
 let students = [];
 let exactSearchMode = false;
 
-const team = [
-  ["สายไหม", "สายไหม สุขดี", "ฐาน AI", "ทฤษฎีเกม การ Vibe Coding และเครื่องมืออัจฉริยะ", "#fcd34d", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"],
-  ["ตุ้ยนุ้ย", "พันธรา สุขดิบ", "ฐาน MicroBit", "เกมเสริมการเรียนรู้ Prompt & Coding ด้วยบอร์ดไมโครบิต", "#a5f3fc", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"],
-  ["นุ่น", "ยลรดี รุ่งแจ่ม", "ฐาน แคนวา", "การเพิ่มเสียงพูดในเกม และรู้จักการใช้งาน API เชิงสร้างสรรค์", "#fbcfe8", "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80"],
-  ["น้ำฝน", "สุชาดา ชิดโคกสูง", "ฐานกิจกรรมพิเศษ", "ทำความรู้จักเทคโนโลยี AR (Hand Tracking) สู่โลกอนาคต", "#bbf7d0", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"]
-];
+const teamData = {
+  instructors: [
+    ["สายไหม", "สายไหม สุขดี", "ฐาน AI", "ทฤษฎีเกม การ Vibe Coding และเครื่องมืออัจฉริยะ", "#fcd34d", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"],
+    ["ตุ้ยนุ้ย", "พันธรา สุขดิบ", "ฐาน MicroBit", "เกมเสริมการเรียนรู้ Prompt & Coding ด้วยบอร์ดไมโครบิต", "#a5f3fc", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"],
+    ["นุ่น", "ยลรดี รุ่งแจ่ม", "ฐาน แคนวา", "การเพิ่มเสียงพูดในเกม และรู้จักการใช้งาน API เชิงสร้างสรรค์", "#fbcfe8", "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80"],
+    ["น้ำฝน", "สุชาดา ชิดโคกสูง", "ฐานกิจกรรมพิเศษ", "ทำความรู้จักเทคโนโลยี AR (Hand Tracking) สู่โลกอนาคต", "#bbf7d0", "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"],
+    ["เบสท์", "วิทยากร คนที่ 5", "ฐาน AI", "การเขียน Prompt ขั้นสูงและการประยุกต์ใช้ AI ในการเรียน", "#fed7aa", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"],
+    ["กาย", "วิทยากร คนที่ 6", "ฐาน MicroBit", "การต่อวงจรอิเล็กทรอนิกส์และเซนเซอร์ตรวจจับอัตโนมัติ", "#c7d2fe", "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"],
+    ["ฟ้า", "วิทยากร คนที่ 7", "ฐาน แคนวา", "เทคนิคการจัดองค์ประกอบภาพและการเลือกใช้โทนสีสร้างสรรค์", "#fef08a", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"],
+    ["บอส", "วิทยากร คนที่ 8", "ฐาน AI", "การสร้างโมเดล Machine Learning เบื้องต้นสำหรับเยาวชน", "#bae6fd", "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80"],
+    ["เจมส์", "วิทยากร คนที่ 9", "ฐาน MicroBit", "โครงงานหุ่นยนต์และการเขียนโปรแกรมบล็อกคำสั่งไร้สาย", "#ddd6fe", "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80"],
+    ["แพรวา", "วิทยากร คนที่ 10", "ฐาน แคนวา", "การสร้างแอนิเมชันเคลื่อนไหวและการตัดต่อคลิปสั้น", "#fbcfe8", "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80"],
+    ["มิว", "วิทยากร คนที่ 11", "ฐานกิจกรรมพิเศษ", "กิจกรรมสันทนาการเชิงตรรกะและการทำงานเป็นทีม", "#d9f99d", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"]
+  ],
+  staff: [
+    ["นนท์", "ธนกฤต วงศ์สวัสดิ์", "สตาฟฝ่ายสถานที่และโสตฯ", "ดูแลความพร้อมห้องกิจกรรม ระบบเสียง โปรเจกเตอร์ และเครือข่าย", "#fed7aa", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"],
+    ["มายด์", "กนกวรรณ รัตนประเสริฐ", "สตาฟฝ่ายทะเบียนและต้อนรับ", "ประสานงานจุดลงทะเบียน จัดทำป้ายชื่อ และบันทึกการเช็กชื่อเข้าค่าย", "#fbcfe8", "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"],
+    ["พีท", "ภานุพงศ์ เจริญผล", "สตาฟฝ่ายสวัสดิการและสันทนาการ", "ดูแลอาหารว่าง น้ำดื่ม ยาปฐมพยาบาล และนำกิจกรรมละลายพฤติกรรม", "#bbf7d0", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"],
+    ["แพร", "ณิชานันท์ ทรัพย์มี", "สตาฟฝ่ายสื่อและช่างภาพ", "บันทึกภาพถ่าย วิดีโอไฮไลท์ และดูแลการเผยแพร่ข่าวสารประชาสัมพันธ์", "#a5f3fc", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"]
+  ],
+  advisors: [
+    ["อ.จิรพันธ์", "ผศ.ดร. จิรพันธ์ ศรีสมพันธุ์", "ประธานที่ปรึกษาโครงการ", "ผู้เชี่ยวชาญด้านเทคโนโลยีคอมพิวเตอร์และการศึกษายุคดิจิทัล", "#fcd34d", "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80"],
+    ["ครูสมหมาย", "นายสมหมาย ชัยมงคล", "ที่ปรึกษาหลักสูตรคอมพิวเตอร์", "ครูชำนาญการพิเศษ กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี", "#a5f3fc", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"],
+    ["ครูพิมพา", "นางพิมพา สุวรรณฉัตร", "ที่ปรึกษานวัตกรรมการสอน", "ดูแลการบูรณาการเทคโนโลยี AI ในการจัดการเรียนรู้ระดับมัธยม", "#fbcfe8", "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"],
+    ["ครูธนกร", "นายธนกร พรหมเพศ", "ที่ปรึกษาฐาน AI", "ผู้เชี่ยวชาญการประยุกต์ใช้ Generative AI เพื่อการศึกษา", "#fed7aa", "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"],
+    ["ครูอารีย์", "นางสาวอารีย์ ลาภอนันต์", "ที่ปรึกษาฐาน MicroBit", "ผู้เชี่ยวชาญการสอนเขียนโปรแกรมบล็อกและระบบสมองกลฝังตัว", "#bbf7d0", "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80"],
+    ["ครูสุพรรณี", "นางสุพรรณี ก้องเกียรติ", "ที่ปรึกษาฐาน Canva", "ผู้เชี่ยวชาญด้านกราฟิกดีไซน์และการสื่อสารด้วยภาพ", "#fef08a", "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&q=80"],
+    ["ครูวรวิทย์", "นายวรวิทย์ บุญช่วย", "ที่ปรึกษากิจกรรมพัฒนาผู้เรียน", "การจัดกิจกรรมส่งเสริมทักษะการคิดเชิงคำนวณและความคิดสร้างสรรค์", "#c7d2fe", "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80"],
+    ["ครูพัชรี", "นางพัชรี สถิตธรรม", "ที่ปรึกษาฝ่ายประสานงาน", "ประสานงานฝ่ายวิชาการและอำนวยความสะดวกแก่นักเรียนผู้เข้าร่วม", "#bae6fd", "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"],
+    ["ครูณรงค์ศักดิ์", "นายณรงค์ศักดิ์ สุระชาติ", "ที่ปรึกษาโครงสร้างระบบไอที", "ดูแลความปลอดภัยเครือข่ายอินเทอร์เน็ตและการเชื่อมต่ออุปกรณ์", "#ddd6fe", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"],
+    ["ครูศิริพร", "นางสาวศิริพร บุญเสริม", "ที่ปรึกษาบูรณาการ STEM", "การออกแบบกิจกรรมเชิงบูรณาการวิทยาศาสตร์ เทคโนโลยี และคณิตศาสตร์", "#d9f99d", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"],
+    ["ครูอนุชา", "นายอนุชา ศรีวิไล", "ที่ปรึกษาฝ่ายสวัสดิภาพ", "ดูแลความปลอดภัย ความเป็นระเบียบ และการร่วมกิจกรรมของนักเรียน", "#fcd34d", "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80"],
+    ["ครูดวงใจ", "นางดวงใจ แสนสุข", "ที่ปรึกษาฝ่ายประเมินผล", "การประเมินพัฒนาการและวัดผลสัมฤทธิ์การเรียนรู้จากการเข้าค่าย", "#fbcfe8", "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80"],
+    ["ครูเกรียงไกร", "นายเกรียงไกร มณีรัตน์", "ที่ปรึกษาโครงงานไอที", "ให้คำปรึกษาการต่อยอดชิ้นงานนักเรียนสู่การแข่งขันโครงงาน", "#a5f3fc", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80"],
+    ["ครูรัตนา", "นางรัตนา ชื่นอารมณ์", "ที่ปรึกษาการจัดการข้อมูล", "ระบบสารสนเทศและการประมวลผลข้อมูลผู้เรียนในกิจกรรมค่าย", "#fed7aa", "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&q=80"],
+    ["ครูชัยวัฒน์", "นายชัยวัฒน์ พงษ์ไพศาล", "ที่ปรึกษาสื่อการเรียนรู้", "การผลิตและพัฒนาชุดสื่อการเรียนรู้ดิจิทัลสำหรับโรงเรียน", "#bbf7d0", "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80"]
+  ]
+};
+
+const team = teamData.instructors;
+let currentTeamCat = "instructors";
 
 const studentTabs = [
   ["home","🏠 หน้าแรก"],
-  ["instructors","👥 วิทยากร"],
+  ["instructors","👥 คณะทำงาน & วิทยากร"],
   ["schedule","📅 กำหนดการ"],
   ["learningHub","📚 เนื้อหาเรียน"],
   ["submitWork","📂 ส่งงาน"],
@@ -515,27 +645,50 @@ const studentTabs = [
 
 for(let i=1;i<=10;i++)$("grade").add(new Option("ม.1/"+i,"ม.1/"+i));
 
-// เรนเดอร์การ์ดวิทยากร
-$("team").innerHTML = team.map((p, idx) => `
-  <article class="card person" onclick="openInstructorModal(${idx})">
-    <div class="person-img-box"><img src="${p[5]}" alt="${p[1]}"></div>
-    <div>
-      <span class="badge" style="background:${p[4]}; color:#1b1f3b; margin-bottom:0.4rem; display:inline-block">${p[2]}</span>
-      <h3 style="font-size:1.05rem">${p[1]} (${p[0]})</h3>
-      <p class="muted" style="font-size:0.82rem; margin-top:0.3rem">${p[3]}</p>
-    </div>
-  </article>
-`).join("");
+// สลับแท็บและเรนเดอร์การ์ด (แถวเดียวสไลด์วนลูป)
+function renderCategory(cat) {
+  currentTeamCat = cat;
+  document.querySelectorAll(".cat-btn").forEach(btn => {
+    btn.classList.toggle("on", btn.id === "catBtn-" + cat);
+  });
 
-function openInstructorModal(idx) {
-  const p = team[idx];
+  const list = teamData[cat] || [];
+  // ถ้าคนน้อยกว่า 8 คน ทำซ้ำในกลุ่มเพื่อให้มีความยาวต่อเนื่องพอดีกับจอทุกขนาด
+  const displayList = list.length <= 4 ? [...list, ...list, ...list] : list;
+
+  const cardsHtml = displayList.map((p, idx) => {
+    const realIdx = idx % list.length;
+    return `
+      <article class="card person" onclick="openPersonModal('${cat}', ${realIdx})">
+        <div class="person-img-box"><img src="${p[5]}" alt="${p[1]}"></div>
+        <div>
+          <span class="badge" style="background:${p[4]}; color:#1b1f3b; margin-bottom:0.4rem; display:inline-block">${p[2]}</span>
+          <h3 style="font-size:1.05rem">${p[1]} (${p[0]})</h3>
+          <p class="muted" style="font-size:0.82rem; margin-top:0.3rem">${p[3]}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  $("team").innerHTML = `<div class="team-group">${cardsHtml}</div><div class="team-group" aria-hidden="true">${cardsHtml}</div>`;
+}
+
+function openPersonModal(cat, idx) {
+  const p = teamData[cat][idx];
   $("mInstImg").src = p[5];
-  $("mInstTitle").textContent = `ข้อมูลวิทยากร: ${p[1]}`;
+  const catNames = { instructors: "วิทยากร", staff: "สตาฟ", advisors: "ที่ปรึกษาร่วมกิจกรรม" };
+  $("mInstTitle").textContent = `ข้อมูล${catNames[cat] || 'บุคลากร'}: ${p[1]}`;
   $("mInstName").textContent = `${p[1]} (ชื่อเล่น: ${p[0]})`;
-  $("mInstBase").textContent = `รับผิดชอบ: ${p[2]}`;
+  $("mInstBase").textContent = `ฝ่าย/ความรับผิดชอบ: ${p[2]}`;
   $("mInstDesc").textContent = p[3];
   show('instructorModal');
 }
+
+function openInstructorModal(idx) {
+  openPersonModal('instructors', idx);
+}
+
+renderCategory("instructors");
 
 // 📅 ระบบสร้างกำหนดการตามฐานแรกที่เลือก
 function updateSchedule() {
