@@ -270,6 +270,12 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
 .hub-card.reveal.visible{opacity:1;transform:translateY(0)}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.slot.current-slot,.slot.current-slot:hover{background:#fee2e2;border-left-color:#b91c1c;color:#671212}
+.slot.current-slot b{color:#991b1b}
+#groupDialog{margin:auto;border:0;background:transparent;color:var(--text);width:min(92vw,440px)}
+#groupDialog::backdrop{background:#111936aa}
+#groupDialog .dayb{justify-content:center;gap:.75rem;margin:1rem 0}
+#activityStatus{padding-left:1.4rem}
 </style>
 </head>
 <body>
@@ -330,7 +336,7 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
  <main class="wrap">
   <!-- หน้าหลัก: พร้อมโปสเตอร์ -->
   <section id="tab-home" class="narrow stack center">
-   <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! อย่าลืมตรวจสอบกำหนดการและเลือกฐานแรกของตัวเองในเมนูกำหนดการ</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
+   <div class="notice"><div><h3>📢 ประกาศสำคัญจากค่าย</h3><p>ยินดีต้อนรับน้อง ๆ ทุกคน! กดดูตารางเพื่อเช็กว่ารอบต่อไปกลุ่มของน้องเข้าฐานไหนและเรียนที่ห้องใด</p></div><button class="btn" onclick="tab('schedule')">ดูตาราง</button></div>
    <div class="card hero">
      <span class="tag">⚡ Workshop เชิงปฏิบัติการ</span>
      <h1>ค่ายส่งเสริมอัจฉริยภาพด้านเทคโนโลยีดิจิทัล</h1>
@@ -360,23 +366,14 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
    <div class="team-marquee"><div class="team-track" id="team"></div></div>
   </section>
 
-  <!-- หน้ากำหนดการ: เลือกฐานแรกได้ -->
+  <!-- กำหนดการตามกลุ่ม -->
   <section id="tab-schedule" class="stack" hidden>
    <h2 class="title">📅 กำหนดการจัดกิจกรรม</h2>
    <p class="muted center">ระหว่างวันที่ 28 - 29 พฤศจิกายน 2569 ณ โรงเรียนปทุมวิไล</p>
    
    <div class="sched-selector">
-     <div>
-       <b>🎯 เลือกฐานแรกที่น้องได้รับมอบหมาย:</b>
-       <p class="muted" style="font-size:0.8rem">ระบบจะจัดลำดับห้องเรียนและเวลาของฐานที่ 2 และ 3 ให้โดยอัตโนมัติ</p>
-     </div>
-     <div style="min-width: 200px;">
-       <select id="startBaseSelect" onchange="updateSchedule()">
-         <option value="Microbit">ชุดที่ 1: เริ่มที่ฐาน MicroBit</option>
-         <option value="AI">ชุดที่ 2: เริ่มที่ฐาน AI</option>
-         <option value="Canva">ชุดที่ 3: เริ่มที่ฐาน Canva</option>
-       </select>
-     </div>
+     <b id="scheduleGroup"></b>
+     <button class="btn ghost" type="button" onclick="openGroups()">เปลี่ยนกลุ่ม</button>
    </div>
 
    <div class="days" id="daysContainer"></div>
@@ -423,55 +420,27 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
    </div>
   </section>
 
-  <!-- ระบบส่งงาน (แบ่งตามชุดและฐานกิจกรรม) + สรุปผลงานของฉัน -->
+  <!-- ระบบส่งงาน (เลือกฐานและกิจกรรม) + สรุปผลงานของฉัน -->
   <section id="tab-submitWork" class="narrow stack" hidden>
    <div class="card">
-     <h2 style="font-size:1.25rem;font-weight:800">📊 สถิติและประวัติการส่งงานของคุณ</h2>
-     <p class="muted">ตรวจสอบรายการงานที่คุณส่งเข้ามาทั้งหมดในระบบ</p>
-     <div style="margin-top:1rem;" class="tablebox">
-       <table>
-         <thead>
-           <tr>
-             <th>เวลาส่ง</th>
-             <th>ชุดกิจกรรม</th>
-             <th>ฐาน</th>
-             <th>รูปแบบ</th>
-             <th>ลิงก์งาน</th>
-           </tr>
-         </thead>
-         <tbody id="mySubmissionsBody">
-           <tr><td colspan="5" class="center muted">กำลังโหลดประวัติการส่งงาน...</td></tr>
-         </tbody>
-       </table>
-     </div>
-   </div>
-
-   <div class="card">
      <h2 style="font-size:1.25rem;font-weight:800">📂 ระบบส่งงานกิจกรรมค่าย</h2>
-     <p class="muted">กรุณาเลือกชุดกิจกรรมและฐานกิจกรรมของท่านให้ถูกต้องก่อนส่งงาน</p>
+     <p class="muted">เลือกฐานเพื่อดูงานทั้ง 6 ชิ้นและสถานะการส่งของคุณ</p>
    </div>
    <div class="card">
      <form onsubmit="handleAdvancedUpload(event)">
        <div class="field">
-         <label for="subCampSet">1. เลือกชุดกิจกรรมของท่าน</label>
-         <select id="subCampSet" required>
-           <option value="">-- กรุณาเลือกชุดกิจกรรม --</option>
-           <option value="ชุดที่ 1">ชุดที่ 1 เริ่มที่ฐาน MicroBit</option>
-           <option value="ชุดที่ 2">ชุดที่ 2 เริ่มที่ฐาน AI</option>
-           <option value="ชุดที่ 3">ชุดที่ 3 เริ่มที่ฐาน Canva</option>
+         <label for="subBase">1. ฐานที่ต้องการจะส่งผลงาน</label>
+         <select id="subBase" required onchange="selectStation()">
+           <option value="">-- เลือกฐาน --</option>
+           <option value="ไมโครบิต">micro:bit</option><option value="แคนวา">Canva</option><option value="AI">AI</option>
          </select>
        </div>
-
+       <fieldset id="submissionDetails" style="border:0;padding:0;min-width:0" hidden disabled>
+       <ul id="activityStatus" aria-live="polite"></ul>
        <div class="field">
-         <label for="subBase">2. เลือกฐานกิจกรรม</label>
-         <select id="subBase" required>
-           <option value="">-- กรุณาเลือกฐานกิจกรรม --</option>
-           <option value="AI">ฐาน AI</option>
-           <option value="ไมโครบิต">ฐาน MicroBit</option>
-           <option value="แคนวา">ฐาน Canva Ai </option>
-         </select>
+         <label for="subActivity">2. เลือกกิจกรรมที่ต้องการจะส่งผลงาน</label>
+         <select id="subActivity" required></select>
        </div>
-
        <div class="field">
          <label for="subType">3. ประเภทการส่งงาน</label>
          <select id="subType" onchange="toggleSubType(this.value)" required>
@@ -492,9 +461,30 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
 
        <div class="field" style="margin-top: 1.5rem;">
          <button class="btn block" type="submit" id="btnSubmitWork">ยืนยันการส่งงาน</button>
-       </div>
+       </div></fieldset>
      </form>
    </div>
+   <div class="card">
+     <h2 style="font-size:1.25rem;font-weight:800">📊 สถิติและประวัติการส่งงานของคุณ</h2>
+     <p class="muted">ตรวจสอบรายการงานที่คุณส่งเข้ามาทั้งหมดในระบบ</p>
+     <div style="margin-top:1rem;" class="tablebox">
+       <table>
+         <thead>
+           <tr>
+             <th>เวลาส่ง</th>
+             <th>กลุ่ม</th>
+             <th>ฐาน / กิจกรรม</th>
+             <th>รูปแบบ</th>
+             <th>ลิงก์งาน</th>
+           </tr>
+         </thead>
+         <tbody id="mySubmissionsBody">
+           <tr><td colspan="5" class="center muted">กำลังโหลดประวัติการส่งงาน...</td></tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+
   </section>
 
   <section id="tab-faq" class="narrow stack" hidden>
@@ -539,8 +529,8 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
          <thead>
            <tr>
              <th>เวลาส่ง</th>
-             <th>ชุด</th>
-             <th>ฐาน</th>
+             <th>กลุ่ม</th>
+             <th>ฐาน / กิจกรรม</th>
              <th>รหัส นร.</th>
              <th>ชื่อ-นามสกุล</th>
              <th>ชื่อเล่น</th>
@@ -579,6 +569,15 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
 <div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อแอดมิน:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0811025149<br>💬 LINE: 0811025149</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
 <div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสนักเรียนของคุณคือ</p><div class="camp" id="campId">12345</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
 
+<dialog id="groupDialog" aria-labelledby="groupHeading">
+ <div class="card center"><h2 id="groupHeading">น้องอยู่กลุ่มไหน?</h2>
+ <p>เลือกกลุ่มที่ได้รับจากสตาฟ เพื่อดูตารางของกลุ่ม</p>
+ <div class="dayb">
+ <button class="btn" onclick="chooseGroup('A')">กลุ่ม A</button>
+ <button class="btn" onclick="chooseGroup('B')">กลุ่ม B</button>
+ <button class="btn" onclick="chooseGroup('C')">กลุ่ม C</button>
+ </div><small>เว็บจดจำกลุ่มแยกตามรหัสนักเรียนบนเบราว์เซอร์นี้</small></div>
+</dialog>
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6tX1Xi26Kn27Toh2c84MYyB1sDAgTosw23EvhnxPm4ApfEa9hbvBgdr-u5hL_aIAyUg/exec";
 const $=id=>document.getElementById(id);
@@ -690,24 +689,46 @@ function openInstructorModal(idx) {
 
 renderCategory("instructors");
 
-// 📅 ระบบสร้างกำหนดการตามฐานแรกที่เลือก
-function updateSchedule() {
-  const start = $("startBaseSelect").value;
-  
-  let r1, r2, r3;
-  if(start === "AI") {
-    r1 = { name: "ฐาน AI", room: "ห้อง 625" };
-    r2 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
-    r3 = { name: "ฐานแคนวา", room: "ห้อง 536" };
-  } else if(start === "Microbit") {
-    r1 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
-    r2 = { name: "ฐานแคนวา", room: "ห้อง 536" };
-    r3 = { name: "ฐาน AI", room: "ห้อง 625" };
-  } else {
-    r1 = { name: "ฐานแคนวา", room: "ห้อง 536" };
-    r2 = { name: "ฐาน AI", room: "ห้อง 625" };
-    r3 = { name: "ฐาน MicroBit", room: "ห้อง 626" };
+// 📅 ระบบสร้างกำหนดการตามกลุ่ม
+const rotations = {
+  A: ["ไมโครบิต","แคนวา","AI"],
+  B: ["แคนวา","AI","ไมโครบิต"],
+  C: ["AI","ไมโครบิต","แคนวา"]
+};
+const rooms = {"ไมโครบิต":"micro:bit · ห้อง 626","แคนวา":"Canva · ห้อง 536",AI:"AI · ห้อง 625"};
+// Keep the IDs when renaming activities so earlier submissions still match.
+const activities = {
+  "ไมโครบิต":[["mb1","หัวใจบนจอ"],["mb2","ป้ายชื่อ LED"],["mb3","ลูกเต๋าเขย่า"],["mb4","เครื่องนับแต้ม"],["mb5","ตัวละครกะพริบ"],["mb6","เกมล่าเหรียญ"]],
+  "แคนวา":[["cv1","นามบัตรสีสัน"],["cv2","โปสเตอร์แนะนำตัว"],["cv3","การ์ดเชิญเพื่อน"],["cv4","ป้ายประจำกลุ่ม"],["cv5","ออกแบบฉากเกม"],["cv6","เกมหาคู่"]],
+  AI:[["ai1","รู้จักผู้ช่วย AI"],["ai2","คำสั่งแรกของฉัน"],["ai3","ปรับคำสั่งให้ชัด"],["ai4","ภาพจากจินตนาการ"],["ai5","สมุดนักสำรวจ"],["ai6","เรื่องเล่าโรงเรียน"]]
+};
+let group = "";
+let submitted = null;
+let historyRequest = 0;
+let historyLoading = false;
+let confirmedHere = new Set();
+const storeKey = (kind,id) => "computer-camp:2569:" + kind + ":" + id;
+function readLocal(kind,id) {
+  try { return localStorage.getItem(storeKey(kind,id)); } catch { return null; }
+}
+function saveLocal(kind,id,value) {
+  try { localStorage.setItem(storeKey(kind,id),value); } catch { /* Private mode: session memory still works. */ }
+}
+function openGroups() { $("groupDialog").showModal(); }
+$("groupDialog").addEventListener("cancel", e => { if (!group) e.preventDefault(); });
+function chooseGroup(value) {
+  group = value;
+  if (!admin) {
+    saveLocal("group",newId,value);
+    $("userBadge").textContent = "รหัส นร.: " + newId + " · กลุ่ม " + value;
   }
+  updateSchedule();
+  $("groupDialog").close();
+}
+function updateSchedule() {
+  if (!group) return;
+  $("scheduleGroup").textContent = "กำหนดการกลุ่ม " + group;
+  const round = n => "กิจกรรมฐานการเรียนรู้รอบที่ " + n + " · " + rooms[rotations[group][n-1]];
 
   const schedData = [
     ["วันที่ 28 พฤศจิกายน 2569", [
@@ -715,32 +736,44 @@ function updateSchedule() {
       ["08.30 น. - 09.00 น.", "พิธีเปิดกิจกรรม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
       ["09.00 น. - 09.15 น.", "แบ่งกลุ่มนักเรียนเข้าฐานการเรียนรู้ จำนวน 3 กลุ่ม (สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"],
       ["09.15 น. - 09.30 น.", "พักรับประทานอาหารว่าง"],
-      ["09.30 น. - 11.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ${r1.room} - ${r1.name})`],
-      ["11.00 น. - 12.00 น.", `พักรับประทานอาหารกลางวัน (สถานที่: ${r2.room} - ${r2.name})`],
-      ["12.00 น. - 13.30 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ${r3.room} - ${r3.name})`],
+      ["09.30 น. - 11.00 น.", round(1)],
+      ["11.00 น. - 12.00 น.", "พักรับประทานอาหารกลางวัน"],
+      ["12.00 น. - 13.30 น.", round(2)],
       ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-      ["14.00 น. - 15.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"]
+      ["14.00 น. - 15.30 น.", round(3)]
     ]],
     ["วันที่ 29 พฤศจิกายน 2569", [
       ["08.00 น. - 08.30 น.", "ลงทะเบียนเข้าร่วมกิจกรรม"],
-      ["08.30 น. - 10.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 1 (สถานที่: ${r1.room} - ${r1.name})`],
-      ["10.00 น. - 10.30 น.", `พักรับประทานอาหารว่าง (สถานที่: ${r2.room} - ${r2.name})`],
-      ["10.30 น. - 12.00 น.", `กิจกรรมฐานการเรียนรู้รอบที่ 2 (สถานที่: ${r3.room} - ${r3.name})`],
+      ["08.30 น. - 10.00 น.", round(1)],
+      ["10.00 น. - 10.30 น.", "พักรับประทานอาหารว่าง"],
+      ["10.30 น. - 12.00 น.", round(2)],
       ["12.00 น. - 13.00 น.", "พักรับประทานอาหารกลางวัน"],
-      ["13.00 น. - 14.30 น.", "กิจกรรมฐานการเรียนรู้รอบที่ 3"],
-      ["13.30 น. - 14.00 น.", "พักรับประทานอาหารว่าง"],
-      ["14.00 น. - 15.00 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
+      ["13.00 น. - 14.30 น.", round(3)],
+      ["14.30 น. - 15.00 น.", "พักรับประทานอาหารว่าง"],
+      ["15.00 น. - 15.30 น.", "พิธีปิด<br>- มอบเกียรติบัตร<br>- ถ่ายภาพที่ระลึก<br>(สถานที่: ห้องประชุมปทุมลักษณ์พิไล)"]
     ]]
   ];
 
-  $("daysContainer").innerHTML = schedData.map(d => `
+  $("daysContainer").innerHTML = schedData.map((d, index) => `
     <div class="card day">
       <h3>📅 ${d[0]}</h3>
-      ${d[1].map(s => `<div class="slot"><b>${s[0]}</b>${s[1]}</div>`).join("")}
+      ${d[1].map(([time, label]) => {
+        const [from,to] = time.match(/\d{2}\.\d{2}/g).map(t => Date.parse("2026-11-" + (28+index) + "T" + t.replace(".",":") + ":00+07:00"));
+        return `<div class="slot" data-from="${from}" data-to="${to}"><b>${time}<span hidden> · กำลังดำเนินอยู่</span></b>${label}</div>`;
+      }).join("")}
     </div>
   `).join("");
+  highlightSchedule();
 }
-updateSchedule();
+function highlightSchedule(now = Date.now()) {
+  document.querySelectorAll("#daysContainer .slot").forEach(slot => {
+    const active = now >= Number(slot.dataset.from) && now < Number(slot.dataset.to);
+    slot.classList.toggle("current-slot",active);
+    slot.querySelector("span").hidden = !active;
+  });
+}
+setInterval(() => { if (cur === "schedule") highlightSchedule(); },1000);
+
 
 function show(id){$(id).hidden=false}
 function hide(id){$(id).hidden=true}
@@ -768,6 +801,7 @@ function buildMenu() {
 
 async function tab(n) {
   cur = n;
+  if (n === "schedule") highlightSchedule();
   document.querySelectorAll("main>section").forEach(s => s.hidden = s.id !== "tab-" + n);
   document.querySelectorAll(".menu button").forEach(b => b.classList.toggle("on", b.id === "nav-" + n));
   $("menu").classList.remove("open");
@@ -787,7 +821,41 @@ async function tab(n) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+function selectStation() {
+  const options = activities[$("subBase").value] || [];
+  $("submissionDetails").disabled = $("submissionDetails").hidden = !options.length;
+  $("subActivity").replaceChildren(new Option("-- เลือกกิจกรรม --",""));
+  options.forEach(([id,name]) => $("subActivity").add(new Option(name,id)));
+  renderActivityStatus();
+}
+function renderActivityStatus() {
+  const station = $("subBase").value;
+  const items = activities[station] || [];
+  $("activityStatus").innerHTML = items.map(([id,name]) => {
+    let state = historyLoading ? "กำลังตรวจสอบ" : "ตรวจสอบประวัติไม่ได้";
+    if (submitted) state = "ยังไม่ส่ง";
+    if (submitted?.some(item => item.base === station && submissionActivityId(item) === id)) state = "ส่งแล้ว";
+    else if (confirmedHere.has(id)) state = "ส่งแล้ว · ยืนยันจากเบราว์เซอร์นี้";
+    else if (submitted?.some(item => item.base === station && !submissionActivityId(item))) state = "ยังยืนยันไม่ได้ · มีประวัติที่ไม่ระบุกิจกรรม";
+    return `<li>${name} — ${state}</li>`;
+  }).join("");
+}
+// The existing Apps Script already returns campSet in submission history.
+function submissionActivityId(item) {
+  return item.activityId || String(item.campSet || "").match(/^กลุ่ม [ABC] · (mb[1-6]|cv[1-6]|ai[1-6])$/)?.[1];
+}
+function historyGroup(item) {
+  return String(item.campSet || "").replace(/^(กลุ่ม [ABC]) · (mb[1-6]|cv[1-6]|ai[1-6])$/, "$1");
+}
+function historyActivity(item) {
+  const match = Object.hasOwn(activities,item.base) && activities[item.base].find(([id]) => id === submissionActivityId(item));
+  return match ? match[1] : "ไม่ระบุกิจกรรม";
+}
 async function loadMySubmissions() {
+  const request = ++historyRequest;
+  submitted = null;
+  historyLoading = true;
+  renderActivityStatus();
   $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">กำลังโหลดประวัติ...</td></tr>`;
   try {
     let res = await fetch(WEB_APP_URL, {
@@ -795,8 +863,10 @@ async function loadMySubmissions() {
       body: JSON.stringify({ action: "getMySubmissions", studentId: newId })
     });
     let json = await res.json();
-    if(json.status === "success") {
-      const list = json.data;
+    if (request !== historyRequest) return;
+    if (json.status !== "success" || !Array.isArray(json.data)) throw Error("history");
+    {
+      const list = submitted = json.data;
       if(list.length === 0) {
         $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">คุณยังไม่ได้ส่งงานใด ๆ ในระบบ</td></tr>`;
         return;
@@ -804,15 +874,18 @@ async function loadMySubmissions() {
       $("mySubmissionsBody").innerHTML = list.map(item => `
         <tr>
           <td>${esc(item.timestamp)}</td>
-          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(item.campSet)}</span></td>
-          <td><span class="badge">${esc(item.base)}</span></td>
+          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(historyGroup(item))}</span></td>
+          <td><span class="badge">${esc(item.base)}</span><br><small>${historyActivity(item)}</small></td>
           <td>${esc(item.type)}</td>
           <td><a href="${esc(item.url)}" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem; text-decoration:none;">เปิดดูงาน ↗</a></td>
         </tr>
       `).join("");
     }
   } catch(err) {
+    if (request !== historyRequest) return;
     $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+  } finally {
+    if (request === historyRequest) { historyLoading = false; renderActivityStatus(); }
   }
 }
 
@@ -850,11 +923,24 @@ function enter(id, isAdmin, name, base) {
   $("app").hidden = false;
   $("userBadge").textContent = isAdmin ? `แอดมิน: ${name} (${adminBase})` : `รหัส นร.: ${id}`;
   
+  const savedGroup = readLocal("group",id);
+  group = isAdmin ? "A" : Object.hasOwn(rotations,savedGroup) ? savedGroup : "";
+  confirmedHere = new Set((readLocal("sent",id) || "").split(",").filter(Boolean));
+  submitted = null;
+  $("subBase").closest("form").reset();
+  toggleSubType("file");
+  selectStation();
   buildMenu();
   tab("home");
+  if (group) {
+    updateSchedule();
+    if (!admin) $("userBadge").textContent += " · กลุ่ม " + group;
+  } else openGroups();
 }
 
 function logout() {
+  ++historyRequest;
+  newId = group = "";
   $("app").hidden = true;
   $("auth").hidden = false;
   admin = false;
@@ -958,8 +1044,8 @@ async function loadSubmissions() {
       $("subBody").innerHTML = list.map(item => `
         <tr>
           <td>${esc(item.timestamp)}</td>
-          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(item.campSet)}</span></td>
-          <td><span class="badge">${esc(item.base)}</span></td>
+          <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(historyGroup(item))}</span></td>
+          <td><span class="badge">${esc(item.base)}</span><br><small>${historyActivity(item)}</small></td>
           <td class="mono"><b>${esc(item.studentId)}</b></td>
           <td><b>${esc(item.fullName)}</b></td>
           <td>${esc(item.nickname)}</td>
@@ -992,11 +1078,13 @@ function toggleSubType(type) {
 
 async function handleAdvancedUpload(e) {
   e.preventDefault();
-  const campSet = $("subCampSet").value;
+  const studentId = newId;
+  const activityId = $("subActivity").value;
+  const campSet = "กลุ่ม " + group + " · " + activityId;
   const base = $("subBase").value;
   const type = $("subType").value;
 
-  if (!campSet || !base) return alert("กรุณาเลือกชุดกิจกรรมและฐานกิจกรรมให้ครบถ้วน");
+  if (!group || !activities[base]?.some(([id]) => id === activityId)) return alert("กรุณาเลือกฐานและกิจกรรมที่ต้องการส่งผลงาน");
 
   const btn = e.submitter;
   const originalText = btn.innerHTML;
@@ -1017,7 +1105,7 @@ async function handleAdvancedUpload(e) {
       const base64Data = reader.result.split(',')[1];
       const payload = {
         action: "uploadAssignment",
-        studentId: newId,
+        studentId, activityId,
         campSet: campSet,
         category: base,
         submissionType: "File",
@@ -1026,6 +1114,11 @@ async function handleAdvancedUpload(e) {
         fileData: base64Data
       };
       await sendPayloadToBackend(payload, btn, originalText, fileInput);
+    };
+    reader.onerror = () => {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      alert("อ่านไฟล์ไม่ได้ กรุณาเลือกไฟล์อีกครั้ง");
     };
     reader.readAsDataURL(file);
   } else {
@@ -1039,7 +1132,7 @@ async function handleAdvancedUpload(e) {
 
     const payload = {
       action: "uploadAssignment",
-      studentId: newId,
+      studentId, activityId,
       campSet: campSet,
       category: base,
       submissionType: "Link",
@@ -1059,6 +1152,12 @@ async function sendPayloadToBackend(payload, btn, originalText, fileInput, linkI
     });
     let json = await res.json();
     if (json.status === "success") {
+      const previous = (readLocal("sent",payload.studentId) || "").split(",").filter(Boolean);
+      const receipts = payload.studentId === newId ? confirmedHere : new Set(previous);
+      receipts.add(payload.activityId);
+      saveLocal("sent",payload.studentId,[...receipts].join(","));
+      if (payload.studentId !== newId) return;
+      renderActivityStatus();
       alert("ส่งงานสำเร็จเรียบร้อยแล้วครับ! 🎉");
       if(fileInput) fileInput.value = "";
       if(linkInput) linkInput.value = "";
