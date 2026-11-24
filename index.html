@@ -272,8 +272,8 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .slot.current-slot,.slot.current-slot:hover{background:#fee2e2;border-left-color:#b91c1c;color:#671212}
 .slot.current-slot b{color:#991b1b}
-#groupDialog{margin:auto;border:0;background:transparent;color:var(--text);width:min(92vw,440px)}
-#groupDialog::backdrop{background:#111936aa}
+#groupDialog,#cancelDialog{margin:auto;border:0;background:transparent;color:var(--text);width:min(92vw,440px)}
+#groupDialog::backdrop,#cancelDialog::backdrop{background:#111936aa}
 #groupDialog .dayb{justify-content:center;gap:.75rem;margin:1rem 0}
 #activityStatus{padding-left:1.4rem}
 </style>
@@ -475,11 +475,11 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
              <th>กลุ่ม</th>
              <th>ฐาน / กิจกรรม</th>
              <th>รูปแบบ</th>
-             <th>ลิงก์งาน</th>
+             <th>ลิงก์งาน</th><th>การส่งงาน</th>
            </tr>
          </thead>
          <tbody id="mySubmissionsBody">
-           <tr><td colspan="5" class="center muted">กำลังโหลดประวัติการส่งงาน...</td></tr>
+           <tr><td colspan="6" class="center muted">กำลังโหลดประวัติการส่งงาน...</td></tr>
          </tbody>
        </table>
      </div>
@@ -521,8 +521,9 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
      <div class="head">
        <div>
          <h2 id="subAdminTitle">📥 รายการส่งงานนักเรียน</h2>
-         <p class="muted" id="subAdminDesc">ตรวจสอบงานที่นักเรียนส่งเข้ามาตามฐานกิจกรรม</p>
+         <p class="muted" id="subAdminDesc" aria-live="polite">ตรวจสอบงานที่นักเรียนส่งเข้ามาตามฐานกิจกรรม</p>
        </div>
+       <button class="btn ghost" type="button" onclick="loadSubmissions()">โหลดใหม่</button>
      </div>
      <div class="tablebox">
        <table>
@@ -569,6 +570,18 @@ footer a{text-decoration:none;transition:opacity .2s}footer a:hover{opacity:.7}
 <div class="modal" id="forgotModal" hidden><div class="card center"><h3>🔑 ลืมรหัสผ่านใช่ไหม?</h3><p class="muted">ติดต่อแอดมิน:</p><p style="margin:.8rem 0 1.2rem;font-weight:600">📞 0811025149<br>💬 LINE: 0811025149</p><button class="btn block" onclick="hide('forgotModal')">เข้าใจแล้ว</button></div></div>
 <div class="modal" id="okModal" hidden><div class="card center"><h3>✅ ลงทะเบียนสำเร็จ!</h3><p class="muted">รหัสนักเรียนของคุณคือ</p><div class="camp" id="campId">12345</div><button class="btn block" onclick="enter(newId,false)">เข้าสู่หน้าหลัก</button></div></div>
 
+<dialog id="cancelDialog" aria-labelledby="cancelTitle">
+ <form class="card stack" id="cancelForm">
+  <h3 id="cancelTitle">ยกเลิกการส่งงานนี้?</h3>
+  <p id="cancelDetail"></p>
+  <p>เมื่องานถูกยกเลิก พี่ฐานจะไม่เห็นรายการนี้ในหน้าตรวจงาน น้องส่งผลงานใหม่ได้</p>
+  <label for="cancelPassword">ยืนยันด้วยรหัสผ่านของน้อง</label>
+  <input id="cancelPassword" type="password" autocomplete="current-password" required>
+  <p id="cancelMessage" role="status"></p>
+  <div><button class="btn ghost" type="button" onclick="closeCancellation()">กลับ</button>
+  <button class="btn" id="confirmCancel" type="submit">ยืนยันยกเลิกงาน</button></div>
+ </form>
+</dialog>
 <dialog id="groupDialog" aria-labelledby="groupHeading">
  <div class="card center"><h2 id="groupHeading">น้องอยู่กลุ่มไหน?</h2>
  <p>เลือกกลุ่มที่ได้รับจากสตาฟ เพื่อดูตารางของกลุ่ม</p>
@@ -706,7 +719,10 @@ let group = "";
 let submitted = null;
 let historyRequest = 0;
 let historyLoading = false;
-let confirmedHere = new Set();
+let adminSubmissionRequest = 0;
+let rosterRequest = 0;
+let selectedSubmission = null;
+let sessionVersion = 0;
 const storeKey = (kind,id) => "computer-camp:2569:" + kind + ":" + id;
 function readLocal(kind,id) {
   try { return localStorage.getItem(storeKey(kind,id)); } catch { return null; }
@@ -807,7 +823,7 @@ async function tab(n) {
   $("menu").classList.remove("open");
   
   if (n === "adminDashboard" || n === "adminCheckin") {
-    await fetchAdminData();
+    if (!await fetchAdminData(n)) return;
   }
   if (n === "adminDashboard") renderAdmin();
   if (n === "adminCheckin") resetSearch();
@@ -835,7 +851,6 @@ function renderActivityStatus() {
     let state = historyLoading ? "กำลังตรวจสอบ" : "ตรวจสอบประวัติไม่ได้";
     if (submitted) state = "ยังไม่ส่ง";
     if (submitted?.some(item => item.base === station && submissionActivityId(item) === id)) state = "ส่งแล้ว";
-    else if (confirmedHere.has(id)) state = "ส่งแล้ว · ยืนยันจากเบราว์เซอร์นี้";
     else if (submitted?.some(item => item.base === station && !submissionActivityId(item))) state = "ยังยืนยันไม่ได้ · มีประวัติที่ไม่ระบุกิจกรรม";
     return `<li>${name} — ${state}</li>`;
   }).join("");
@@ -851,66 +866,136 @@ function historyActivity(item) {
   const match = Object.hasOwn(activities,item.base) && activities[item.base].find(([id]) => id === submissionActivityId(item));
   return match ? match[1] : "ไม่ระบุกิจกรรม";
 }
+// Bound read times so a slow endpoint cannot leave either table spinning indefinitely.
+async function campRequest(payload, timeoutMs = 20000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(WEB_APP_URL, {
+      method: "POST", cache: "no-store", signal: controller.signal, body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw Error("เชื่อมต่อระบบไม่ได้");
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+let personalHistory = [];
+function openCancellation(index) {
+  const item = personalHistory[index];
+  if (!item?.submissionId || item.withdrawn || admin) return;
+  selectedSubmission = item.submissionId;
+  $("cancelDetail").textContent = [item.base, historyActivity(item), item.timestamp].join(" · ");
+  $("cancelPassword").value = "";
+  $("cancelMessage").textContent = "";
+  $("confirmCancel").disabled = false;
+  $("cancelDialog").showModal();
+}
+
+function closeCancellation() {
+  if ($("confirmCancel").disabled) return;
+  $("cancelDialog").close();
+}
+$("cancelDialog").addEventListener("cancel", e => {
+  if ($("confirmCancel").disabled) e.preventDefault();
+});
+$("cancelDialog").addEventListener("close", () => {
+  $("cancelPassword").value = "";
+  selectedSubmission = null;
+});
+$("cancelForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!selectedSubmission || $("confirmCancel").disabled) return;
+  const session = sessionVersion;
+  $("confirmCancel").disabled = true;
+  $("cancelMessage").textContent = "กำลังยืนยันกับระบบ…";
+  try {
+    const result = await campRequest({action:"cancelSubmission", studentId:newId,
+      submissionId:selectedSubmission, password:$("cancelPassword").value}, 30000);
+    if (session !== sessionVersion) return;
+    if (result.status !== "success" || result.withdrawn !== true) {
+      $("cancelMessage").textContent = result.message || "ยกเลิกไม่สำเร็จ กรุณาตรวจสอบประวัติอีกครั้ง";
+      return;
+    }
+    $("cancelDialog").close();
+    await loadMySubmissions();
+  } catch {
+    if (session === sessionVersion) $("cancelMessage").textContent = "ยังยืนยันผลไม่ได้ กรุณากลับไปโหลดประวัติอีกครั้ง";
+  } finally {
+    if (session === sessionVersion) {
+      $("confirmCancel").disabled = false;
+      $("cancelPassword").value = "";
+    }
+  }
+});
+
 async function loadMySubmissions() {
   const request = ++historyRequest;
   submitted = null;
   historyLoading = true;
   renderActivityStatus();
-  $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">กำลังโหลดประวัติ...</td></tr>`;
+  $("mySubmissionsBody").innerHTML = `<tr><td colspan="6" class="center muted">กำลังโหลดประวัติ...</td></tr>`;
   try {
-    let res = await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({ action: "getMySubmissions", studentId: newId })
-    });
-    let json = await res.json();
+    const json = await campRequest({action:"getMySubmissions", studentId:newId});
     if (request !== historyRequest) return;
     if (json.status !== "success" || !Array.isArray(json.data)) throw Error("history");
     {
-      const list = submitted = json.data;
+      const list = personalHistory = json.data;
+      submitted = list.filter(item => !item.withdrawn);
       if(list.length === 0) {
-        $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">คุณยังไม่ได้ส่งงานใด ๆ ในระบบ</td></tr>`;
+        $("mySubmissionsBody").innerHTML = `<tr><td colspan="6" class="center muted">คุณยังไม่ได้ส่งงานใด ๆ ในระบบ</td></tr>`;
         return;
       }
-      $("mySubmissionsBody").innerHTML = list.map(item => `
+      $("mySubmissionsBody").innerHTML = list.map((item, index) => `
         <tr>
           <td>${esc(item.timestamp)}</td>
           <td><span class="badge" style="background:#f59e0b; color:#3b1d00;">${esc(historyGroup(item))}</span></td>
           <td><span class="badge">${esc(item.base)}</span><br><small>${historyActivity(item)}</small></td>
           <td>${esc(item.type)}</td>
           <td><a href="${esc(item.url)}" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem; text-decoration:none;">เปิดดูงาน ↗</a></td>
+          <td>${item.withdrawn ? "ยกเลิกแล้ว" : item.submissionId && !admin
+            ? `<button class="btn ghost" type="button" onclick="openCancellation(${index})">ยกเลิกการส่งงาน</button>`
+            : (json.cancellationEnabled ? "กรุณาติดต่อพี่ฐาน" : "รอเปิดระบบยกเลิก")}</td>
         </tr>
       `).join("");
     }
   } catch(err) {
     if (request !== historyRequest) return;
-    $("mySubmissionsBody").innerHTML = `<tr><td colspan="5" class="center muted">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+    $("mySubmissionsBody").innerHTML = `<tr><td colspan="6" class="center muted">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
   } finally {
     if (request === historyRequest) { historyLoading = false; renderActivityStatus(); }
   }
 }
 
-async function fetchAdminData() {
+async function fetchAdminData(view) {
+  const request = ++rosterRequest;
+  students = [];
+  renderAdmin();
+  renderCheckin();
+  const table = view === "adminDashboard" ? "adminBody" : "ckBody";
+  $(table).innerHTML = '<tr><td colspan="6" class="center muted">กำลังโหลดรายชื่อ…</td></tr>';
   try {
-    let res = await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({ action: "getAdminData" })
-    });
-    let json = await res.json();
-    if (json.status === "success") {
-      students = json.data.map(item => ({
-        t: item.timestamp,
-        email: item.email,
-        sid: String(item.studentId),
-        name: `${item.title}${item.fullName}`,
-        nick: item.nickname,
-        grade: item.grade,
-        rowIdx: item.rowIdx,
-        c28: item.check16 === "มาแล้ว",
-        c29: item.check17 === "มาแล้ว"
-      }));
+    const json = await campRequest({action:"getAdminData"});
+    if (request !== rosterRequest || !admin || cur !== view) return false;
+    if (json.status !== "success" || !Array.isArray(json.data)) throw Error("roster");
+    students = json.data.filter(item => item && String(item.studentId ?? "").trim()).map(item => ({
+      t: item.timestamp,
+      email: item.email,
+      sid: String(item.studentId),
+      name: `${item.title}${item.fullName}`,
+      nick: item.nickname,
+      grade: item.grade,
+      rowIdx: item.rowIdx,
+      c28: item.check16 === "มาแล้ว",
+      c29: item.check17 === "มาแล้ว"
+    }));
+    return true;
+  } catch {
+    if (request === rosterRequest && admin && cur === view) {
+      $(table).innerHTML = '<tr><td colspan="6" class="center muted">โหลดรายชื่อไม่ได้ กดเมนูนี้อีกครั้งเพื่อลองใหม่</td></tr>';
     }
-  } catch (err) {
-    console.error("Error fetching data:", err);
+    return false;
   }
 }
 
@@ -925,7 +1010,8 @@ function enter(id, isAdmin, name, base) {
   
   const savedGroup = readLocal("group",id);
   group = isAdmin ? "A" : Object.hasOwn(rotations,savedGroup) ? savedGroup : "";
-  confirmedHere = new Set((readLocal("sent",id) || "").split(",").filter(Boolean));
+  ++sessionVersion;
+  personalHistory = [];
   submitted = null;
   $("subBase").closest("form").reset();
   toggleSubType("file");
@@ -939,6 +1025,11 @@ function enter(id, isAdmin, name, base) {
 }
 
 function logout() {
+  ++sessionVersion;
+  ++adminSubmissionRequest;
+  ++rosterRequest;
+  if ($("cancelDialog").open) $("cancelDialog").close();
+  personalHistory = [];
   ++historyRequest;
   newId = group = "";
   $("app").hidden = true;
@@ -1027,16 +1118,39 @@ async function toggle(i, d) {
   }
 }
 
-async function loadSubmissions() {
-  $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">กำลังโหลดข้อมูลงาน...</td></tr>`;
+function viewingAdminWork() {
+  return admin && cur === "adminSubmissions" && !document.hidden;
+}
+setInterval(() => { if (viewingAdminWork()) loadSubmissions(true); }, 60000);
+document.addEventListener("visibilitychange", () => {
+  if (viewingAdminWork()) loadSubmissions(true);
+});
+
+async function loadSubmissions(background = false) {
+  if (!admin || cur !== "adminSubmissions") return;
+  const request = ++adminSubmissionRequest;
+  const base = adminBase;
+  if (!background) $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">กำลังโหลดข้อมูลงาน...</td></tr>`;
+  $("subAdminDesc").textContent = "กำลังตรวจสอบรายการล่าสุด…";
   try {
-    let res = await fetch(WEB_APP_URL, {
-      method: "POST",
-      body: JSON.stringify({ action: "getSubmissions", base: adminBase })
-    });
-    let json = await res.json();
-    if (json.status === "success") {
-      const list = json.data;
+    const json = await campRequest({action:"getSubmissions", base});
+    if (request !== adminSubmissionRequest || !admin || cur !== "adminSubmissions") return;
+    if (json.code === "work_sheet_missing") {
+      $("subAdminDesc").textContent = "เชื่อมต่อชีตส่งงานไม่ได้";
+      $("subBody").innerHTML = '<tr><td colspan="9" class="center muted">ไม่พบแท็บชีตส่งงานที่ตั้งไว้ กรุณาแจ้งผู้ดูแลค่าย</td></tr>';
+      return;
+    }
+    if (json.status !== "success" || !Array.isArray(json.data)) throw Error("invalid response");
+    {
+      const norm = value => {
+        const name = String(value || "").trim().toLowerCase().replace(/^ฐาน\s*/, "");
+        if (["microbit","micro:bit","ไมโครบิท"].includes(name)) return "ไมโครบิต";
+        if (["canva","canva ai"].includes(name)) return "แคนวา";
+        return name;
+      };
+      const list = json.data.filter(item => item && item.studentId != null && String(item.studentId).trim() && !item.withdrawn &&
+        (norm(base) === "all" || norm(item.base) === norm(base)));
+      $("subAdminDesc").textContent = "อัปเดตล่าสุด " + new Date().toLocaleTimeString("th-TH", {timeZone:"Asia/Bangkok"}) + " น. · " + list.length + " รายการ";
       if (list.length === 0) {
         $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">ยังไม่มีนักเรียนส่งงานในฐานนี้</td></tr>`;
         return;
@@ -1056,7 +1170,9 @@ async function loadSubmissions() {
       `).join("");
     }
   } catch (err) {
-    $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
+    if (request !== adminSubmissionRequest || !admin || cur !== "adminSubmissions") return;
+    $("subAdminDesc").textContent = "แสดงรายการล่าสุดไม่ได้";
+    $("subBody").innerHTML = `<tr><td colspan="9" class="center muted">โหลดข้อมูลงานไม่สำเร็จ กด “โหลดใหม่” เพื่อลองอีกครั้ง</td></tr>`;
   }
 }
 
@@ -1152,12 +1268,7 @@ async function sendPayloadToBackend(payload, btn, originalText, fileInput, linkI
     });
     let json = await res.json();
     if (json.status === "success") {
-      const previous = (readLocal("sent",payload.studentId) || "").split(",").filter(Boolean);
-      const receipts = payload.studentId === newId ? confirmedHere : new Set(previous);
-      receipts.add(payload.activityId);
-      saveLocal("sent",payload.studentId,[...receipts].join(","));
       if (payload.studentId !== newId) return;
-      renderActivityStatus();
       alert("ส่งงานสำเร็จเรียบร้อยแล้วครับ! 🎉");
       if(fileInput) fileInput.value = "";
       if(linkInput) linkInput.value = "";
